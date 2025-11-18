@@ -1,6 +1,8 @@
 package br.edu.fatecgru.glice;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.edu.fatecgru.glice.activity.LoginActivity;
+import br.edu.fatecgru.glice.activity.ReceitasActivity;
+import br.edu.fatecgru.glice.activity.TutorialActivity;
+
 public class MainActivity extends AppCompatActivity {
+
+    Button inicial, tutorial, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +28,24 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        inicial = findViewById(R.id.inicial);
+        inicial.setOnClickListener(v -> {
+            Intent it = new Intent(this, ReceitasActivity.class);
+            startActivity(it);
+        });
+
+        login = findViewById(R.id.login);
+        login.setOnClickListener(v -> {
+            Intent it = new Intent(this, LoginActivity.class);
+            startActivity(it);
+        });
+
+        tutorial = findViewById(R.id.tutorial);
+        tutorial.setOnClickListener(v -> {
+            Intent it = new Intent(this, TutorialActivity.class);
+            startActivity(it);
+        });
+
     }
 }
