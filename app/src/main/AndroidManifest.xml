@@ -16,6 +16,7 @@
         <activity
             android:name=".activity.ReceitasActivity"
             android:exported="false" />
+        <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.TutorialActivity"
             android:exported="false" />
