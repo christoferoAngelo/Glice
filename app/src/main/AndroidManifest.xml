@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glice">
         <activity
+            android:name=".activity.ReceitasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
