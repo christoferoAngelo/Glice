@@ -13,6 +13,7 @@
     tools:visibility="visible">
 
     <LinearLayout
+        android:id="@+id/layoutIndicators"
         android:layout_width="match_parent"
         android:layout_height="682dp"
         android:layout_marginStart="0dp"
@@ -22,6 +23,8 @@
         android:elevation="50dp"
         android:orientation="vertical"
         android:padding="50dp">
+
+
 
         <!-- Foto Circular -->
         <de.hdodenhof.circleimageview.CircleImageView
