@@ -18,12 +18,10 @@
         android:layout_height="682dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@drawable/bolhas_de_sabao_flutuam_fundo_36860_367__1_"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/branco"
         android:elevation="50dp"
         android:orientation="vertical"
         android:padding="50dp">
-
 
 
         <!-- Foto Circular -->
@@ -65,30 +63,6 @@
             android:textColor="#666666"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnContinuar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#F49CBB"
-            android:gravity="center"
-            android:text="Continuar"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btnPular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="#00C4C4C4"
-            android:gravity="center"
-            android:hapticFeedbackEnabled="false"
-            android:text="Pular"
-            android:textColor="#625D5D"
-            android:textSize="20sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
