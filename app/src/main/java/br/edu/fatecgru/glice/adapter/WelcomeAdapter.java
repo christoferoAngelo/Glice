@@ -8,14 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.edu.fatecgru.glice.R;
+import br.edu.fatecgru.glice.model.Carrossel_Item;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
 
-public class CarrosselAdapter extends RecyclerView.Adapter<CarrosselAdapter.CarrosselViewHolder> {
+public abstract class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.CarrosselViewHolder> {
 
-    private List<CarrosselItem> itens;
+    private List<Carrossel_Item> itens;
 
-    public CarrosselAdapter(List<CarrosselItem> itens) {
+    public WelcomeAdapter(List<Carrossel_Item> itens) {
         this.itens = itens;
     }
 
@@ -29,7 +30,7 @@ public class CarrosselAdapter extends RecyclerView.Adapter<CarrosselAdapter.Carr
 
     @Override
     public void onBindViewHolder(@NonNull CarrosselViewHolder holder, int position) {
-        CarrosselItem item = itens.get(position);
+        Carrossel_Item item = itens.get(position);
         holder.bind(item);
     }
 
@@ -50,7 +51,7 @@ public class CarrosselAdapter extends RecyclerView.Adapter<CarrosselAdapter.Carr
             tvDescription = itemView.findViewById(R.id.tvDescription);
         }
 
-        public void bind(CarrosselItem item) {
+        public void bind(Carrossel_Item item) {
             boasVindasImage.setImageResource(item.getImageRes());
             tvTitle.setText(item.getTitle());
             tvDescription.setText(item.getDescription());

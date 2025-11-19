@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SupabaseClient {
 
-    private static final String BASE_URL = "https://glice.supabase.co/";
+    private static final String BASE_URL = "https://usjwnkaisabwnxhvthkl.supabase.co";
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

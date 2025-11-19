@@ -10,8 +10,8 @@ import java.util.Map;
 public interface SupabaseApi {
 
     @Headers({
-            "apikey: YOUR_ANON_KEY",
-            "Authorization: Bearer YOUR_ANON_KEY",
+            "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzandua2Fpc2Fid254aHZ0aGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0NzEyNTksImV4cCI6MjA3OTA0NzI1OX0.rs93APWLWqE5l7LiJVW1J0ebC9OqZZ_w29ZQcnKhzXY",
+            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzandua2Fpc2Fid254aHZ0aGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0NzEyNTksImV4cCI6MjA3OTA0NzI1OX0.rs93APWLWqE5l7LiJVW1J0ebC9OqZZ_w29ZQcnKhzXY",
             "Content-Type: application/json"
     })
     @GET("rest/v1/receita")
@@ -22,7 +22,7 @@ public interface SupabaseApi {
 
     @Headers({
             "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzandua2Fpc2Fid254aHZ0aGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0NzEyNTksImV4cCI6MjA3OTA0NzI1OX0.rs93APWLWqE5l7LiJVW1J0ebC9OqZZ_w29ZQcnKhzXY",
-            "Authorization: Bearer YOUR_ANON_KEY",
+            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzandua2Fpc2Fid254aHZ0aGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0NzEyNTksImV4cCI6MjA3OTA0NzI1OX0.rs93APWLWqE5l7LiJVW1J0ebC9OqZZ_w29ZQcnKhzXY",
             "Content-Type: application/json"
     })
     @POST("rest/v1/receita")

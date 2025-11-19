@@ -37,12 +37,14 @@ public class ReceitaDAO {
                     callback.onSuccess(response.body());
                 } else {
                     callback.onError("Erro: " + response.errorBody());
+                    Log.e("Errinho", String.valueOf(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Receita>> call, Throwable t) {
                 callback.onError("Falha: " + t.getMessage());
+                Log.e("Falhinha", String.valueOf(t.getMessage()));
             }
         });
     }
