@@ -42,6 +42,29 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edtNomeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="20dp"
+            android:hint="Nome"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            app:boxStrokeColor="#78737D"
+            app:endIconMinSize="24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtNomeText"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edtEmailLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
@@ -85,7 +108,32 @@
                 android:inputType="textPassword"
                 android:singleLine="true" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edtConfirmarSenhaLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Confirmar senha"
+            app:boxStrokeColor="#78737D"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@android:drawable/ic_lock_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtConfirmarSenhaText"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColorLink="#CE5858"></com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnCadastrar"
@@ -94,21 +142,11 @@
             android:layout_height="62dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/rosa1"
-            android:enabled="false"
+            android:enabled="true"
             android:fontFamily="sans-serif"
             android:hapticFeedbackEnabled="true"
-            android:text="LOG IN"
-            android:textColor="@color/branco" />
-
-        <TextView
-            android:id="@+id/txvCadastrar"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             android:text="Cadastrar"
-            android:textAlignment="textEnd"
-            android:textColor="@color/rosa4"
-            android:textSize="16sp" />
+            android:textColor="@color/branco" />
 
     </LinearLayout>
 
