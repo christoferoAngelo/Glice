@@ -1,0 +1,142 @@
+[
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_stack_star_24px.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\stack_star_24px.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_welcome.png.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\welcome.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_activity_receitas.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\activity_receitas.xml"
+    },
+    {
+        "merged": "br.edu.fatecgru.glice.app-debug-38:/layout_activity_cadastrar_login.xml.flat",
+        "source": "br.edu.fatecgru.glice.app-main-40:/layout/activity_cadastrar_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\font_agbalumo.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\font\\agbalumo.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_item_carrossel_welcome.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\item_carrossel_welcome.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\font_flow_block.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\font\\flow_block.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_activity_cadastrar_login.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\activity_cadastrar_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_activity_tutorial.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\activity_tutorial.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_welcome_back__1_.png.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\welcome_back__1_.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_profile_placeholder.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\profile_placeholder.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_bolhas_de_sabao_flutuam_fundo_36860_367__1_.jpg.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\bolhas_de_sabao_flutuam_fundo_36860_367__1_.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\font_aleo_thin.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\font\\aleo_thin.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_welcome_back__2_.png.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\welcome_back__2_.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_viewpager_welcome.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\viewpager_welcome.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\layout_item_receita.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\layout\\item_receita.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-debug-38:\\drawable_icemail.xml.flat",
+        "source": "C:\\Users\\Pc\\.gradle\\daemon\\8.13\\br.edu.fatecgru.glice.app-main-40:\\drawable\\icemail.xml"
+    }
+]

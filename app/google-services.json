@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107850080862",
+    "project_id": "glice-98ca7",
+    "storage_bucket": "glice-98ca7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107850080862:android:0d1ae0efed81686636cacf",
+        "android_client_info": {
+          "package_name": "br.edu.fatecgru.glice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUMnkhHnyAkdztH4WQyezlWbijnsKJbsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
