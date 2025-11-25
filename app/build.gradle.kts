@@ -50,6 +50,13 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Cloudinary
+    // All:
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
+    // Download + Preprocess:
+    implementation("com.cloudinary:cloudinary-android-download:3.0.2")
+    implementation("com.cloudinary:cloudinary-android-preprocess:3.0.2")
 }
 
 

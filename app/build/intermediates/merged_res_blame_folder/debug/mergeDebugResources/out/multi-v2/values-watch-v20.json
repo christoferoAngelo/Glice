@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-36:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-45:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Pc\\.gradle\\caches\\8.13\\transforms\\f907a60daaa90048f2c2616646289958\\transformed\\appcompat-1.7.0\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\angel\\.gradle\\caches\\8.13\\transforms\\f907a60daaa90048f2c2616646289958\\transformed\\appcompat-1.7.0\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

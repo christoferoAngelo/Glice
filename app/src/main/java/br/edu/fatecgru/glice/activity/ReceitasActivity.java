@@ -7,8 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+
+import java.security.AlgorithmParameterGenerator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.edu.fatecgru.glice.R;
 import br.edu.fatecgru.glice.adapter.ReceitaAdapter;
@@ -22,10 +28,19 @@ public class ReceitasActivity extends AppCompatActivity {
     private List<Receita> lista = new ArrayList<>();
     private ReceitaDAO receitaDao;
 
+    private static Cloudinary cloudinary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receitas);
+
+        Map config = new HashMap();
+        config.put("cloud_name", "de4j4ibb6");
+        config.put("secure", true);
+        MediaManager.init(this, config);
+
+        MediaManager.get().upload("\"C:\\Users\\angel\\AndroidStudioProjects\\Glice2311\\app\\src\\main\\res\\drawable\\welcome.png\"").dispatch();
 
         recycler = findViewById(R.id.recyclerReceitas);
         recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -38,8 +53,18 @@ public class ReceitasActivity extends AppCompatActivity {
         carregarReceitas();
     }
 
+    public static Cloudinary getInstance() {
+        if (cloudinary == null) {
+            Map<String, Object> config = new HashMap<>();
+            config.put("cloud_name", "de4j4ibb6"); // Substitua pelo seu Cloud Name
+            config.put("api_key", "792215385188622");       // Substitua pela sua API Key
+            config.put("api_secret", "LB10k0h9NhImokGxXyp9GLwxJpk"); // Substitua pelo seu API Secret
+            cloudinary = new Cloudinary(config);
+        }
+        return cloudinary;
+    }
     private void carregarReceitas() {
-        receitaDao.getReceitas(new ReceitaDAO.ReceitasCallback() {
+        receitaDao.getReceitas(new ReceitaDAO.BuscarReceitasCallback() {
             @Override
             public void onSuccess(List<Receita> receitas) {
                 lista.clear();

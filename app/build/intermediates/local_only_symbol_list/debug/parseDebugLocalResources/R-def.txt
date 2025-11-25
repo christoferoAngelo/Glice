@@ -26,6 +26,11 @@ id boas_vindas_image
 id btnCadastrar
 id btnContinuar
 id btnPular
+id button_uploadReceita
+id editText_ingredientes
+id editText_modoPreparo
+id editText_nomeReceita
+id editText_tempoPreparo
 id edtConfirmarSenhaLayout
 id edtConfirmarSenhaText
 id edtEmailLayout
@@ -36,6 +41,7 @@ id edtSenhaLayout
 id edtSenhaText
 id imageView
 id imageView2
+id imageView_fotoReceita
 id inicial
 id layoutIndicators
 id linearLayout
@@ -51,12 +57,14 @@ id txtFonte
 id txtIndiceGlice
 id txtNomeReceita
 id txvCadastrar
+id upload
 id viewPager
 layout activity_cadastrar_login
 layout activity_login
 layout activity_main
 layout activity_receitas
 layout activity_tutorial
+layout activity_upload_receita
 layout item_carrossel_welcome
 layout item_receita
 layout viewpager_welcome

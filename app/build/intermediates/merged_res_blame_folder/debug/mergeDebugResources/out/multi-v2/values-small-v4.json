@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-36:/values-small-v4/values-small-v4.xml",
+            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-45:/values-small-v4/values-small-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Pc\\.gradle\\caches\\8.13\\transforms\\87f2898e237fd5039398e20cc04b095b\\transformed\\material-1.12.0\\res\\values-small-v4\\values-small-v4.xml",
+                    "source": "C:\\Users\\angel\\.gradle\\caches\\8.13\\transforms\\87f2898e237fd5039398e20cc04b095b\\transformed\\material-1.12.0\\res\\values-small-v4\\values-small-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
