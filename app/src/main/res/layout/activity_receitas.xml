@@ -20,33 +20,168 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="15dp"
-            android:paddingTop="3dp">
+            android:paddingTop="3dp"
+            tools:visibility="gone">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:elevation="3dp"
-                android:fontFamily="@font/ysabeau_bold"
-                android:paddingBottom="5dp"
-                android:text="GLICE"
-                android:textColor="@color/azul"
-                android:textSize="34sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imgPerfil"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:elevation="3dp"
+                    android:fontFamily="@font/ysabeau_bold"
+                    android:paddingBottom="5dp"
+                    android:text="GLICE"
+                    android:textColor="@color/azul"
+                    android:textSize="34sp"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="250dp"
-                android:backgroundTint="@color/branco"
-                android:foregroundGravity="right"
-                android:onClick="abrirPerfil"
-                android:visibility="visible"
-                tools:srcCompat="@drawable/ic_perfil" />
+                <ImageView
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_perfil" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDetalheReceita"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/branco"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="15dp"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txtNomeDetalhe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ysabeau_bold"
+                    android:text="Nome da Receita Clicada"
+                    android:textColor="@color/rosa4"
+                    android:textSize="28sp"
+                    app:layout_constraintStart_toEndOf="@+id/btnFecharDetalhe"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnFecharDetalhe"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="fecharDetalhe"
+                    android:src="@drawable/baseline_arrow_back_ios_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNomeDetalhe"
+                    tools:layout_editor_absoluteX="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="60dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewImagem"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="16dp">
+
+                            <ImageView
+                                android:id="@+id/imgDetalheReceita"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:scaleType="centerCrop"
+                                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/txtTituloIngredientes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/ysabeau"
+                            android:text="INGREDIENTES:"
+                            android:textColor="@color/rosa4"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/txtIngredientes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Ingredientes"
+                            android:textColor="@color/preto"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/txtTituloPreparo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/ysabeau"
+                            android:text="MODO DE PREPARO:"
+                            android:textColor="@color/rosa4"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/txtPreparo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="8dp"
+                            android:text="preparo"
+                            android:textColor="@color/preto"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/txtIndiceDetalhe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="ÍNDICE CALÓRICO: XX"
+                            android:textColor="@color/rosa3"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/txtFonteDetalhe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Fonte: Algum Lugar"
+                            android:textColor="#555"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </ScrollView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -56,7 +191,8 @@
             android:padding="5dp"
             app:cardBackgroundColor="@color/branco"
             app:cardCornerRadius="25dp"
-            app:cardElevation="10dp">
+            app:cardElevation="10dp"
+            tools:visibility="gone">
 
             <LinearLayout
                 android:layout_width="370dp"

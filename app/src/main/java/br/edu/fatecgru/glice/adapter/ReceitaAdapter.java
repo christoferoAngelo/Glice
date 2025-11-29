@@ -22,9 +22,10 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     private List<Receita> receitaList;
     private Context context;
 
-    public ReceitaAdapter(Context context, List<Receita> receitaList) {
+    public ReceitaAdapter(Context context, List<Receita> receitaList, OnReceitaClickListener listener) {
         this.context = context;
         this.receitaList = receitaList;
+        this.clickListener = listener; // Inicialize o listener
     }
 
     @NonNull
@@ -51,6 +52,13 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
         } else {
             holder.img.setImageResource(R.drawable.ic_launcher_background); // alterar  ícone padrão
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            // Quando um item é clicado, chame o método da interface
+            if (clickListener != null) {
+                clickListener.onReceitaClick(r);
+            }
+        });
     }
 
     @Override
@@ -72,4 +80,10 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
             txtFonte = itemView.findViewById(R.id.txtFonte);
         }
     }
+
+    public interface OnReceitaClickListener {
+        void onReceitaClick(Receita receita);
+    }
+
+    private OnReceitaClickListener clickListener;
 }

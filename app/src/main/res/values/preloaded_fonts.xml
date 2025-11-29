@@ -6,6 +6,8 @@
         <item>@font/agbalumo</item>
         <item>@font/aleo_thin</item>
         <item>@font/flow_block</item>
+        <item>@font/ysabeau</item>
         <item>@font/ysabeau_bold</item>
+        <item>@font/ysabeau_thin</item>
     </array>
 </resources>

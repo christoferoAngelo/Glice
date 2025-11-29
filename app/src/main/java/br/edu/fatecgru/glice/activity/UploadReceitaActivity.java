@@ -139,17 +139,18 @@ public class UploadReceitaActivity extends AppCompatActivity {
 
     private void uploadImageAndSaveRecipe(String path, String nome, String ingredientes, String preparo) {
         File file = new File(path);
-        Cloudinary cloudinary = CloudinaryConfig.getInstance(); // Assumindo que CloudinaryConfig existe
+        Cloudinary cloudinary = CloudinaryConfig.getInstance();
 
         executorService.execute(() -> {
             try {
                 // 1. Upload para o Cloudinary
                 Map uploadResult = cloudinary.uploader().upload(
                         file,
-                        ObjectUtils.asMap("folder", "receitas_app") // Opcional: organiza suas imagens
+                        ObjectUtils.asMap("folder", "receitas_app", "secure", true) // Opcional: organiza suas imagens
                 );
 
-                String imageUrl = (String) uploadResult.get("url");
+
+                String imageUrl = (String) uploadResult.get("secure_url");
 
                 // 2. Volta para a Main Thread para salvar os dados no banco
                 runOnUiThread(() -> {

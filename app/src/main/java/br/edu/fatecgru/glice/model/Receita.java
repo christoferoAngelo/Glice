@@ -46,4 +46,28 @@ public class Receita {
 
         return map;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getIndiceGlicemico() {
+        return indice;
+    }
+
+    public String getFonte() {
+        return fonte;
+    }
+
+    public String getUrlImagem() {
+        return foto_url;
+    }
+
+    public String getIngredientes() {
+        return ingredientes;
+    }
+
+    public String getPreparo() {
+        return preparo;
+    }
 }
