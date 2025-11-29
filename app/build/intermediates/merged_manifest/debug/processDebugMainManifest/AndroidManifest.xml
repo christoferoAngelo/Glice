@@ -9,10 +9,10 @@
         android:targetSdkVersion="36" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -40,6 +40,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.Glice" >
+        <activity
+            android:name="br.edu.fatecgru.glice.activity.PerfilUsuario"
+            android:exported="false" />
         <activity
             android:name="br.edu.fatecgru.glice.activity.UploadReceitaActivity"
             android:exported="false" />

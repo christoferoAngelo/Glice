@@ -4,7 +4,7 @@
             "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-45:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Pc\\.gradle\\caches\\8.13\\transforms\\b598ec052be4227e45aaf487206111f2\\transformed\\browser-1.4.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "C:\\Users\\angel\\.gradle\\caches\\8.13\\transforms\\560fc5dce7f08906b6b6f422ca6be020\\transformed\\browser-1.4.0\\res\\values-en-rCA\\values-en-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Pc\\.gradle\\caches\\8.13\\transforms\\f907a60daaa90048f2c2616646289958\\transformed\\appcompat-1.7.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "C:\\Users\\angel\\.gradle\\caches\\8.13\\transforms\\f54f279f86f25824aef44e21e0b0d5fb\\transformed\\appcompat-1.7.0\\res\\values-en-rCA\\values-en-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Pc\\.gradle\\caches\\8.13\\transforms\\74477d8c3c91e0fd44bc27b10fb931c2\\transformed\\core-1.13.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "C:\\Users\\angel\\.gradle\\caches\\8.13\\transforms\\5b21a4ab6cc026e0c8d286df7fb3ef52\\transformed\\core-1.13.0\\res\\values-en-rCA\\values-en-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

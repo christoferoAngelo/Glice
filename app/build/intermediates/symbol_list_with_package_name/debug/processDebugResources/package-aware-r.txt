@@ -2209,6 +2209,7 @@ color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
 color notification_material_background_media_default_color
+color preto
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -3173,6 +3174,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable baseline_account_circle_24
 drawable bolhas_de_sabao_flutuam_fundo_36860_367__1_
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
@@ -3183,6 +3185,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable check
+drawable circle_background
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -3308,6 +3311,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_perfil
 drawable ic_search_black_24
 drawable icemail
 drawable indeterminate_static
@@ -3384,6 +3388,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable outline_checklist_24
 drawable play
 drawable play_overlay
 drawable profile_placeholder
@@ -3398,10 +3403,12 @@ drawable video
 drawable welcome
 drawable welcome_back__1_
 drawable welcome_back__2_
+font aboreto
 font agbalumo
 font aleo_thin
 font flow_block
 font roboto_medium_numbers
+font ysabeau_bold
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3515,9 +3522,12 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
+id btnAdicionarIngrediente
 id btnCadastrar
 id btnContinuar
+id btnEditarInfo
 id btnPular
+id btnVerFavoritos
 id buttonPanel
 id button_uploadReceita
 id buttonsContainer
@@ -3584,6 +3594,7 @@ id disableIntraAutoTransition
 id disablePostScroll
 id disableScroll
 id disjoint
+id divider
 id doneButton
 id dragAnticlockwise
 id dragClockwise
@@ -3609,6 +3620,7 @@ id edtConfirmarSenhaLayout
 id edtConfirmarSenhaText
 id edtEmailLayout
 id edtEmailText
+id edtIngrediente
 id edtNomeLayout
 id edtNomeText
 id edtSenhaLayout
@@ -3721,8 +3733,12 @@ id ignoreRequest
 id image
 id imageView
 id imageView2
+id imageView4
+id imageView5
 id imageView_fotoReceita
 id imagesViewPager
+id imgPerfil
+id imgProfile
 id immediateStop
 id included
 id indeterminate
@@ -3746,6 +3762,7 @@ id line1
 id line3
 id linear
 id linearLayout
+id listIngredientes
 id listMode
 id list_item
 id login
@@ -3863,6 +3880,7 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id perfil
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -3891,6 +3909,7 @@ id screen
 id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
+id scrollMain
 id scrollView
 id scrollable
 id search_badge
@@ -3970,6 +3989,7 @@ id textStart
 id textTop
 id textView
 id textView2
+id textView3
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -4007,6 +4027,8 @@ id tvTitle
 id txtFonte
 id txtIndiceGlice
 id txtNomeReceita
+id txtUserEmail
+id txtUserName
 id txvCadastrar
 id unchecked
 id uniform
@@ -4159,6 +4181,7 @@ layout abc_tooltip
 layout activity_cadastrar_login
 layout activity_login
 layout activity_main
+layout activity_perfil_usuario
 layout activity_receitas
 layout activity_tutorial
 layout activity_upload_receita

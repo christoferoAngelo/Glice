@@ -15,12 +15,16 @@
         </item>
     </string-array>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/</item>
+        <item>@font/aboreto</item>
         <item>@font/agbalumo</item>
         <item>@font/aleo_thin</item>
         <item>@font/flow_block</item>
+        <item>@font/ysabeau_bold</item>
     </array>
     <color name="azul">#CBEEF3</color>
     <color name="branco">#FFFBFA</color>
+    <color name="preto">#141313</color>
     <color name="rosa1">#F49CBB</color>
     <color name="rosa2">#F26A8D</color>
     <color name="rosa3">#DD2D4A</color>

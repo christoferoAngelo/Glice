@@ -1,6 +1,9 @@
 package br.edu.fatecgru.glice.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +31,19 @@ public class ReceitasActivity extends AppCompatActivity {
     private List<Receita> lista = new ArrayList<>();
     private ReceitaDAO receitaDao;
 
+    private ImageView imgPerfil;
+
     private static Cloudinary cloudinary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receitas);
+
+        //coisos
+        imgPerfil = findViewById(R.id.imgPerfil);
+
+
 
         Map config = new HashMap();
         config.put("cloud_name", "de4j4ibb6");
@@ -77,5 +87,14 @@ public class ReceitasActivity extends AppCompatActivity {
                 Toast.makeText(ReceitasActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void abrirPerfil(View view){
+        Intent it = new Intent(this, PerfilUsuario.class);
+        startActivity(it);
+    }
+
+    private void abrirFiltro(View view){
+      //TODO
     }
 }

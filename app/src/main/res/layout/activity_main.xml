@@ -36,6 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="upload" />
+        <Button
+            android:id="@+id/perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="perfil" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

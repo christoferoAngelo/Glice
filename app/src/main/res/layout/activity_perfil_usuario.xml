@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#FAFAFA">
+    android:background="#FAFAFA"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,30 +17,30 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_user_placeholder"
-            android:scaleType="centerCrop"
             android:background="@drawable/circle_background"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/check" />
 
         <TextView
             android:id="@+id/txtUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:text="Nome do Usuário"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:text="email@exemplo.com"
-            android:textSize="15sp"
             android:textColor="#666"
-            android:layout_marginTop="4dp"/>
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btnEditarInfo"
@@ -54,10 +55,10 @@
             android:id="@+id/btnVerFavoritos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver Receitas Favoritas"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#0085FF"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"/>
+            android:text="Ver Receitas Favoritas"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,9 +79,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/edit_text"
                 android:hint="Adicionar ingrediente"
-                android:padding="8dp"
-                android:background="@android:drawable/edit_text" />
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/btnAdicionarIngrediente"
@@ -97,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:dividerHeight="10dp"/>
+            android:dividerHeight="10dp" />
     </LinearLayout>
 
 </ScrollView>

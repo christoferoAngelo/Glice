@@ -10,41 +10,114 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/branco"
-        android:backgroundTint="@color/branco"
+        android:background="@color/rosa4"
         android:paddingTop="20dp"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="26dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingTop="3dp">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:elevation="3dp"
+                android:fontFamily="@font/ysabeau_bold"
                 android:paddingBottom="5dp"
-                android:text="RECEITAS" />
+                android:text="GLICE"
+                android:textColor="@color/azul"
+                android:textSize="34sp" />
 
-            <SearchView
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center">
+            <ImageView
+                android:id="@+id/imgPerfil"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
 
-            </SearchView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerReceitas"
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
-
-
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="250dp"
+                android:backgroundTint="@color/branco"
+                android:foregroundGravity="right"
+                android:onClick="abrirPerfil"
+                android:visibility="visible"
+                tools:srcCompat="@drawable/ic_perfil" />
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="900dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:padding="5dp"
+            app:cardBackgroundColor="@color/branco"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="370dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="90dp"
+                        android:elevation="3dp"
+                        android:fontFamily="@font/ysabeau_bold"
+                        android:paddingBottom="5dp"
+                        android:text="RECEITAS"
+                        android:textColor="@color/rosa4"
+                        android:textSize="24sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="10dp"
+                        android:onClick="abrirFiltro"
+                        app:srcCompat="@drawable/outline_checklist_24" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/rosa1" />
+
+                <SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </SearchView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerReceitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

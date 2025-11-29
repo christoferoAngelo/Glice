@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button inicial;
     Button upload;
     Button login;
-    Button tutorial;
+    Button tutorial, perfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
         tutorial = findViewById(R.id.tutorial);
         tutorial.setOnClickListener(v -> {
             Intent it = new Intent(this, TutorialActivity.class);
+            startActivity(it);
+        });
+
+        perfil = findViewById(R.id.perfil);
+        perfil.setOnClickListener(v -> {
+            Intent it = new Intent(this, PerfilUsuario.class);
             startActivity(it);
         });
 
