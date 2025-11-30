@@ -21,11 +21,17 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
 
     private List<Receita> receitaList;
     private Context context;
+    private OnReceitaClickListener clickListener;
+    private OnReceitaFavoriteListener favoriteListener; // NOVO: Listener para o clique no favorito
 
-    public ReceitaAdapter(Context context, List<Receita> receitaList, OnReceitaClickListener listener) {
+    // CONSTRUTOR ATUALIZADO para 4 argumentos
+    public ReceitaAdapter(Context context, List<Receita> receitaList,
+                          OnReceitaClickListener listener,
+                          OnReceitaFavoriteListener favoriteListener) {
         this.context = context;
         this.receitaList = receitaList;
-        this.clickListener = listener; // Inicialize o listener
+        this.clickListener = listener;
+        this.favoriteListener = favoriteListener;
     }
 
     @NonNull
@@ -40,21 +46,41 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     public void onBindViewHolder(@NonNull ReceitaViewHolder holder, int position) {
         Receita r = receitaList.get(position);
 
-        holder.txtNome.setText(r.nome);
-        holder.txtIndice.setText("Índice: " + r.indice);
-        holder.txtFonte.setText("Fonte: " + r.fonte);
+        // CORREÇÃO 1: Usando getters corretos e consistentes
+        holder.txtNome.setText(r.getNome());
+        holder.txtIndice.setText("Índice: " + r.getIndiceGlicemico()); // CORRIGIDO: usa getIndiceGlicemico()
+        holder.txtFonte.setText("Fonte: " + r.getFonte());
+
+        // CORREÇÃO 2: Usando o getter correto para URL da imagem
+        String imageUrl = r.getUrlImagem();
 
         // Se tiver imagem, usa Glide
-        if (r.foto_url != null && !r.foto_url.isEmpty()) {
+        if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(context)
-                    .load(r.foto_url)
+                    .load(imageUrl)
                     .into(holder.img);
         } else {
             holder.img.setImageResource(R.drawable.ic_launcher_background); // alterar  ícone padrão
         }
 
+        // NOVO: Lógica visual do ícone de favorito
+        if (r.isFavorita()) {
+            holder.imgFavoriteList.setImageResource(R.drawable.baseline_favorite_24); // Coração Cheio
+        } else {
+            holder.imgFavoriteList.setImageResource(R.drawable.baseline_favorite_border_24); // Coração Vazio
+        }
+
+
+        // NOVO: Configura o clique no ícone de favorito
+        holder.imgFavoriteList.setOnClickListener(v -> {
+            if (favoriteListener != null) {
+                // Passa a receita e a posição para a Activity
+                favoriteListener.onReceitaFavoriteClick(r, position);
+            }
+        });
+
+        // Clique no item (área não-favorito) para abrir detalhes
         holder.itemView.setOnClickListener(v -> {
-            // Quando um item é clicado, chame o método da interface
             if (clickListener != null) {
                 clickListener.onReceitaClick(r);
             }
@@ -69,6 +95,7 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     public static class ReceitaViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
+        ImageView imgFavoriteList; // NOVO: Ícone de Favorito
         TextView txtNome, txtIndice, txtFonte;
 
         public ReceitaViewHolder(@NonNull View itemView) {
@@ -78,6 +105,9 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
             txtNome = itemView.findViewById(R.id.txtNomeReceita);
             txtIndice = itemView.findViewById(R.id.txtIndiceGlice);
             txtFonte = itemView.findViewById(R.id.txtFonte);
+
+            // NOVO: Encontrar a view do ícone de favorito (ID do XML item_receita)
+            imgFavoriteList = itemView.findViewById(R.id.imgFavoriteList);
         }
     }
 
@@ -85,5 +115,8 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
         void onReceitaClick(Receita receita);
     }
 
-    private OnReceitaClickListener clickListener;
+    // NOVA INTERFACE: Para tratar o clique no botão de Favorito
+    public interface OnReceitaFavoriteListener {
+        void onReceitaFavoriteClick(Receita receita, int position);
+    }
 }

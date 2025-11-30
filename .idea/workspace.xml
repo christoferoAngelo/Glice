@@ -12,6 +12,11 @@
           <theme>@style/Theme.Glice</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/baseline_favorite_border_24.xml">
+        <config>
+          <theme>@style/Theme.Glice</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_cadastrar_login.xml">
         <config>
           <theme>@style/Theme.Glice</theme>
@@ -37,6 +42,16 @@
           <theme>@style/Theme.Glice</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_upload_receita.xml">
+        <config>
+          <theme>@style/Theme.Glice</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_carrossel_welcome.xml">
+        <config>
+          <theme>@style/Theme.Glice</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_receita.xml">
         <config>
           <theme>@style/Theme.Glice</theme>
@@ -48,7 +63,19 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5caeb31b-96d9-40a9-80e7-81d3f0a760cb" name="Changes" comment="update tela de receitas" />
+    <list default="true" id="5caeb31b-96d9-40a9-80e7-81d3f0a760cb" name="Changes" comment="update tela de receitas">
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/res/processDebugGoogleServices/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/res/processDebugGoogleServices/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/activity/ReceitasActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/activity/ReceitasActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/adapter/ReceitaAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/adapter/ReceitaAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/model/Receita.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/edu/fatecgru/glice/model/Receita.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_receitas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_receitas.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_receita.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_receita.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +84,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=R9QXB0395TX)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=ZF524QLZ6R)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -72,12 +99,12 @@
     &quot;assignee&quot;: &quot;christoferoAngelo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/christoferoAngelo/Glice.git&quot;,
-    &quot;accountId&quot;: &quot;6eaabf3a-d5f5-40ce-917e-fdeb8cc13170&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/christoferoAngelo/Glice.git",
+    "accountId": "fca60e43-77ac-4910-9059-6ea80ea28ca9"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>

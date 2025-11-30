@@ -12,7 +12,7 @@ public class Receita {
     public String fonte;
     public String ingredientes;
     public String preparo;
-
+    private boolean isFavorita = false;
     // Construtor vazio para Firebase/Retrofit
     public Receita() {
     }
@@ -70,4 +70,8 @@ public class Receita {
     public String getPreparo() {
         return preparo;
     }
+
+    public boolean isFavorita() {return isFavorita;}
+
+    public void setFavorita(boolean favorita) {isFavorita = favorita;}
 }

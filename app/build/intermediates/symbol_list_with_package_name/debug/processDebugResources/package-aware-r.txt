@@ -3176,6 +3176,8 @@ drawable avd_hide_password
 drawable avd_show_password
 drawable baseline_account_circle_24
 drawable baseline_arrow_back_ios_24
+drawable baseline_favorite_24
+drawable baseline_favorite_border_24
 drawable bolhas_de_sabao_flutuam_fundo_36860_367__1_
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
@@ -3529,6 +3531,7 @@ id btnAdicionarIngrediente
 id btnCadastrar
 id btnContinuar
 id btnEditarInfo
+id btnFavoriteDetalhe
 id btnFecharDetalhe
 id btnPular
 id btnVerFavoritos
@@ -3740,10 +3743,10 @@ id image
 id imageView
 id imageView2
 id imageView4
-id imageView5
 id imageView_fotoReceita
 id imagesViewPager
 id imgDetalheReceita
+id imgFavoriteList
 id imgPerfil
 id imgProfile
 id immediateStop
