@@ -30,58 +30,95 @@
             android:contentDescription="Clique para selecionar a foto da receita"
             android:focusable="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/welcome" />
-        <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:srcCompat="@drawable/ic_launcher_background" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_nomeReceita"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nome da Receita"
-            android:inputType="textCapWords" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_marginBottom="8dp"
+            android:text="Nome da receita"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_ingredientes"
+                android:id="@+id/editText_nomeReceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingredientes (Um por linha)"
-                android:inputType="textMultiLine"
-                android:minLines="4"
-                android:gravity="top" />
+                android:hint="Nome da Receita"
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredientes"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/container_ingredientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+        <Button
+            android:id="@+id/button_adicionarIngrediente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar Ingrediente"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_marginBottom="3dp"
+            android:text="Modo de preparo"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_modoPreparo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top"
                 android:hint="Modo de Preparo (Passos)"
                 android:inputType="textMultiLine"
-                android:minLines="6"
-                android:gravity="top" />
+                android:minLines="6" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:text="Tempo de preparo"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_marginTop="3dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_tempoPreparo"
@@ -98,6 +135,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Publicar Receita" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/rosa4"
+            android:text="Cancelar" />
 
     </LinearLayout>
 </ScrollView>

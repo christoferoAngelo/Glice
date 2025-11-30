@@ -27,17 +27,32 @@ import br.edu.fatecgru.glice.model.Receita;
 import br.edu.fatecgru.glice.network.CloudinaryConfig;
 // ... (Você pode colocar a classe CloudinaryConfig aqui ou em um arquivo separado)
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView; // Usamos AutoCompleteTextView como Spinner em Material Design
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
+import com.google.android.material.textfield.TextInputEditText;
+
 public class UploadReceitaActivity extends AppCompatActivity {
     private ReceitaDAO receitaDAO = new ReceitaDAO(); // Instancie sua DAO
 
     private ImageView imageViewFotoReceita;
     private EditText editTextNomeReceita;
-    private EditText editTextIngredientes;
+
     private EditText editTextModoPreparo;
     private Button buttonUploadReceita;
+    private Button btnCancelar;
 
     private String imageFilePath = null; // Caminho do arquivo da imagem selecionada
     private ExecutorService executorService;
+    private TextInputEditText editTextTempoPreparo; // Incluindo o tempo de preparo
+
+    private Button buttonAdicionarIngrediente; // Novo botão
+    private LinearLayout containerIngredientes; // Novo container para as linhas
+
 
     // Contrato para lidar com a seleção de imagem
     private final ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
@@ -52,20 +67,96 @@ public class UploadReceitaActivity extends AppCompatActivity {
         // 1. Inicializar Views
         imageViewFotoReceita = findViewById(R.id.imageView_fotoReceita);
         editTextNomeReceita = findViewById(R.id.editText_nomeReceita);
-        editTextIngredientes = findViewById(R.id.editText_ingredientes);
+        // REMOVIDO: findViewById(R.id.editText_ingredientes);
         editTextModoPreparo = findViewById(R.id.editText_modoPreparo);
+        editTextTempoPreparo = findViewById(R.id.editText_tempoPreparo); // Inicializar este também!
         buttonUploadReceita = findViewById(R.id.button_uploadReceita);
+        btnCancelar = findViewById(R.id.btnCancelar);
 
-        // Inicializar o Executor
+        // NOVAS VIEWS
+        containerIngredientes = findViewById(R.id.container_ingredientes);
+        buttonAdicionarIngrediente = findViewById(R.id.button_adicionarIngrediente);
+
         executorService = Executors.newSingleThreadExecutor();
 
 
         // 2. Configurar Listeners
         imageViewFotoReceita.setOnClickListener(v -> selectImage());
         buttonUploadReceita.setOnClickListener(v -> handlePublicarReceita());
+        btnCancelar.setOnClickListener(v-> finish());
+        // NOVO LISTENER
+        buttonAdicionarIngrediente.setOnClickListener(v -> adicionarNovoIngrediente());
+
+        // Adiciona um ingrediente inicial para não deixar o campo vazio
+        adicionarNovoIngrediente();
     }
 
     // --- Métodos de Seleção de Imagem ---
+
+    // --- NOVO MÉTODO: Adicionar Linha de Ingrediente ---
+    private void adicionarNovoIngrediente() {
+        // Infla o layout da linha de ingrediente
+        final View ingredienteView = LayoutInflater.from(this)
+                .inflate(R.layout.item_ingrediente, containerIngredientes, false);
+
+        // Componentes da nova View
+        AutoCompleteTextView spinnerMedida = ingredienteView.findViewById(R.id.spinner_medida);
+        ImageButton buttonRemover = ingredienteView.findViewById(R.id.button_remover_ingrediente);
+
+        // 1. Configurar o Spinner/AutoCompleteTextView para as medidas
+        String[] medidas = {"g", "ml", "xícara", "colher de sopa", "pitada", "unidade", "a gosto"};
+        // Importante: use 'android.R.layout.simple_spinner_dropdown_item'
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, medidas);
+        spinnerMedida.setAdapter(adapter);
+
+        // Adiciona um listener para o botão de remover
+        buttonRemover.setOnClickListener(v -> {
+            containerIngredientes.removeView(ingredienteView);
+            // Opcional: Garantir que sempre haja pelo menos um campo
+            if (containerIngredientes.getChildCount() == 0) {
+                adicionarNovoIngrediente();
+            }
+        });
+
+        // Adiciona a View ao container principal
+        containerIngredientes.addView(ingredienteView);
+    }
+
+    // --- NOVO MÉTODO: Coletar os Ingredientes ---
+    private String coletarIngredientesFormatados() {
+        StringBuilder ingredientesBuilder = new StringBuilder();
+        int count = containerIngredientes.getChildCount();
+
+        for (int i = 0; i < count; i++) {
+            View ingredienteView = containerIngredientes.getChildAt(i);
+
+            // Views da linha
+            TextInputEditText editQuantidade = ingredienteView.findViewById(R.id.edit_quantidade);
+            AutoCompleteTextView spinnerMedida = ingredienteView.findViewById(R.id.spinner_medida);
+            TextInputEditText editNomeIngrediente = ingredienteView.findViewById(R.id.edit_nome_ingrediente);
+
+            // Coleta os valores
+            String quantidade = editQuantidade.getText().toString().trim();
+            String medida = spinnerMedida.getText().toString().trim();
+            String nome = editNomeIngrediente.getText().toString().trim();
+
+            // Se o nome do ingrediente não estiver vazio, adiciona à lista
+            if (!nome.isEmpty()) {
+                // Formato exigido: "[ingrediente] [medida] [quantidade]"
+                // Para exibir no texto: "Quantidade Medida de Nome"
+                ingredientesBuilder.append(quantidade).append(" ");
+                ingredientesBuilder.append(medida).append(" de ");
+                ingredientesBuilder.append(nome);
+
+                // Adiciona quebra de linha, exceto para o último
+                if (i < count - 1) {
+                    ingredientesBuilder.append("\n");
+                }
+            }
+        }
+        return ingredientesBuilder.toString().trim();
+    }
 
     private void selectImage() {
         // Solicita ao sistema que abra a galeria para selecionar uma imagem (MIME type "image/*")
@@ -115,10 +206,10 @@ public class UploadReceitaActivity extends AppCompatActivity {
 
     private void handlePublicarReceita() {
         String nome = editTextNomeReceita.getText().toString().trim();
-        String ingredientes = editTextIngredientes.getText().toString().trim();
         String preparo = editTextModoPreparo.getText().toString().trim();
-
-        if (nome.isEmpty() || ingredientes.isEmpty() || preparo.isEmpty()) {
+        String ingredientesFormatados = coletarIngredientesFormatados();
+        String tempoPreparo = editTextTempoPreparo.getText().toString().trim();
+        if (nome.isEmpty() || ingredientesFormatados.isEmpty() || preparo.isEmpty() || nome.isEmpty() || tempoPreparo.isEmpty()) {
             Toast.makeText(this, "Preencha todos os campos da receita.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -132,12 +223,12 @@ public class UploadReceitaActivity extends AppCompatActivity {
         Toast.makeText(this, "Iniciando upload e publicação...", Toast.LENGTH_LONG).show();
 
         // Inicia o processo de upload da imagem em uma Thread Separada
-        uploadImageAndSaveRecipe(imageFilePath, nome, ingredientes, preparo);
+        uploadImageAndSaveRecipe(imageFilePath, nome, ingredientesFormatados, preparo, tempoPreparo);
     }
 
     // --- Lógica do Cloudinary (Da sua pergunta anterior) ---
 
-    private void uploadImageAndSaveRecipe(String path, String nome, String ingredientes, String preparo) {
+    private void uploadImageAndSaveRecipe(String path, String nome, String ingredientes, String preparo, String tempo) {
         File file = new File(path);
         Cloudinary cloudinary = CloudinaryConfig.getInstance();
 
@@ -156,7 +247,7 @@ public class UploadReceitaActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     if (imageUrl != null) {
                         // SUCESSO: Salva a receita com a URL
-                        salvarDadosDaReceita(nome, ingredientes, preparo, imageUrl);
+                        salvarDadosDaReceita(nome, ingredientes, preparo, imageUrl, tempo);
                     } else {
                         Toast.makeText(this, "Erro de Upload: URL não retornada.", Toast.LENGTH_LONG).show();
                         buttonUploadReceita.setEnabled(true);
@@ -176,14 +267,22 @@ public class UploadReceitaActivity extends AppCompatActivity {
 
     // ... (dentro da classe UploadReceitaActivity) ...
 
-    private void salvarDadosDaReceita(String nome, String ingredientes, String preparo, String imageUrl) {
+    private void salvarDadosDaReceita(String nome, String ingredientes, String preparo, String imageUrl, String tempo) {
+
+        // Converte o tempo (agora uma String) para Integer para o modelo
+        int tempoEmMinutos = 0;
+        try {
+            tempoEmMinutos = Integer.parseInt(tempo);
+        } catch (NumberFormatException e) {
+            Log.e("UploadReceita", "Tempo de preparo inválido: " + tempo);
+            // Opcional: Exibir Toast de erro ou usar um valor padrão.
+        }
+
         // 1. Cria o objeto Receita
         Receita novaReceita = new Receita(
                 nome,
-                // Indice: Usando 0 como padrão.
-                0,
+                tempoEmMinutos, // AGORA USAMOS tempoEmMinutos
                 imageUrl,
-                // Fonte: Usando "App Glice" como padrão.
                 "App Glice",
                 ingredientes,
                 preparo

@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import br.edu.fatecgru.glice.MainActivity;
 import br.edu.fatecgru.glice.R;
@@ -35,9 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         // Componentes
-        edtEmail = findViewById(R.id.edtLoginEmail);
-        edtSenha = findViewById(R.id.edtLoginSenha);
-        btnLogin = findViewById(R.id.btnLogin); // no XML o botão chama btnCadastrar
+        edtEmail = findViewById(R.id.edtEmailText);
+        edtSenha = findViewById(R.id.edtSenhaText);
+        btnLogin = findViewById(R.id.btnCadastrar); // no XML o botão chama btnCadastrar
         txtCadastrar = findViewById(R.id.txvCadastrar);
 
         // Botão começa desabilitado
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        checarSessaoExistente();
     }
 
     private void fazerLogin() {
@@ -98,5 +99,15 @@ public class LoginActivity extends AppCompatActivity {
 
         edtEmail.addTextChangedListener(watcher);
         edtSenha.addTextChangedListener(watcher);
+    }
+
+    private void checarSessaoExistente() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            Intent it = new Intent(this, PerfilUsuario.class);
+            it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(it);
+            finish();
+        }
     }
 }

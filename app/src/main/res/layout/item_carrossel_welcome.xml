@@ -1,68 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="30dp"
-    android:layout_marginTop="20dp"
-    android:visibility="visible"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    tools:visibility="visible">
+    android:layout_margin="24dp"
+    android:layout_gravity="center_vertical"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="12dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:id="@+id/layoutIndicators"
         android:layout_width="match_parent"
-        android:layout_height="682dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/branco"
-        android:elevation="50dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:padding="40dp"
+        android:gravity="center"
+        android:background="@color/branco">
 
-
-        <!-- Foto Circular -->
+        <!-- Imagem Circular (PRINCÍPIO DA FIGURA-FUNDO) -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/boas_vindas_image"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:foregroundGravity="center"
-
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="32dp"
             android:src="@drawable/welcome"
-            app:civ_border_color="#2196F3"
-            app:civ_border_width="3dp"
-            tools:ignore="MissingClass" />
+            app:civ_border_color="#4CAF50"
+            app:civ_border_width="3dp" />
 
-
+        <!-- Título (PRINCÍPIO DA PROXIMIDADE) -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="BOAS VINDAS"
-            android:textColor="#000000"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="257dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="O Glice é um aplicativo de receitas com baixo teor de açúcar. "
-            android:textColor="#666666"
-            android:textSize="20sp" />
+            android:text="BOAS VINDAS"
+            android:textColor="#1A1A1A"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.02"
+            android:lineSpacingExtra="4dp" />
 
+        <!-- Descrição (PRINCÍPIO DA CONTINUIDADE) -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="O Glice é seu companheiro fitness para receitas saudáveis e nutritivas. Alcance seus objetivos com alimentação balanceada!"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            android:lineSpacingExtra="8dp"
+            android:letterSpacing="0.01" />
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

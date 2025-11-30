@@ -26,6 +26,7 @@
     </array>
     <color name="azul">#CBEEF3</color>
     <color name="branco">#FFFBFA</color>
+    <color name="ic_launcher_background">#FFFBFA</color>
     <color name="preto">#141313</color>
     <color name="rosa1">#F49CBB</color>
     <color name="rosa2">#F26A8D</color>
