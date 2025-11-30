@@ -13,6 +13,7 @@ color rosa3
 color rosa4
 drawable baseline_account_circle_24
 drawable baseline_arrow_back_ios_24
+drawable baseline_delete_24
 drawable baseline_favorite_24
 drawable baseline_favorite_border_24
 drawable bolhas_de_sabao_flutuam_fundo_36860_367__1_
@@ -41,7 +42,11 @@ id btnContinuar
 id btnEditarInfo
 id btnFavoriteDetalhe
 id btnFecharDetalhe
+id btnLogin
+id btnLogout
 id btnPular
+id btnRemoverFavorito
+id btnSalvar
 id btnVerFavoritos
 id button_uploadReceita
 id cardDetalheReceita
@@ -53,9 +58,14 @@ id editText_nomeReceita
 id editText_tempoPreparo
 id edtConfirmarSenhaLayout
 id edtConfirmarSenhaText
+id edtEmail
 id edtEmailLayout
 id edtEmailText
 id edtIngrediente
+id edtLoginEmail
+id edtLoginLayout
+id edtLoginSenha
+id edtNome
 id edtNomeLayout
 id edtNomeText
 id edtSenhaLayout
@@ -66,6 +76,7 @@ id imageView4
 id imageView_fotoReceita
 id imgDetalheReceita
 id imgFavoriteList
+id imgFavorito
 id imgPerfil
 id imgProfile
 id inicial
@@ -75,6 +86,7 @@ id listIngredientes
 id login
 id main
 id perfil
+id recyclerFavoritos
 id recyclerReceitas
 id scrollMain
 id textView
@@ -89,6 +101,7 @@ id txtIndiceDetalhe
 id txtIndiceGlice
 id txtIngredientes
 id txtNomeDetalhe
+id txtNomeFavorito
 id txtNomeReceita
 id txtPreparo
 id txtTituloIngredientes
@@ -99,13 +112,16 @@ id txvCadastrar
 id upload
 id viewPager
 layout activity_cadastrar_login
+layout activity_editar_perfil
 layout activity_login
 layout activity_main
 layout activity_perfil_usuario
 layout activity_receitas
+layout activity_receitas_favoritas
 layout activity_tutorial
 layout activity_upload_receita
 layout item_carrossel_welcome
+layout item_favorito
 layout item_receita
 layout viewpager_welcome
 mipmap ic_launcher

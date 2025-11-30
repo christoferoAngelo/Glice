@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtNome"
+        android:hint="Nome"
+        android:layout_width="match_parent"
+        android:layout_marginTop="300dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtEmail"
+        android:hint="Email"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/rosa2"
+        android:text="Salvar mudanças" />
+
+</LinearLayout>

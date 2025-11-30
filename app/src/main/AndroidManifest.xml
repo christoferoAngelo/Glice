@@ -21,6 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glice">
         <activity
+            android:name=".activity.ReceitasFavoritasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EditarPerfilActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PerfilUsuario"
             android:exported="false" />
         <activity

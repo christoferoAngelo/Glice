@@ -126,4 +126,41 @@ public class ReceitaDAO {
         void onSuccess();
         void onError(String msg);
     }
+
+    public void getReceitasFavoritas(String userId, BuscarReceitasCallback callback) {
+
+        // 1. Pega o documento do usuário com os IDs favoritos
+        db.collection("usuarios").document(userId).get()
+                .addOnSuccessListener(userDoc -> {
+                    if (!userDoc.exists()) {
+                        callback.onSuccess(new ArrayList<>());
+                        return;
+                    }
+
+                    List<String> favoritosIds = (List<String>) userDoc.get("favoritos");
+
+                    if (favoritosIds == null || favoritosIds.isEmpty()) {
+                        callback.onSuccess(new ArrayList<>());
+                        return;
+                    }
+
+                    // 2. Busca só os documentos que estão na lista de favoritos
+                    db.collection("receita")
+                            .whereIn("__name__", favoritosIds)
+                            .get()
+                            .addOnSuccessListener(task -> {
+                                List<Receita> lista = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : task) {
+                                    Receita r = doc.toObject(Receita.class);
+                                    r.setDocumentId(doc.getId());
+                                    r.setFavorita(true);
+                                    lista.add(r);
+                                }
+                                callback.onSuccess(lista);
+                            })
+                            .addOnFailureListener(e -> callback.onError("Falha ao carregar favoritos"));
+                })
+                .addOnFailureListener(e -> callback.onError("Erro ao buscar usuário"));
+    }
+
 }

@@ -35,9 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         // Componentes
-        edtEmail = findViewById(R.id.edtEmailText);
-        edtSenha = findViewById(R.id.edtSenhaText);
-        btnLogin = findViewById(R.id.btnCadastrar); // no XML o botão chama btnCadastrar
+        edtEmail = findViewById(R.id.edtLoginEmail);
+        edtSenha = findViewById(R.id.edtLoginSenha);
+        btnLogin = findViewById(R.id.btnLogin); // no XML o botão chama btnCadastrar
         txtCadastrar = findViewById(R.id.txvCadastrar);
 
         // Botão começa desabilitado
@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, CadastrarLoginActivity.class);
             startActivity(intent);
         });
+
+
     }
 
     private void fazerLogin() {

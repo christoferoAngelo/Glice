@@ -118,7 +118,7 @@ public class ReceitasActivity extends AppCompatActivity
         // 2. CHAMA a lógica de carregamento.
         // Isso garante que a lista de favoritos será atualizada se o usuário acabou de logar
         // ou deslogar.
-        carregarReceitas();
+        carregarReceitas(() -> verificarIntentDeAbrirReceita());
     }
 
     // MÉTODO ATUALIZADO para receber o ID do usuário
@@ -130,6 +130,24 @@ public class ReceitasActivity extends AppCompatActivity
                 lista.clear();
                 lista.addAll(receitas);
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String msg) {
+                Toast.makeText(ReceitasActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void carregarReceitas(Runnable callback) {
+        receitaDao.getReceitas(currentUserId, new ReceitaDAO.BuscarReceitasCallback() {
+            @Override
+            public void onSuccess(List<Receita> receitas) {
+                lista.clear();
+                lista.addAll(receitas);
+                adapter.notifyDataSetChanged();
+
+                if (callback != null) callback.run();
             }
 
             @Override
@@ -278,8 +296,24 @@ public class ReceitasActivity extends AppCompatActivity
         }
     }
 
+    private void verificarIntentDeAbrirReceita() {
+        String id = getIntent().getStringExtra("abrir_receita_id");
+        if (id == null) return;
+
+        // evitar reabrir ao voltar
+        getIntent().removeExtra("abrir_receita_id");
+
+        for (Receita r : lista) {
+            if (r.getDocumentId().equals(id)) {
+                exibirDetalheReceita(r);
+                break;
+            }
+        }
+    }
+
     // Método para fechar o CardView de Detalhes
     public void fecharDetalhe(View view) {
         cardDetalheReceita.setVisibility(View.GONE);
     }
 }
+
