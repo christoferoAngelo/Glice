@@ -1,5 +1,7 @@
 package br.edu.fatecgru.glice.model;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +15,9 @@ public class Receita {
     public String ingredientes;
     public String preparo;
     private boolean isFavorita = false;
+    @Exclude // O Firebase não deve tentar salvar este campo no banco
+    private String documentId;
+
     // Construtor vazio para Firebase/Retrofit
     public Receita() {
     }
@@ -29,8 +34,6 @@ public class Receita {
     }
 
     // Método para facilitar a conversão para Map (útil para Supabase e Firebase)
-    // Dentro de Receita.java
-
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 
@@ -74,4 +77,8 @@ public class Receita {
     public boolean isFavorita() {return isFavorita;}
 
     public void setFavorita(boolean favorita) {isFavorita = favorita;}
+
+    public String getDocumentId() {return documentId;}
+
+    public void setDocumentId(String documentId) {this.documentId = documentId;}
 }
