@@ -3529,6 +3529,7 @@ id browser_actions_menu_items
 id browser_actions_menu_view
 id btnAdicionarIngrediente
 id btnCadastrar
+id btnCancelar
 id btnContinuar
 id btnEditarInfo
 id btnFavoriteDetalhe
@@ -3536,6 +3537,8 @@ id btnFecharDetalhe
 id btnPular
 id btnVerFavoritos
 id buttonPanel
+id button_adicionarIngrediente
+id button_remover_ingrediente
 id button_uploadReceita
 id buttonsContainer
 id cache_measures
@@ -3568,6 +3571,7 @@ id compress
 id confirm_button
 id constraint
 id container
+id container_ingredientes
 id content
 id contentPanel
 id contiguous
@@ -3604,6 +3608,7 @@ id disablePostScroll
 id disableScroll
 id disjoint
 id divider
+id divider2
 id doneButton
 id dragAnticlockwise
 id dragClockwise
@@ -3619,10 +3624,11 @@ id easeInOut
 id easeOut
 id east
 id edge
-id editText_ingredientes
 id editText_modoPreparo
 id editText_nomeReceita
 id editText_tempoPreparo
+id edit_nome_ingrediente
+id edit_quantidade
 id edit_query
 id edit_text_id
 id edtConfirmarSenhaLayout
@@ -3953,6 +3959,7 @@ id south
 id spacer
 id special_effects_controller_view_tag
 id spherical_gl_surface_view
+id spinner_medida
 id spline
 id split_action_bar
 id spread
@@ -4000,6 +4007,9 @@ id textTop
 id textView
 id textView2
 id textView3
+id textView4
+id textView5
+id textView6
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -4238,6 +4248,7 @@ layout fragment_upload_widget
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_carrossel_welcome
+layout item_ingrediente
 layout item_receita
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
