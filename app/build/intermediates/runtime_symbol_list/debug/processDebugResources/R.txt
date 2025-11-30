@@ -1551,6 +1551,7 @@ int color foreground_material_dark 0x7f060077
 int color foreground_material_light 0x7f060078
 int color highlighted_text_material_dark 0x7f060079
 int color highlighted_text_material_light 0x7f06007a
+int color ic_launcher_background 0x7f060328
 int color m3_appbar_overlay_color 0x7f06007b
 int color m3_assist_chip_icon_tint_color 0x7f06007c
 int color m3_assist_chip_stroke_color 0x7f06007d
@@ -3318,6 +3319,7 @@ int drawable ic_search_black_24 0x7f080107
 int drawable icemail 0x7f080108
 int drawable indeterminate_static 0x7f080109
 int drawable lock 0x7f08010a
+int drawable logobranca 0x7f080162
 int drawable m3_avd_hide_password 0x7f08010b
 int drawable m3_avd_show_password 0x7f08010c
 int drawable m3_bottom_sheet_drag_handle 0x7f08010d
@@ -3752,6 +3754,7 @@ int id imageView_fotoReceita 0x7f0a014d
 int id imagesViewPager 0x7f0a014e
 int id imgDetalheReceita 0x7f0a014f
 int id imgFavoriteList 0x7f0a0150
+int id imgLogo 0x7f0a02a2
 int id imgPerfil 0x7f0a0151
 int id imgProfile 0x7f0a0152
 int id immediateStop 0x7f0a0153

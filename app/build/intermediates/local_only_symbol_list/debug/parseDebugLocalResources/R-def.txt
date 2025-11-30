@@ -6,6 +6,7 @@ array com_google_android_gms_fonts_certs_prod
 array preloaded_fonts
 color azul
 color branco
+color ic_launcher_background
 color preto
 color rosa1
 color rosa2
@@ -21,6 +22,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_perfil
 drawable icemail
+drawable logobranca
 drawable outline_checklist_24
 drawable profile_placeholder
 drawable stack_star_24px
@@ -72,6 +74,7 @@ id imageView4
 id imageView_fotoReceita
 id imgDetalheReceita
 id imgFavoriteList
+id imgLogo
 id imgPerfil
 id imgProfile
 id inicial

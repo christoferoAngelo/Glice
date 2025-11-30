@@ -1552,6 +1552,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color ic_launcher_background
 color m3_appbar_overlay_color
 color m3_assist_chip_icon_tint_color
 color m3_assist_chip_stroke_color
@@ -3319,6 +3320,7 @@ drawable ic_search_black_24
 drawable icemail
 drawable indeterminate_static
 drawable lock
+drawable logobranca
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
 drawable m3_bottom_sheet_drag_handle
@@ -3753,6 +3755,7 @@ id imageView_fotoReceita
 id imagesViewPager
 id imgDetalheReceita
 id imgFavoriteList
+id imgLogo
 id imgPerfil
 id imgProfile
 id immediateStop
