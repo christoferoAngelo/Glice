@@ -75,7 +75,7 @@ public class TutorialActivity extends AppCompatActivity {
                 recyclerCarrossel.smoothScrollToPosition(next);
             } else {
                 finish();
-            }
+            }//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah
         });
 
         btnPular.setOnClickListener(v -> {
