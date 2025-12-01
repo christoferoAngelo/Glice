@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
     tools:context=".activity.LoginActivity">
 
     <LinearLayout
@@ -109,6 +110,26 @@
             android:textAlignment="textEnd"
             android:textColor="@color/rosa4"
             android:textSize="16sp" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="50dp"
+            android:background="?android:attr/listDivider"
+            android:paddingTop="50dp" />
+
+        <Button
+            android:id="@+id/btnLoginGoogle"
+            style="@style/Widget.Material3.MaterialTimePicker.Button"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/rosa1"
+            android:fontFamily="sans-serif"
+            android:hapticFeedbackEnabled="true"
+            android:text="ENTRAR COM GOOGLE"
+            android:textColor="@color/branco" />
 
     </LinearLayout>
 

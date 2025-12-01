@@ -72,7 +72,7 @@
             app:cardBackgroundColor="@color/branco"
             app:cardCornerRadius="15dp"
             app:cardElevation="15dp"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -82,12 +82,13 @@
 
                 <TextView
                     android:id="@+id/txtNomeDetalhe"
-                    android:layout_width="wrap_content"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/ysabeau_bold"
                     android:text="Nome da Receita Clicada"
                     android:textColor="@color/rosa4"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     app:layout_constraintStart_toEndOf="@+id/btnFecharDetalhe"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingBottom="60dp">
+                        android:paddingBottom="100dp">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardViewImagem"
@@ -143,7 +144,7 @@
                             android:id="@+id/txtTituloIngredientes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:fontFamily="@font/ysabeau"
                             android:text="INGREDIENTES:"
                             android:textColor="@color/rosa4"
@@ -163,7 +164,7 @@
                             android:id="@+id/txtTituloPreparo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="30dp"
                             android:fontFamily="@font/ysabeau"
                             android:text="MODO DE PREPARO:"
                             android:textColor="@color/rosa4"
@@ -183,7 +184,7 @@
                             android:id="@+id/txtIndiceDetalhe"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="15dp"
                             android:text="ÍNDICE CALÓRICO: XX"
                             android:textColor="@color/rosa3"
                             android:textSize="18dp" />
@@ -213,7 +214,7 @@
             app:cardBackgroundColor="@color/branco"
             app:cardCornerRadius="25dp"
             app:cardElevation="10dp"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <LinearLayout
                 android:layout_width="370dp"

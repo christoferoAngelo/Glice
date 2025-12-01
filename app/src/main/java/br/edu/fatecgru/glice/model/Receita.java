@@ -14,7 +14,7 @@ public class Receita implements Parcelable {
     public long id;
     public String created_at;
     public String nome;
-    public int indice;
+    public int indiceGlicemico;
     public String foto_url;
     public String fonte;
     public String preparo;
@@ -38,10 +38,10 @@ public class Receita implements Parcelable {
     }
 
     // Construtor completo para criação de novos objetos
-    public Receita(String nome, int indice, String foto_url, String fonte, String preparo,
+    public Receita(String nome, int indiceGlicemico, String foto_url, String fonte, String preparo,
                    int tempoPreparo, List<String> ingredientesDetalhe, List<String> nomesIngredientes) {
         this.nome = nome;
-        this.indice = indice;
+        this.indiceGlicemico = indiceGlicemico;
         this.foto_url = foto_url;
         this.fonte = fonte;
         this.preparo = preparo;
@@ -55,7 +55,7 @@ public class Receita implements Parcelable {
         this.id = in.readLong();
         this.created_at = in.readString();
         this.nome = in.readString();
-        this.indice = in.readInt();
+        this.indiceGlicemico = in.readInt();
         this.foto_url = in.readString();
         this.fonte = in.readString();
         this.preparo = in.readString();
@@ -85,7 +85,7 @@ public class Receita implements Parcelable {
         dest.writeLong(this.id);
         dest.writeString(this.created_at);
         dest.writeString(this.nome);
-        dest.writeInt(this.indice);
+        dest.writeInt(this.indiceGlicemico);
         dest.writeString(this.foto_url);
         dest.writeString(this.fonte);
         dest.writeString(this.preparo);
@@ -108,7 +108,7 @@ public class Receita implements Parcelable {
         Map<String, Object> map = new HashMap<>();
 
         map.put("nome", nome);
-        map.put("indice", indice);
+        map.put("indiceGlicemico", indiceGlicemico);
         map.put("fonte", fonte);
         map.put("foto_url", foto_url);
         map.put("preparo", preparo);
@@ -123,7 +123,7 @@ public class Receita implements Parcelable {
     }
 
     public int getIndiceGlicemico() {
-        return indice;
+        return indiceGlicemico;
     }
 
     public String getFonte() {return fonte;}
@@ -145,7 +145,7 @@ public class Receita implements Parcelable {
 
     public void setPreparo(String preparo) {this.preparo = preparo;}
 
-    public void setIndice(int indice) {this.indice = indice;}
+    public void setIndice(int indice) {this.indiceGlicemico = indice;}
 
     public void setIngredientesDetalhe(List<String> ingredientesDetalhe) {this.ingredientesDetalhe = ingredientesDetalhe;}
 

@@ -12,7 +12,20 @@
           "package_name": "br.edu.fatecgru.glice"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "107850080862-44a7e84lbsu62rdtm2pmd99fm4v4hgmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.edu.fatecgru.glice",
+            "certificate_hash": "9ada05695fdfe4f85b93955a7ff17b02b388a29e"
+          }
+        },
+        {
+          "client_id": "107850080862-9tm47h9bdm57ech0mahbo9kpqee42ul1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUMnkhHnyAkdztH4WQyezlWbijnsKJbsU"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107850080862-9tm47h9bdm57ech0mahbo9kpqee42ul1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

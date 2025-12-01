@@ -3540,6 +3540,7 @@ id btnEditarInfo
 id btnFavoriteDetalhe
 id btnFecharDetalhe
 id btnLogin
+id btnLoginGoogle
 id btnLogout
 id btnPular
 id btnRemoverFavorito
@@ -3620,6 +3621,7 @@ id disableScroll
 id disjoint
 id divider
 id divider2
+id divider3
 id doneButton
 id dragAnticlockwise
 id dragClockwise
@@ -3953,6 +3955,7 @@ id scrollIndicatorUp
 id scrollMain
 id scrollView
 id scrollable
+id searchPesquisa
 id search_badge
 id search_bar
 id search_button
@@ -4430,6 +4433,7 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string copy_toast_msg
+string default_web_client_id
 string done
 string error_a11y_label
 string error_icon_content_description

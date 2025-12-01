@@ -51,6 +51,7 @@ public class ReceitasActivity extends AppCompatActivity
     private TextView txtFonteDetalhe;
     private TextView txtIngredientes, txtPreparo;
 
+
     private FirebaseAuth auth;
     private String currentUserId; // Armazenará o UID do usuário (será null se deslogado)
 

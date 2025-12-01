@@ -48,6 +48,7 @@ id btnEditarInfo
 id btnFavoriteDetalhe
 id btnFecharDetalhe
 id btnLogin
+id btnLoginGoogle
 id btnLogout
 id btnPular
 id btnRemoverFavorito
@@ -63,6 +64,7 @@ id cardViewImagem
 id container_ingredientes
 id divider
 id divider2
+id divider3
 id editText_modoPreparo
 id editText_nomeReceita
 id editText_tempoPreparo
@@ -108,6 +110,7 @@ id recyclerFavoritos
 id recyclerReceitas
 id recycler_admin_receitas
 id scrollMain
+id searchPesquisa
 id spinner_medida
 id textView
 id textView2
@@ -155,6 +158,7 @@ layout item_receita_admin
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string default_web_client_id
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
