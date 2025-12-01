@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class ReceitasActivity extends AppCompatActivity
 
     private RecyclerView recycler;
     private ReceitaAdapter adapter;
+    private SearchView searchPesquisa;
     private List<Receita> lista = new ArrayList<>();
     private ReceitaDAO receitaDao;
 
@@ -69,6 +71,7 @@ public class ReceitasActivity extends AppCompatActivity
         imgPerfil = findViewById(R.id.imgPerfil);
         cardDetalheReceita = findViewById(R.id.cardDetalheReceita);
         imgDetalheReceita = findViewById(R.id.imgDetalheReceita);
+        searchPesquisa = findViewById(R.id.searchPesquisa);
         txtNomeDetalhe = findViewById(R.id.txtNomeDetalhe);
         txtIndiceDetalhe = findViewById(R.id.txtIndiceDetalhe);
         txtFonteDetalhe = findViewById(R.id.txtFonteDetalhe);
@@ -99,6 +102,8 @@ public class ReceitasActivity extends AppCompatActivity
             Intent it = new Intent(this, LoginActivity.class);
             startActivity(it);
         });
+
+        configurarPesquisa();
     }
 
     // --- Lógica de Sincronização e Favoritos ---
@@ -321,5 +326,43 @@ public class ReceitasActivity extends AppCompatActivity
     public void fecharDetalhe(View view) {
         cardDetalheReceita.setVisibility(View.GONE);
     }
-}
 
+    private void configurarPesquisa() {
+        searchPesquisa.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filtrarReceitas(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrarReceitas(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filtrarReceitas(String texto) {
+
+        if (texto == null || texto.trim().isEmpty()) {
+            // Se o texto estiver vazio, restaura a lista completa
+            adapter.atualizarLista(lista);
+            return;
+        }
+
+        String pesquisa = texto.toLowerCase().trim();
+
+        List<Receita> listaFiltrada = new ArrayList<>();
+
+        for (Receita r : lista) {
+            if (r.getNome() != null && r.getNome().toLowerCase().contains(pesquisa)) {
+                listaFiltrada.add(r);
+            }
+        }
+
+        adapter.atualizarLista(listaFiltrada);
+    }
+
+}

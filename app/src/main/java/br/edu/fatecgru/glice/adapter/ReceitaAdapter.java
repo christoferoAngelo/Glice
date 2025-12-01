@@ -119,4 +119,9 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     public interface OnReceitaFavoriteListener {
         void onReceitaFavoriteClick(Receita receita, int position);
     }
+
+    public void atualizarLista(List<Receita> novaLista) {
+        this.receitaList = novaLista;
+        notifyDataSetChanged();
+    }
 }
