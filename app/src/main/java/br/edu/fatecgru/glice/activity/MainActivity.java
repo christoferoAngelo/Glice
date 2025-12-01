@@ -10,10 +10,7 @@ import br.edu.fatecgru.glice.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button inicial;
-    Button upload;
-    Button login;
-    Button tutorial, perfil;
+    Button inicial, upload, login, tutorial, perfil, editarReceita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
             Intent it = new Intent(this, PerfilUsuario.class);
             startActivity(it);
         });
-
+        editarReceita = findViewById(R.id.editarReceita);
+        editarReceita.setOnClickListener(v -> {
+            Intent it = new Intent(this, AdminListActivity.class);
+            startActivity(it);
+        });
     }
 }

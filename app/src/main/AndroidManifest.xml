@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glice">
         <activity
+            android:name=".activity.AdminListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ReceitasFavoritasActivity"
             android:exported="false" />
         <activity

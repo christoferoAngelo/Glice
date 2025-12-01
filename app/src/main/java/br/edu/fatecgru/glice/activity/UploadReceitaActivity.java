@@ -11,12 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.database.Cursor;
+import android.provider.MediaStore;
+import android.widget.TextView;
 
-// Imports do Cloudinary e Utilitários (como CloudinaryConfig da resposta anterior)
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -25,36 +37,25 @@ import br.edu.fatecgru.glice.R;
 import br.edu.fatecgru.glice.dao.ReceitaDAO;
 import br.edu.fatecgru.glice.model.Receita;
 import br.edu.fatecgru.glice.network.CloudinaryConfig;
-// ... (Você pode colocar a classe CloudinaryConfig aqui ou em um arquivo separado)
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView; // Usamos AutoCompleteTextView como Spinner em Material Design
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 public class UploadReceitaActivity extends AppCompatActivity {
-    private ReceitaDAO receitaDAO = new ReceitaDAO(); // Instancie sua DAO
+    private ReceitaDAO receitaDAO = new ReceitaDAO();
 
     private ImageView imageViewFotoReceita;
     private EditText editTextNomeReceita;
-
     private EditText editTextModoPreparo;
     private Button buttonUploadReceita;
     private Button btnCancelar;
 
-    private String imageFilePath = null; // Caminho do arquivo da imagem selecionada
+    private String imageFilePath = null;
     private ExecutorService executorService;
-    private TextInputEditText editTextTempoPreparo; // Incluindo o tempo de preparo
+    private TextInputEditText editTextTempoPreparo;
 
-    private Button buttonAdicionarIngrediente; // Novo botão
-    private LinearLayout containerIngredientes; // Novo container para as linhas
+    // Variáveis de ingredientes REMOVIDAS
 
+    private Receita receitaParaEditar = null;
+    public static final String EXTRA_RECEITA_PARA_EDITAR = "RECEITA_PARA_EDITAR";
 
-    // Contrato para lidar com a seleção de imagem
     private final ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
             this::handleImageUri);
@@ -64,190 +65,104 @@ public class UploadReceitaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_receita);
 
-        // 1. Inicializar Views
         imageViewFotoReceita = findViewById(R.id.imageView_fotoReceita);
         editTextNomeReceita = findViewById(R.id.editText_nomeReceita);
-        // REMOVIDO: findViewById(R.id.editText_ingredientes);
         editTextModoPreparo = findViewById(R.id.editText_modoPreparo);
-        editTextTempoPreparo = findViewById(R.id.editText_tempoPreparo); // Inicializar este também!
+        editTextTempoPreparo = findViewById(R.id.editText_tempoPreparo);
         buttonUploadReceita = findViewById(R.id.button_uploadReceita);
         btnCancelar = findViewById(R.id.btnCancelar);
 
-        // NOVAS VIEWS
-        containerIngredientes = findViewById(R.id.container_ingredientes);
-        buttonAdicionarIngrediente = findViewById(R.id.button_adicionarIngrediente);
+        // Views de ingredientes REMOVIDAS da inicialização
 
         executorService = Executors.newSingleThreadExecutor();
 
-
-        // 2. Configurar Listeners
         imageViewFotoReceita.setOnClickListener(v -> selectImage());
         buttonUploadReceita.setOnClickListener(v -> handlePublicarReceita());
         btnCancelar.setOnClickListener(v-> finish());
-        // NOVO LISTENER
-        buttonAdicionarIngrediente.setOnClickListener(v -> adicionarNovoIngrediente());
+        // Listener de adicionar ingrediente REMOVIDO
 
-        // Adiciona um ingrediente inicial para não deixar o campo vazio
-        adicionarNovoIngrediente();
-    }
-
-    // --- Métodos de Seleção de Imagem ---
-
-    // --- NOVO MÉTODO: Adicionar Linha de Ingrediente ---
-    private void adicionarNovoIngrediente() {
-        // Infla o layout da linha de ingrediente
-        final View ingredienteView = LayoutInflater.from(this)
-                .inflate(R.layout.item_ingrediente, containerIngredientes, false);
-
-        // Componentes da nova View
-        AutoCompleteTextView spinnerMedida = ingredienteView.findViewById(R.id.spinner_medida);
-        ImageButton buttonRemover = ingredienteView.findViewById(R.id.button_remover_ingrediente);
-
-        // 1. Configurar o Spinner/AutoCompleteTextView para as medidas
-        String[] medidas = {"g", "ml", "xícara", "colher de sopa", "pitada", "unidade", "a gosto"};
-        // Importante: use 'android.R.layout.simple_spinner_dropdown_item'
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, medidas);
-        spinnerMedida.setAdapter(adapter);
-
-        // Adiciona um listener para o botão de remover
-        buttonRemover.setOnClickListener(v -> {
-            containerIngredientes.removeView(ingredienteView);
-            // Opcional: Garantir que sempre haja pelo menos um campo
-            if (containerIngredientes.getChildCount() == 0) {
-                adicionarNovoIngrediente();
-            }
-        });
-
-        // Adiciona a View ao container principal
-        containerIngredientes.addView(ingredienteView);
-    }
-
-    // --- NOVO MÉTODO: Coletar os Ingredientes ---
-    private String coletarIngredientesFormatados() {
-        StringBuilder ingredientesBuilder = new StringBuilder();
-        int count = containerIngredientes.getChildCount();
-
-        for (int i = 0; i < count; i++) {
-            View ingredienteView = containerIngredientes.getChildAt(i);
-
-            // Views da linha
-            TextInputEditText editQuantidade = ingredienteView.findViewById(R.id.edit_quantidade);
-            AutoCompleteTextView spinnerMedida = ingredienteView.findViewById(R.id.spinner_medida);
-            TextInputEditText editNomeIngrediente = ingredienteView.findViewById(R.id.edit_nome_ingrediente);
-
-            // Coleta os valores
-            String quantidade = editQuantidade.getText().toString().trim();
-            String medida = spinnerMedida.getText().toString().trim();
-            String nome = editNomeIngrediente.getText().toString().trim();
-
-            // Se o nome do ingrediente não estiver vazio, adiciona à lista
-            if (!nome.isEmpty()) {
-                // Formato exigido: "[ingrediente] [medida] [quantidade]"
-                // Para exibir no texto: "Quantidade Medida de Nome"
-                ingredientesBuilder.append(quantidade).append(" ");
-                ingredientesBuilder.append(medida).append(" de ");
-                ingredientesBuilder.append(nome);
-
-                // Adiciona quebra de linha, exceto para o último
-                if (i < count - 1) {
-                    ingredientesBuilder.append("\n");
-                }
+        if (getIntent().hasExtra(EXTRA_RECEITA_PARA_EDITAR)) {
+            receitaParaEditar = getIntent().getParcelableExtra(EXTRA_RECEITA_PARA_EDITAR);
+            if (receitaParaEditar != null) {
+                preencherCamposParaEdicao(receitaParaEditar);
             }
         }
-        return ingredientesBuilder.toString().trim();
+        // Lógica de adicionar ingrediente inicial REMOVIDA
     }
 
-    private void selectImage() {
-        // Solicita ao sistema que abra a galeria para selecionar uma imagem (MIME type "image/*")
-        galleryLauncher.launch("image/*");
+    private void preencherCamposParaEdicao(Receita receita) {
+        ((TextView)findViewById(R.id.textView_titulo)).setText("Editar Receita");
+        buttonUploadReceita.setText("Atualizar Receita");
+
+        editTextNomeReceita.setText(receita.getNome());
+        editTextModoPreparo.setText(receita.getPreparo());
+        editTextTempoPreparo.setText(String.valueOf(receita.getTempoPreparo()));
+
+        // Lógica de preenchimento de ingredientes REMOVIDA
     }
 
-    private void handleImageUri(Uri uri) {
-        if (uri != null) {
-            // Exibir a imagem na ImageView
-            imageViewFotoReceita.setImageURI(uri);
-
-            // ATENÇÃO: É NECESSÁRIO CONVERTER O URI PARA UM CAMINHO DE ARQUIVO (FILE PATH)
-            // Esta conversão pode ser complexa. Para simplicidade, assuma que esta função existe:
-            imageFilePath = getPathFromUri(uri);
-
-            if (imageFilePath == null) {
-                Toast.makeText(this, "Não foi possível obter o caminho do arquivo.", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    // >>> Importante: Implementar o método getPathFromUri <<<
-    // Esta função requer manipulação de ContentResolver e Cursor, sendo específica para cada versão do Android.
-    // Você deve procurar uma função utilitária confiável para fazer esta conversão, pois é um ponto de falha comum.
-    private String getPathFromUri(Uri uri) {
-        // *** Implementação Real do ContentResolver e Cursor ***
-        // Para a maioria dos casos simples:
-        String path = null;
-        try {
-            // Exemplo Simplificado (Pode não funcionar em todos os dispositivos/versões)
-            String[] projection = { android.provider.MediaStore.Images.Media.DATA };
-            android.database.Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndexOrThrow(android.provider.MediaStore.Images.Media.DATA);
-                path = cursor.getString(columnIndex);
-                cursor.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Tentar outras abordagens, como o Storage Access Framework (SAF)
-        }
-        return path;
-    }
-
-
-    // --- Método Principal de Publicação ---
+    // MÉTODOS DE INGREDIENTES (adicionarNovoIngrediente, IngredienteParse, parseIngredienteDetalhe, coletar...) FORAM REMOVIDOS
 
     private void handlePublicarReceita() {
         String nome = editTextNomeReceita.getText().toString().trim();
         String preparo = editTextModoPreparo.getText().toString().trim();
-        String ingredientesFormatados = coletarIngredientesFormatados();
         String tempoPreparo = editTextTempoPreparo.getText().toString().trim();
-        if (nome.isEmpty() || ingredientesFormatados.isEmpty() || preparo.isEmpty() || nome.isEmpty() || tempoPreparo.isEmpty()) {
+
+        // Coleta de ingredientes REMOVIDA
+
+        // Usaremos listas vazias, mas mantemos o formato do método para evitar grandes refatorações
+        List<String> ingredientesDetalhe = new ArrayList<>();
+        List<String> nomesIngredientes = new ArrayList<>();
+
+
+        if (nome.isEmpty() || preparo.isEmpty() || tempoPreparo.isEmpty()) {
             Toast.makeText(this, "Preencha todos os campos da receita.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (imageFilePath == null) {
-            Toast.makeText(this, "Por favor, selecione uma foto para a receita.", Toast.LENGTH_SHORT).show();
-            return;
+        buttonUploadReceita.setEnabled(false);
+        String mensagem = receitaParaEditar == null ? "Iniciando upload e publicação..." : "Iniciando verificação e atualização...";
+        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+
+
+        if (receitaParaEditar != null) {
+            if (imageFilePath != null) {
+                uploadImageAndSaveRecipe(imageFilePath, nome, preparo, tempoPreparo, ingredientesDetalhe, nomesIngredientes);
+            } else {
+                // Passa os dados de ingredientes EXISTENTES do objeto Receita para manter no DB
+                atualizarDadosDaReceita(nome, preparo, receitaParaEditar.getUrlImagem(), tempoPreparo, receitaParaEditar.getIngredientesDetalhe(), receitaParaEditar.getNomesIngredientes());
+            }
+        } else {
+            if (imageFilePath == null) {
+                Toast.makeText(this, "Por favor, selecione uma foto para a receita.", Toast.LENGTH_SHORT).show();
+                buttonUploadReceita.setEnabled(true);
+                return;
+            }
+            uploadImageAndSaveRecipe(imageFilePath, nome, preparo, tempoPreparo, ingredientesDetalhe, nomesIngredientes);
         }
-
-        buttonUploadReceita.setEnabled(false); // Desabilita para evitar cliques múltiplos
-        Toast.makeText(this, "Iniciando upload e publicação...", Toast.LENGTH_LONG).show();
-
-        // Inicia o processo de upload da imagem em uma Thread Separada
-        uploadImageAndSaveRecipe(imageFilePath, nome, ingredientesFormatados, preparo, tempoPreparo);
     }
 
-    // --- Lógica do Cloudinary (Da sua pergunta anterior) ---
-
-    private void uploadImageAndSaveRecipe(String path, String nome, String ingredientes, String preparo, String tempo) {
+    private void uploadImageAndSaveRecipe(String path, String nome, String preparo, String tempo,
+                                          List<String> ingredientesDetalhe, List<String> nomesIngredientes) {
         File file = new File(path);
         Cloudinary cloudinary = CloudinaryConfig.getInstance();
 
         executorService.execute(() -> {
             try {
-                // 1. Upload para o Cloudinary
                 Map uploadResult = cloudinary.uploader().upload(
                         file,
-                        ObjectUtils.asMap("folder", "receitas_app", "secure", true) // Opcional: organiza suas imagens
+                        ObjectUtils.asMap("folder", "receitas_app", "secure", true)
                 );
-
-
                 String imageUrl = (String) uploadResult.get("secure_url");
 
-                // 2. Volta para a Main Thread para salvar os dados no banco
                 runOnUiThread(() -> {
                     if (imageUrl != null) {
-                        // SUCESSO: Salva a receita com a URL
-                        salvarDadosDaReceita(nome, ingredientes, preparo, imageUrl, tempo);
+                        if (receitaParaEditar != null) {
+                            // Ao atualizar, precisamos garantir que os ingredientes antigos sejam preservados se a imagem mudar
+                            atualizarDadosDaReceita(nome, preparo, imageUrl, tempo, receitaParaEditar.getIngredientesDetalhe(), receitaParaEditar.getNomesIngredientes());
+                        } else {
+                            salvarDadosDaReceita(nome, preparo, imageUrl, tempo, ingredientesDetalhe, nomesIngredientes);
+                        }
                     } else {
                         Toast.makeText(this, "Erro de Upload: URL não retornada.", Toast.LENGTH_LONG).show();
                         buttonUploadReceita.setEnabled(true);
@@ -264,53 +179,121 @@ public class UploadReceitaActivity extends AppCompatActivity {
         });
     }
 
+    private void salvarDadosDaReceita(String nome, String preparo, String imageUrl, String tempo,
+                                      List<String> ingredientesDetalhe, List<String> nomesIngredientes) {
 
-    // ... (dentro da classe UploadReceitaActivity) ...
+        int indiceGlicemico = 0;
 
-    private void salvarDadosDaReceita(String nome, String ingredientes, String preparo, String imageUrl, String tempo) {
-
-        // Converte o tempo (agora uma String) para Integer para o modelo
-        int tempoEmMinutos = 0;
+        int tempoPreparoInt = 0;
         try {
-            tempoEmMinutos = Integer.parseInt(tempo);
+            tempoPreparoInt = Integer.parseInt(tempo);
         } catch (NumberFormatException e) {
-            Log.e("UploadReceita", "Tempo de preparo inválido: " + tempo);
-            // Opcional: Exibir Toast de erro ou usar um valor padrão.
+            Log.e("Upload", "Erro ao converter tempo de preparo para int", e);
         }
 
-        // 1. Cria o objeto Receita
         Receita novaReceita = new Receita(
                 nome,
-                tempoEmMinutos, // AGORA USAMOS tempoEmMinutos
+                indiceGlicemico,
                 imageUrl,
                 "App Glice",
-                ingredientes,
-                preparo
+                preparo,
+                tempoPreparoInt,
+                new ArrayList<>(), // Inserindo listas vazias para novas receitas
+                new ArrayList<>()
         );
 
-        // 2. Chama a DAO para salvar no Firebase Firestore
         receitaDAO.salvarNovaReceita(novaReceita, new ReceitaDAO.SalvarReceitaCallback() {
             @Override
             public void onSuccess(Receita receitaSalva) {
-                // Sucesso no salvamento do Firebase
                 Toast.makeText(UploadReceitaActivity.this, "Receita publicada com sucesso!", Toast.LENGTH_LONG).show();
                 buttonUploadReceita.setEnabled(true);
-                finish(); // Fecha a Activity
+                finish();
             }
 
             @Override
             public void onError(String msg) {
-                // Falha no Firebase
                 Toast.makeText(UploadReceitaActivity.this, "Falha ao salvar a receita: " + msg, Toast.LENGTH_LONG).show();
-                buttonUploadReceita.setEnabled(true); // Reabilita o botão para que o usuário tente novamente
+                buttonUploadReceita.setEnabled(true);
             }
         });
+    }
+
+    private void atualizarDadosDaReceita(String nome, String preparo, String imageUrl, String tempo,
+                                         List<String> ingredientesDetalhe, List<String> nomesIngredientes) {
+
+        int indiceGlicemico = receitaParaEditar.getIndiceGlicemico();
+
+        int tempoPreparoInt = 0;
+        try {
+            tempoPreparoInt = Integer.parseInt(tempo);
+        } catch (NumberFormatException e) {
+            Log.e("Upload", "Erro ao converter tempo de preparo para int", e);
+        }
+
+        Receita receitaAtualizada = receitaParaEditar;
+        receitaAtualizada.setNome(nome);
+        receitaAtualizada.setFotoUrl(imageUrl);
+        receitaAtualizada.setPreparo(preparo);
+        receitaAtualizada.setTempoPreparo(tempoPreparoInt);
+
+        // Preserva os ingredientes e nomes existentes (passados como argumento)
+        receitaAtualizada.setIngredientesDetalhe(ingredientesDetalhe);
+        receitaAtualizada.setNomesIngredientes(nomesIngredientes);
+
+        receitaDAO.atualizarReceita(receitaAtualizada, new ReceitaDAO.AtualizarReceitaCallback() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(UploadReceitaActivity.this, "Receita atualizada com sucesso!", Toast.LENGTH_LONG).show();
+                buttonUploadReceita.setEnabled(true);
+                finish();
+            }
+
+            @Override
+            public void onError(String msg) {
+                Toast.makeText(UploadReceitaActivity.this, "Falha ao atualizar a receita: " + msg, Toast.LENGTH_LONG).show();
+                buttonUploadReceita.setEnabled(true);
+            }
+        });
+    }
+
+    private void selectImage() {
+        galleryLauncher.launch("image/*");
+    }
+
+    private void handleImageUri(Uri uri) {
+        if (uri != null) {
+            imageViewFotoReceita.setImageURI(uri);
+            imageFilePath = getPathFromUri(uri);
+
+            if (imageFilePath == null) {
+                Toast.makeText(this, "Não foi possível obter o caminho do arquivo.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private String getPathFromUri(Uri uri) {
+        String path = null;
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = null;
+        try {
+            cursor = getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
+            }
+        } catch (Exception e) {
+            Log.e("UploadReceita", "Erro ao buscar caminho do URI", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return path;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Garante que o executor seja desligado
         if (executorService != null) {
             executorService.shutdown();
         }

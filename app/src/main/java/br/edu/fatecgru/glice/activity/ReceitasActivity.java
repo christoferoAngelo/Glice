@@ -217,7 +217,13 @@ public class ReceitasActivity extends AppCompatActivity
         txtNomeDetalhe.setText(receita.getNome());
         txtIndiceDetalhe.setText("Índice Glicêmico: " + receita.getIndiceGlicemico());
         txtFonteDetalhe.setText("Fonte: " + receita.getFonte());
-        txtIngredientes.setText(receita.getIngredientes());
+        List<String> ingredientesList = receita.getIngredientesDetalhe();
+        if (ingredientesList != null) {
+            // Usa String.join("\n", lista) para colocar cada item da lista em uma nova linha.
+            txtIngredientes.setText(String.join("\n", ingredientesList));
+        } else {
+            txtIngredientes.setText("Ingredientes não disponíveis.");
+        }
         txtPreparo.setText(receita.getPreparo());
 
         Glide.with(this)

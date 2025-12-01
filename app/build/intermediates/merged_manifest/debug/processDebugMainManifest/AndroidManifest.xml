@@ -41,6 +41,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.Glice" >
         <activity
+            android:name="br.edu.fatecgru.glice.activity.AdminListActivity"
+            android:exported="false" />
+        <activity
             android:name="br.edu.fatecgru.glice.activity.ReceitasFavoritasActivity"
             android:exported="false" />
         <activity

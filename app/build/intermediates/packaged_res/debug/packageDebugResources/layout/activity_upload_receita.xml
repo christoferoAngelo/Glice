@@ -14,6 +14,16 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/textView_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nova Receita"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Foto da Receita"
