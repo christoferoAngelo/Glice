@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
         tutorial = findViewById(R.id.tutorial);
         tutorial.setOnClickListener(v -> {
-            Intent it = new Intent(this, TutorialActivity.class);
-            startActivity(it);
+
+                Intent it = new Intent(this, TutorialActivity.class);
+                startActivity(it);
+
         });
 
         perfil = findViewById(R.id.perfil);

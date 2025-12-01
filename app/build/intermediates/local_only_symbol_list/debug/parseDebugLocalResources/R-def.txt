@@ -23,6 +23,8 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_perfil
 drawable icemail
+drawable indicador_ativo
+drawable indicador_inativo
 drawable logobranca
 drawable outline_checklist_24
 drawable profile_placeholder
@@ -101,6 +103,7 @@ id login
 id main
 id perfil
 id progress_bar_admin
+id recyclerCarrossel
 id recyclerFavoritos
 id recyclerReceitas
 id recycler_admin_receitas
@@ -134,7 +137,6 @@ id txtUserEmail
 id txtUserName
 id txvCadastrar
 id upload
-id viewPager
 layout activity_admin_list
 layout activity_cadastrar_login
 layout activity_editar_perfil

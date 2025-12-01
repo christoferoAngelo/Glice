@@ -12,7 +12,7 @@ import br.edu.fatecgru.glice.model.Carrossel_Item;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
 
-public abstract class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.CarrosselViewHolder> {
+public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.CarrosselViewHolder> {
 
     private List<Carrossel_Item> itens;
 
@@ -46,15 +46,17 @@ public abstract class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter
 
         public CarrosselViewHolder(@NonNull View itemView) {
             super(itemView);
-            boasVindasImage = itemView.findViewById(R.id.boas_vindas_image);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            boasVindasImage = itemView.findViewById(R.id.boas_vindas_image);
+
         }
 
         public void bind(Carrossel_Item item) {
-            boasVindasImage.setImageResource(item.getImageRes());
             tvTitle.setText(item.getTitle());
             tvDescription.setText(item.getDescription());
+            boasVindasImage.setImageResource(item.getImageRes());
+
         }
     }
 }
