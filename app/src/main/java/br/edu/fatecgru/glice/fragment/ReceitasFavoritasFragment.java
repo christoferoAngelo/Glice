@@ -62,7 +62,8 @@ public class ReceitasFavoritasFragment extends Fragment
     private ImageButton btnFavoriteDetalhe;
     private ImageButton btnInfoGlice;
 
-    public ReceitasFavoritasFragment() {}
+    public ReceitasFavoritasFragment() {
+    }
 
     @Nullable
     @Override
@@ -238,7 +239,7 @@ public class ReceitasFavoritasFragment extends Fragment
 
         // Índice Glicêmico com cor
         int indice = receita.getIndiceGlicemico();
-        String textoIndice = "Glicê " + indice;
+        String textoIndice = "Índice Glicê " + indice;
         txtIndiceDetalhe.setText(textoIndice);
 
         int cor = R.color.preto;
@@ -330,7 +331,6 @@ public class ReceitasFavoritasFragment extends Fragment
             btnFavoriteDetalhe.setImageResource(R.drawable.baseline_favorite_border_24);
         }
     }
-
     private void exibirInfoGlice(Receita receita) {
         // 1. Inflar o layout do diálogo (R.layout.dialog_glice_info deve existir)
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -347,7 +347,7 @@ public class ReceitasFavoritasFragment extends Fragment
 
         // 3. Preencher os dados
         int indice = receita.getIndiceGlicemico();
-        String textoIndice = "Índice Glicê: Glicê " + indice;
+        String textoIndice = "Índice Glicê: " + indice;
         txtIndiceInfo.setText(textoIndice);
 
         // Ajusta a cor do índice no pop-up
@@ -361,33 +361,33 @@ public class ReceitasFavoritasFragment extends Fragment
         }
         txtIndiceInfo.setTextColor(ContextCompat.getColor(requireContext(), cor));
 
-        // Aplica o formato HTML nas Justificativas e Substituições (seções removidas do detalhe)
-        txtJustificativaInfo.setText(Html.fromHtml("<b>Justificativa:</b><br/>" + formatarComNegrito(receita.getJustificativaGlice())));
-        txtSubstituicoesInfo.setText(Html.fromHtml("<b>Substituições:</b><br/>" + formatarComNegrito(receita.getSubstituicoes())));
+        // Aplica o formato HTML nas Justificativas e Substituições
+        txtJustificativaInfo.setText(formatarComNegrito(receita.getJustificativaGlice()));
+        txtSubstituicoesInfo.setText(formatarComNegrito(receita.getSubstituicoes()));
 
+        // Explicação padrão do Índice Glicê (APRIMORADA)
+        String explicacao = "O **Índice Glice** do GLICE classifica o impacto potencial da receita na glicemia:\n\n" +
+                "• **Glice 1 (Baixo):** Receitas sem adição de açúcar, frequentemente usando adoçantes dietéticos e ingredientes de baixo carboidrato. Ideal para controle estrito.\n" +
+                "• **Glice 2 (Moderado):** Contém carboidratos complexos ou açúcares naturais de frutas/vegetais. Impacto controlado, adequado com moderação.\n" +
+                "• **Glice 3 (Alto):** Contém açúcar adicionado (mel, açúcar refinado, leite condensado) ou alto teor de farinhas brancas. Deve ser consumido com cautela.";
 
-        // Explicação padrão do Índice Glicê
-        String explicacao = "O Índice Glice do GLICE classifica o impacto potencial da receita na glicemia: " +
-                "Glice 1 (Baixo), Glice 2 (Moderado) e Glice 3 (Alto). " +
-                "O objetivo é auxiliar na escolha de refeições mais estáveis.";
-        txtOQueEGlice.setText(explicacao);
+        // Usa o formatador para aplicar negrito e quebras de linha.
+        txtOQueEGlice.setText(formatarComNegrito(explicacao));
 
-        // 4. Configurar o botão de fechar
         btnFecharInfo.setOnClickListener(v -> dialog.dismiss());
-
-        // 5. Exibir o diálogo
         dialog.show();
     }
 
     private CharSequence formatarComNegrito(String texto) {
-        String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
-                .replaceAll("\n", "<br/>");
+            // Substitui **palavra** por <b>palavra</b> e \n por <br/>
+            String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
+                    .replaceAll("\n", "<br/>");
 
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_COMPACT);
-        } else {
-            return Html.fromHtml(htmlText);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_COMPACT);
+            } else {
+                return Html.fromHtml(htmlText);
+            }
         }
     }
-}
