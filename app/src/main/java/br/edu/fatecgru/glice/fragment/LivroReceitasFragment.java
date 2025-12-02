@@ -16,11 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import br.edu.fatecgru.glice.R;
-// Importação simulada, assumindo que DetalheReceitaActivity existe
-import br.edu.fatecgru.glice.activity.DetalheReceitaActivity;
+// Remova a importação de DetalheReceitaActivity, pois não usaremos mais aqui
+// import br.edu.fatecgru.glice.activity.DetalheReceitaActivity;
+import br.edu.fatecgru.glice.activity.AdicionarReceitaLocalActivity;  // NOVO: Import para a Activity de adicionar/editar
 import br.edu.fatecgru.glice.adapter.ReceitaLocalAdapter;
 import br.edu.fatecgru.glice.model.ReceitaPessoal;
 import br.edu.fatecgru.glice.viewmodel.ReceitaLocalViewModel;
@@ -36,9 +39,10 @@ public class LivroReceitasFragment extends Fragment implements ReceitaLocalAdapt
     private TextView txtListaVazia;
     private ReceitaLocalAdapter adapter;
     private ReceitaLocalViewModel viewModel;
+    private FloatingActionButton fabAdicionarReceita;
 
-    // Chave para passar a receita para a Activity de Detalhes
-    public static final String EXTRA_RECEITA_LOCAL = "br.edu.fatecgru.glice.EXTRA_RECEITA_LOCAL";
+    // Chave para passar a receita para a Activity de edição (substitui o EXTRA para detalhes)
+    public static final String EXTRA_RECEITA_PARA_EDITAR = "receita_para_editar";
 
     @Nullable
     @Override
@@ -81,31 +85,30 @@ public class LivroReceitasFragment extends Fragment implements ReceitaLocalAdapt
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
+
+        fabAdicionarReceita = view.findViewById(R.id.fabAdicionarReceita);
+        fabAdicionarReceita.setOnClickListener(v -> abrirTelaAdicionarReceita());
     }
 
     // Implementação da interface ReceitaLocalAdapter.OnItemClickListener
 
     /**
-     * Lógica para abrir a Activity de Detalhes da Receita quando o item é clicado.
-     * @param receita O objeto ReceitaLocal clicado.
+     * Lógica para abrir a tela de edição da receita quando o item é clicado.
+     * Passa a receita selecionada via Intent para a AdicionarReceitaLocalActivity.
+     * @param receita O objeto ReceitaPessoal clicado.
      */
     @Override
     public void onItemClick(ReceitaPessoal receita) {
-        // Para que esta navegação funcione, ReceitaLocal precisa implementar Parcelable.
-
-        Toast.makeText(getContext(), "Preparando para abrir detalhes de: " + receita.getTitulo(), Toast.LENGTH_SHORT).show();
-
-        // Simulação da navegação:
-        /*
-        Intent intent = new Intent(getContext(), DetalheReceitaActivity.class);
-        intent.putExtra(EXTRA_RECEITA_LOCAL, receita); // Requer que ReceitaLocal seja Parcelable
+        // Navega para a tela de edição, passando a receita
+        Intent intent = new Intent(getContext(), AdicionarReceitaLocalActivity.class);
+        intent.putExtra(EXTRA_RECEITA_PARA_EDITAR, receita);  // Passa a receita via Parcelable
         startActivity(intent);
-        */
+
     }
 
     /**
      * Lógica chamada quando o botão de exclusão é clicado.
-     * @param receita O objeto ReceitaLocal a ser excluído.
+     * @param receita O objeto ReceitaPessoal a ser excluído.
      */
     @Override
     public void onDeleteClick(ReceitaPessoal receita) {
@@ -129,5 +132,14 @@ public class LivroReceitasFragment extends Fragment implements ReceitaLocalAdapt
                 })
                 .setNegativeButton("Cancelar", null) // Fecha o diálogo sem ação
                 .show();
+    }
+
+    /**
+     * Abre a tela para adicionar uma nova receita (chamado pelo FAB).
+     * Não passa nenhuma receita, então a Activity detectará como "nova".
+     */
+    private void abrirTelaAdicionarReceita() {
+        Intent intent = new Intent(getContext(), AdicionarReceitaLocalActivity.class);
+        startActivity(intent);
     }
 }

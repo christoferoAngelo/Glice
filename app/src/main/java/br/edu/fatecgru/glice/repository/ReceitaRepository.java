@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import br.edu.fatecgru.glice.dao.ReceitaPessoalDAO_Impl;
+import br.edu.fatecgru.glice.dao.ReceitaPessoalDAO;
 import br.edu.fatecgru.glice.database.AppDatabase;
 import br.edu.fatecgru.glice.dao.ReceitaPessoalDAO;
 import br.edu.fatecgru.glice.model.ReceitaPessoal;

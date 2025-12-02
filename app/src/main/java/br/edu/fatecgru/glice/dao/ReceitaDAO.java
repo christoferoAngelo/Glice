@@ -110,6 +110,7 @@ public class ReceitaDAO {
 
         db.collection("usuarios").document(userId).get()
                 .addOnSuccessListener(userDoc -> {
+
                     if (!userDoc.exists()) {
                         callback.onSuccess(new ArrayList<>());
                         return;
@@ -122,23 +123,34 @@ public class ReceitaDAO {
                         return;
                     }
 
-                    db.collection("receita")
-                            .whereIn(FieldPath.documentId(), favoritosIds) // Corrigido para usar FieldPath.documentId()
-                            .get()
-                            .addOnSuccessListener(task -> {
-                                List<Receita> lista = new ArrayList<>();
-                                for (QueryDocumentSnapshot doc : task) {
-                                    Receita r = doc.toObject(Receita.class);
-                                    r.setDocumentId(doc.getId());
-                                    r.setFavorita(true);
-                                    lista.add(r);
-                                }
-                                callback.onSuccess(lista);
-                            })
-                            .addOnFailureListener(e -> callback.onError("Falha ao carregar favoritos"));
+                    // --- Busca manual, ignorando o limite do whereIn ---
+                    List<Receita> lista = new ArrayList<>();
+
+                    for (String id : favoritosIds) {
+                        db.collection("receita").document(id).get()
+                                .addOnSuccessListener(doc -> {
+                                    if (doc.exists()) {
+                                        Receita r = doc.toObject(Receita.class);
+                                        r.setDocumentId(doc.getId());
+                                        r.setFavorita(true);
+                                        lista.add(r);
+                                    }
+
+                                    // Quando todos IDs forem processados → retorna a lista
+                                    if (lista.size() == favoritosIds.size()) {
+                                        callback.onSuccess(lista);
+                                    }
+
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("ReceitaDAO", "Erro carregando receita favorita: " + id, e);
+                                });
+                    }
                 })
                 .addOnFailureListener(e -> callback.onError("Erro ao buscar usuário"));
     }
+
+
 
     // 🔹 BUSCAR RECEITAS POR INGREDIENTES
     public void buscarReceitasPorIngredientes(String userId, List<String> ingredientesBusca, BuscarReceitasCallback callback) {

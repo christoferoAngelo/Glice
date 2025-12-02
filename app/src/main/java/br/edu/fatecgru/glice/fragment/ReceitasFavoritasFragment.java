@@ -1,126 +1,393 @@
 package br.edu.fatecgru.glice.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore; // Import adicionado para desfavoritar
+
 import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.fatecgru.glice.R;
-import br.edu.fatecgru.glice.activity.DetalheReceitaActivity;
+import br.edu.fatecgru.glice.activity.LoginActivity;
 import br.edu.fatecgru.glice.adapter.ReceitaFavoritaAdapter;
+import br.edu.fatecgru.glice.dao.ReceitaDAO;
 import br.edu.fatecgru.glice.model.Receita;
-import br.edu.fatecgru.glice.viewmodel.ReceitasFavoritasViewModel; // CORRIGIDO: Nome do ViewModel
 
-/**
- * Fragmento para exibir a lista de receitas marcadas como favoritas (dados do Firestore).
- * Utiliza o ReceitaFavoritaAdapter e o ReceitaFavoritasViewModel.
- */
-public class ReceitasFavoritasFragment extends Fragment implements ReceitaFavoritaAdapter.OnItemClickListener {
+public class ReceitasFavoritasFragment extends Fragment
+        implements ReceitaFavoritaAdapter.OnReceitaFavoriteListener { // Implementação adicionada
 
     private RecyclerView recyclerView;
     private TextView txtListaVazia;
-    private ReceitaFavoritaAdapter adapter;
-    private ReceitasFavoritasViewModel viewModel; // CORRIGIDO: Tipo do ViewModel
 
-    // Chave para passar a receita para a Activity de Detalhes
-    public static final String EXTRA_RECEITA_FAVORITA = "br.edu.fatecgru.glice.EXTRA_RECEITA_FAVORITA";
+    private ReceitaFavoritaAdapter adapter;
+    private ArrayList<Receita> listaFavoritos = new ArrayList<>();
+
+    private FirebaseAuth auth;
+    private ReceitaDAO receitaDAO;
+
+    // Novas views para o detalhe (overlay)
+    private CardView cardDetalheReceita;
+    private ImageView imgDetalheReceita;
+    private TextView txtNomeDetalhe;
+    private TextView txtIndiceDetalhe;
+    private TextView txtFonteDetalhe;
+    private TextView txtIngredientes;
+    private TextView txtPreparo;
+    private TextView txtResumoDetalhe;
+    private TextView txtTempoDetalhe;
+    private TextView txtLinkDetalhe;
+    private ImageButton btnFecharDetalhe;
+    private ImageButton btnFavoriteDetalhe;
+    private ImageButton btnInfoGlice;
+
+    public ReceitasFavoritasFragment() {}
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Reutiliza o layout, mas se fosse diferente, usaria fragment_receitas_favoritas
-        return inflater.inflate(R.layout.fragment_livro_receitas, container, false);
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_receitas_favoritas, container, false);
 
-        // 1. Inicialização de Views (reutilizando IDs do layout de livro)
-        // OBS: Se você quiser IDs mais específicos para este fragment, crie um novo XML de fragmento.
         recyclerView = view.findViewById(R.id.recyclerViewLivroReceitas);
         txtListaVazia = view.findViewById(R.id.txtListaVazia);
-        txtListaVazia.setText("Você ainda não favoritou nenhuma receita!");
 
-        // 2. Configuração do RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
 
-        // 3. Inicializa o Adapter e define o Listener
-        adapter = new ReceitaFavoritaAdapter(new ArrayList<>());
-        adapter.setOnItemClickListener(this);
+        // CORREÇÃO: Passando 'this' como favoriteListener
+        adapter = new ReceitaFavoritaAdapter(listaFavoritos, receita -> {
+            exibirDetalheReceita(receita);
+        }, this);
+
         recyclerView.setAdapter(adapter);
 
-        // 4. Inicializa o ViewModel
-        viewModel = new ViewModelProvider(this).get(ReceitasFavoritasViewModel.class); // CORRIGIDO: Classe do ViewModel
+        auth = FirebaseAuth.getInstance();
+        receitaDAO = new ReceitaDAO();
 
-        // 5. Observa a lista de receitas favoritas (LiveData)
-        viewModel.favoritas.observe(getViewLifecycleOwner(), receitas -> {
-            // Atualiza a lista no Adapter
-            adapter.setReceitas(receitas);
+        // Inicializar as views do detalhe
+        cardDetalheReceita = view.findViewById(R.id.cardDetalheReceita);
+        imgDetalheReceita = view.findViewById(R.id.imgDetalheReceita);
+        txtNomeDetalhe = view.findViewById(R.id.txtNomeDetalhe);
+        txtIndiceDetalhe = view.findViewById(R.id.txtIndiceDetalhe);
+        txtFonteDetalhe = view.findViewById(R.id.txtFonteDetalhe);
+        txtIngredientes = view.findViewById(R.id.txtIngredientes);
+        txtPreparo = view.findViewById(R.id.txtPreparo);
+        txtResumoDetalhe = view.findViewById(R.id.txtResumoDetalhe);
+        txtTempoDetalhe = view.findViewById(R.id.txtTempoDetalhe);
+        txtLinkDetalhe = view.findViewById(R.id.txtLinkDetalhe);
+        btnFecharDetalhe = view.findViewById(R.id.btnFecharDetalhe);
+        btnFavoriteDetalhe = view.findViewById(R.id.btnFavoriteDetalhe);
+        btnInfoGlice = view.findViewById(R.id.btnInfoGlice);
 
-            // Gerencia a exibição da mensagem de lista vazia
-            if (receitas != null && receitas.isEmpty()) {
-                txtListaVazia.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                txtListaVazia.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+        // Configurar clique para fechar o detalhe
+        btnFecharDetalhe.setOnClickListener(v -> fecharDetalhe());
+
+        carregarFavoritos();
+
+        return view;
+    }
+
+    // =================================================================================
+    // NOVO MÉTODO OBRIGATÓRIO (para corrigir o problema de clique no coração da lista)
+    // =================================================================================
+
+    @Override
+    public void onReceitaFavoriteClick(Receita receita, int position) {
+        if (auth.getCurrentUser() == null) {
+            Toast.makeText(getContext(), "Faça login para desfavoritar receitas!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        }
+
+        String userId = auth.getCurrentUser().getUid();
+
+        // No contexto da lista de favoritos, clicar no coração significa DESFAVORITAR (novoStatus = false)
+        boolean novoStatus = false;
+        receita.setFavorita(novoStatus);
+
+        // Atualiza a visualização rapidamente
+        adapter.notifyItemChanged(position);
+
+        // 1. Atualizar no banco de dados principal
+        receitaDAO.atualizarFavorito(
+                userId,
+                receita.getDocumentId(),
+                novoStatus,
+                new ReceitaDAO.UpdateFavoriteCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(getContext(), receita.getNome() + " desfavoritada!", Toast.LENGTH_SHORT).show();
+                        // 2. Recarregar favoritos para REMOVER o item da lista
+                        carregarFavoritos();
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        // Reverte o status em caso de erro
+                        receita.setFavorita(true);
+                        adapter.notifyItemChanged(position);
+                        Toast.makeText(getContext(), "Erro ao desfavoritar: " + msg, Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+        // 3. Remover da subcoleção de favoritos do usuário (necessário para a consistência da lista)
+        // Se esta lógica já estiver dentro do ReceitaDAO.atualizarFavorito, remova este bloco.
+        // Caso contrário, use:
+        FirebaseFirestore.getInstance()
+                .collection("usuarios")
+                .document(userId)
+                .collection("favoritos")
+                .document(receita.getDocumentId())
+                .delete()
+                .addOnFailureListener(e -> Log.e("Favoritos", "Erro ao remover da subcoleção: " + e.getMessage()));
+    }
+
+    // =================================================================================
+    // MÉTODOS EXISTENTES ABAIXO (MANTIDOS SEM ALTERAÇÃO na lógica principal)
+    // =================================================================================
+
+    private void carregarFavoritos() {
+        if (auth.getCurrentUser() == null) {
+            mostrarListaVazia(true);
+            return;
+        }
+
+        String userId = auth.getCurrentUser().getUid();
+
+        receitaDAO.getReceitasFavoritas(userId, new ReceitaDAO.BuscarReceitasCallback() {
+            @Override
+            public void onSuccess(List<Receita> receitas) {
+
+                listaFavoritos.clear();
+                listaFavoritos.addAll(receitas);
+
+                // Debug: Verificar se as receitas estão marcadas como favoritas
+                for (Receita r : receitas) {
+                    Log.d("Favoritos", "Receita: " + r.getNome() + " - Favorita: " + r.isFavorita());
+                }
+
+                adapter.notifyDataSetChanged();
+
+                mostrarListaVazia(receitas.isEmpty());
+            }
+
+            @Override
+            public void onError(String msg) {
+                mostrarListaVazia(true);
             }
         });
     }
 
-    // --- Implementação da interface ReceitaFavoritaAdapter.OnItemClickListener ---
-
-    /**
-     * Abre a Activity de Detalhes da Receita (para receitas da API).
-     */
-    @Override
-    public void onItemClick(Receita receita) {
-        Toast.makeText(getContext(), "Detalhes da Receita: " + receita.getNome(), Toast.LENGTH_SHORT).show();
-        // Lógica de navegação para DetalheReceitaActivity (se necessário)
-        /*
-        Intent intent = new Intent(getContext(), DetalheReceitaActivity.class);
-        intent.putExtra(EXTRA_RECEITA_FAVORITA, receita); // Receita precisa ser Parcelable/Serializable
-        startActivity(intent);
-        */
+    private void mostrarListaVazia(boolean vazio) {
+        txtListaVazia.setVisibility(vazio ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(vazio ? View.GONE : View.VISIBLE);
     }
 
-    /**
-     * Lógica chamada quando o botão de exclusão/remover favorito é clicado.
-     */
-    @Override
-    public void onDeleteClick(Receita receita) {
-        mostrarDialogoDeRemocao(receita);
+    private void exibirDetalheReceita(Receita receita) {
+        if (receita == null) return;
+
+        // Preencher os campos
+        txtNomeDetalhe.setText(receita.getNome());
+        txtFonteDetalhe.setText("Fonte: " + receita.getFonte());
+
+        // Adicionando títulos em negrito aos campos de texto
+        txtPreparo.setText(Html.fromHtml("<b>Preparo:</b><br/>" + receita.getPreparo()));
+        txtResumoDetalhe.setText(Html.fromHtml("<b>Resumo:</b><br/>" + receita.getResumo()));
+        txtTempoDetalhe.setText(Html.fromHtml("<b>Tempo:</b> " + receita.getTempoPreparo() + " minutos"));
+
+        // Link da receita (ajustado para melhor manipulação)
+        String link = receita.getLinkReceita();
+        if (link != null && !link.isEmpty()) {
+            txtLinkDetalhe.setText(Html.fromHtml("<b>Link:</b> " + link));
+            txtLinkDetalhe.setVisibility(View.VISIBLE);
+        } else {
+            txtLinkDetalhe.setVisibility(View.GONE);
+        }
+
+        // Ingredientes (formatar com bullets)
+        List<String> ingredientesList = receita.getIngredientesDetalhe();
+        if (ingredientesList != null && !ingredientesList.isEmpty()) {
+            String ingredientesFormatados = formatarListaComBullet(ingredientesList);
+            txtIngredientes.setText(Html.fromHtml("<b>Ingredientes:</b><br/>" + ingredientesFormatados));
+        } else {
+            txtIngredientes.setText(Html.fromHtml("<b>Ingredientes:</b><br/>" + "Não disponíveis."));
+        }
+
+        // Índice Glicêmico com cor
+        int indice = receita.getIndiceGlicemico();
+        String textoIndice = "Glicê " + indice;
+        txtIndiceDetalhe.setText(textoIndice);
+
+        int cor = R.color.preto;
+        if (indice == 1) {
+            cor = R.color.rosa4;
+        } else if (indice == 2) {
+            cor = R.color.rosa2;
+        } else if (indice == 3) {
+            cor = R.color.rosa3;
+        }
+        txtIndiceDetalhe.setTextColor(ContextCompat.getColor(requireContext(), cor));
+
+        // Imagem
+        Glide.with(requireContext())
+                .load(receita.getUrlImagem())
+                .placeholder(R.drawable.recipes)
+                .into(imgDetalheReceita);
+
+        // Atualizar ícone do favorito
+        atualizarIconeFavoritoDetalhe(receita);
+
+        // Configurar clique no botão favorito
+        btnFavoriteDetalhe.setOnClickListener(v -> {
+            if (auth.getCurrentUser() == null) {
+                Toast.makeText(getContext(), "Faça login para favoritar receitas!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                return;
+            }
+
+            String userId = auth.getCurrentUser().getUid();
+            boolean novoStatus = !receita.isFavorita();
+            receita.setFavorita(novoStatus);
+            atualizarIconeFavoritoDetalhe(receita);
+
+            // Atualizar na lista e notificar adapter
+            int index = listaFavoritos.indexOf(receita);
+            if (index != -1) {
+                adapter.notifyItemChanged(index);
+            }
+
+            // Persistir no Firebase
+            receitaDAO.atualizarFavorito(
+                    userId,
+                    receita.getDocumentId(),
+                    receita.isFavorita(),
+                    new ReceitaDAO.UpdateFavoriteCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(getContext(), receita.getNome() + (novoStatus ? " favoritada!" : " desfavoritada!"), Toast.LENGTH_SHORT).show();
+                            // Recarregar favoritos para atualizar a lista (ex.: remover se desfavoritar)
+                            carregarFavoritos();
+                        }
+
+                        @Override
+                        public void onError(String msg) {
+                            // Reverte o status em caso de erro
+                            receita.setFavorita(!novoStatus);
+                            if (index != -1) adapter.notifyItemChanged(index);
+                            atualizarIconeFavoritoDetalhe(receita);
+                            Toast.makeText(getContext(), "Erro ao salvar favorito: " + msg, Toast.LENGTH_LONG).show();
+                        }
+                    }
+            );
+        });
+
+        // Configurar clique no botão Info Glice (para abrir pop-up)
+        btnInfoGlice.setOnClickListener(v -> exibirInfoGlice(receita));
+
+        // Mostrar o card
+        cardDetalheReceita.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Exibe um diálogo de confirmação antes de remover dos favoritos.
-     */
-    private void mostrarDialogoDeRemocao(Receita receita) {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Remover Favorito")
-                .setMessage("Tem certeza que deseja remover \"" + receita.getNome() + "\" dos seus favoritos?")
-                .setPositiveButton("Remover", (dialog, which) -> {
-                    // 1. Chama o método do ViewModel para remover do Firestore
-                    viewModel.removerFavorita(receita);
-                    // 2. O LiveData garante que a lista na UI será atualizada automaticamente
-                    Toast.makeText(getContext(), "Removido dos favoritos: " + receita.getNome(), Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
+    private void fecharDetalhe() {
+        cardDetalheReceita.setVisibility(View.GONE);
+    }
+
+    private String formatarListaComBullet(List<String> lista) {
+        StringBuilder sb = new StringBuilder();
+        for (String item : lista) {
+            sb.append("• ").append(item).append("<br/>");
+        }
+        return sb.toString().trim();
+    }
+
+    private void atualizarIconeFavoritoDetalhe(Receita receita) {
+        if (receita.isFavorita()) {
+            btnFavoriteDetalhe.setImageResource(R.drawable.baseline_favorite_24);
+        } else {
+            btnFavoriteDetalhe.setImageResource(R.drawable.baseline_favorite_border_24);
+        }
+    }
+
+    private void exibirInfoGlice(Receita receita) {
+        // 1. Inflar o layout do diálogo (R.layout.dialog_glice_info deve existir)
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_glice_info, null);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        // 2. Encontrar as views do diálogo
+        TextView txtIndiceInfo = dialogView.findViewById(R.id.txtIndiceInfo);
+        TextView txtJustificativaInfo = dialogView.findViewById(R.id.txtJustificativaInfo);
+        TextView txtSubstituicoesInfo = dialogView.findViewById(R.id.txtSubstituicoesInfo);
+        TextView txtOQueEGlice = dialogView.findViewById(R.id.txtOQueEGlice);
+        Button btnFecharInfo = dialogView.findViewById(R.id.btnFecharInfo);
+
+        // 3. Preencher os dados
+        int indice = receita.getIndiceGlicemico();
+        String textoIndice = "Índice Glicê: Glicê " + indice;
+        txtIndiceInfo.setText(textoIndice);
+
+        // Ajusta a cor do índice no pop-up
+        int cor = R.color.preto;
+        if (indice == 1) {
+            cor = R.color.rosa4;
+        } else if (indice == 2) {
+            cor = R.color.rosa2;
+        } else if (indice == 3) {
+            cor = R.color.rosa3;
+        }
+        txtIndiceInfo.setTextColor(ContextCompat.getColor(requireContext(), cor));
+
+        // Aplica o formato HTML nas Justificativas e Substituições (seções removidas do detalhe)
+        txtJustificativaInfo.setText(Html.fromHtml("<b>Justificativa:</b><br/>" + formatarComNegrito(receita.getJustificativaGlice())));
+        txtSubstituicoesInfo.setText(Html.fromHtml("<b>Substituições:</b><br/>" + formatarComNegrito(receita.getSubstituicoes())));
+
+
+        // Explicação padrão do Índice Glicê
+        String explicacao = "O Índice Glice do GLICE classifica o impacto potencial da receita na glicemia: " +
+                "Glice 1 (Baixo), Glice 2 (Moderado) e Glice 3 (Alto). " +
+                "O objetivo é auxiliar na escolha de refeições mais estáveis.";
+        txtOQueEGlice.setText(explicacao);
+
+        // 4. Configurar o botão de fechar
+        btnFecharInfo.setOnClickListener(v -> dialog.dismiss());
+
+        // 5. Exibir o diálogo
+        dialog.show();
+    }
+
+    private CharSequence formatarComNegrito(String texto) {
+        String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
+                .replaceAll("\n", "<br/>");
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            return Html.fromHtml(htmlText);
+        }
     }
 }

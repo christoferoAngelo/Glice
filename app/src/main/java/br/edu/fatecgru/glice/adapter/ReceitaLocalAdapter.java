@@ -62,8 +62,8 @@ public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapte
         holder.txtTituloReceita.setText(currentReceita.getTitulo());
 
         // Exibe um resumo do conteúdo
-        String conteudo = currentReceita.getConteudo();
-        holder.txtDescricaoReceita.setText(conteudo.length() > 80 ? conteudo.substring(0, 80) + "..." : conteudo);
+        String resumo = (currentReceita.getIngredientes() != null ? currentReceita.getIngredientes() + "\n" : "") + currentReceita.getPreparo();
+        holder.txtDescricaoReceita.setText(resumo.length() > 80 ? resumo.substring(0, 80) + "..." : resumo);
 
         // Carrega a imagem se o URL estiver disponível
         if (currentReceita.getImageUrl() != null && !currentReceita.getImageUrl().isEmpty()) {

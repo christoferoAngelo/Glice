@@ -30,12 +30,12 @@ public interface ReceitaPessoalDAO {
         @Delete
         void delete(ReceitaPessoal receita);
 
-        // Retorna todas as receitas ordenadas pelo título.
+        // Retorna todas as receitas ordenadas pela data de criação (mais recentes primeiro).
         // O LiveData permite que a UI observe mudanças em tempo real.
-        @Query("SELECT * FROM receitas_pessoais ORDER BY titulo ASC")
+        @Query("SELECT * FROM receitas_pessoais ORDER BY dataCriacao DESC")
         LiveData<List<ReceitaPessoal>> getAllReceitas();
 
         // Você pode adicionar outras consultas como buscar por ID ou por título.
-        // @Query("SELECT * FROM receitas WHERE id = :id")
-        // ReceitaLocal getReceitaById(int id);
+        // @Query("SELECT * FROM receitas_pessoais WHERE id = :id")
+        // ReceitaPessoal getReceitaById(int id);
 }

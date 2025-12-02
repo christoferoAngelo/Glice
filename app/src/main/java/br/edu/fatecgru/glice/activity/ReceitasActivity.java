@@ -24,6 +24,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,42 +183,52 @@ public class ReceitasActivity extends AppCompatActivity
     @Override
     public void onReceitaFavoriteClick(Receita receita, int position) {
 
-        // 🚨 PASSO 1: VERIFICAÇÃO DE LOGIN
         if (currentUserId == null || currentUserId.isEmpty()) {
             Toast.makeText(this, "Faça login para favoritar receitas!", Toast.LENGTH_LONG).show();
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            startActivity(new Intent(this, LoginActivity.class));
             return;
         }
 
-        // PASSO 2: Atualização Visual Imediata
+        // Alterna estado
         receita.setFavorita(!receita.isFavorita());
         adapter.notifyItemChanged(position);
 
-        // PASSO 3: Persistência no Firebase
-        if (receita.getDocumentId() != null) {
-            receitaDao.atualizarFavorito(
-                    currentUserId,
-                    receita.getDocumentId(),
-                    receita.isFavorita(),
-                    new ReceitaDAO.UpdateFavoriteCallback() {
-                        @Override
-                        public void onSuccess() {}
+        // Persiste no banco principal
+        receitaDao.atualizarFavorito(
+                currentUserId,
+                receita.getDocumentId(),
+                receita.isFavorita(),
+                new ReceitaDAO.UpdateFavoriteCallback() {
+                    @Override
+                    public void onSuccess() {}
 
-                        @Override
-                        public void onError(String msg) {
-                            // Reverte o estado visual em caso de falha
-                            receita.setFavorita(!receita.isFavorita());
-                            adapter.notifyItemChanged(position);
-                            Toast.makeText(ReceitasActivity.this, "Erro ao salvar favorito: " + msg, Toast.LENGTH_LONG).show();
-                        }
+                    @Override
+                    public void onError(String msg) {
+                        receita.setFavorita(!receita.isFavorita());
+                        adapter.notifyItemChanged(position);
+                        Toast.makeText(ReceitasActivity.this, "Erro ao salvar favorito: " + msg, Toast.LENGTH_LONG).show();
                     }
-            );
-            Toast.makeText(this, receita.getNome() + (receita.isFavorita() ? " favoritada!" : " desfavoritada!"), Toast.LENGTH_SHORT).show();
+                }
+        );
+
+        // SALVA OU REMOVE NA LISTA DE FAVORITOS DO USUÁRIO (necessário para o Fragment)
+        if (receita.isFavorita()) {
+            FirebaseFirestore.getInstance()
+                    .collection("usuarios")
+                    .document(currentUserId)
+                    .collection("favoritos")
+                    .document(receita.getDocumentId())
+                    .set(receita.toMap());
         } else {
-            Toast.makeText(this, "Erro: Receita sem ID de documento.", Toast.LENGTH_SHORT).show();
+            FirebaseFirestore.getInstance()
+                    .collection("usuarios")
+                    .document(currentUserId)
+                    .collection("favoritos")
+                    .document(receita.getDocumentId())
+                    .delete();
         }
     }
+
 
     // Método para popular e mostrar o CardView de Detalhes
     private void exibirDetalheReceita(Receita receita) {
@@ -428,7 +439,6 @@ public class ReceitasActivity extends AppCompatActivity
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_glice_info, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
-
         // 2. Encontrar as views do diálogo
         TextView txtIndiceInfo = dialogView.findViewById(R.id.txtIndiceInfo);
         TextView txtJustificativaInfo = dialogView.findViewById(R.id.txtJustificativaInfo);
