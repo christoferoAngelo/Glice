@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-63:12
-INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-63:12
-INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-63:12
-INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-63:12
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-60:12
+INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-60:12
+INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-60:12
+INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:2:1-60:12
 MERGED from [com.cloudinary:cloudinary-android:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\38b5f55fb6e9889ddf08d86d2011cb55\transformed\cloudinary-android-3.0.2\AndroidManifest.xml:2:1-9:12
 MERGED from [com.cloudinary:cloudinary-android-download:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\fb09f2dd4cbb5cf0bab9f960a3428f28\transformed\cloudinary-android-download-3.0.2\AndroidManifest.xml:2:1-9:12
 MERGED from [com.cloudinary:cloudinary-android-ui:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\ce6935d32a191c92a4e5ee700c27bf14\transformed\cloudinary-android-ui-3.0.2\AndroidManifest.xml:2:1-16:12
@@ -135,14 +135,14 @@ MERGED from [com.google.android.recaptcha:recaptcha:18.1.2] C:\Users\Andrea\.gra
 	android:name
 		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:5:22-64
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:7:5-9:38
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:6:5-8:38
 	android:maxSdkVersion
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:9:9-35
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:8:9-35
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:8:9-64
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:7:9-64
 application
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:14:5-61:19
-INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:14:5-61:19
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:10:5-58:19
+INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:10:5-58:19
 MERGED from [com.cloudinary:cloudinary-android-ui:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\ce6935d32a191c92a4e5ee700c27bf14\transformed\cloudinary-android-ui-3.0.2\AndroidManifest.xml:9:5-14:19
 MERGED from [com.cloudinary:cloudinary-android-ui:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\ce6935d32a191c92a4e5ee700c27bf14\transformed\cloudinary-android-ui-3.0.2\AndroidManifest.xml:9:5-14:19
 MERGED from [com.cloudinary:cloudinary-android-core:3.0.2] C:\Users\Andrea\.gradle\caches\8.13\transforms\f1198afdb35ba410fd7e460eb1d3d31b\transformed\cloudinary-android-core-3.0.2\AndroidManifest.xml:11:5-20
@@ -206,95 +206,97 @@ MERGED from [com.facebook.soloader:soloader:0.10.5] C:\Users\Andrea\.gradle\cach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.13.0] C:\Users\Andrea\.gradle\caches\8.13\transforms\5b21a4ab6cc026e0c8d286df7fb3ef52\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:21:9-35
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:17:9-35
 	android:label
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:19:9-41
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:15:9-41
 	android:fullBackupContent
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:17:9-54
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:13:9-54
 	android:roundIcon
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:20:9-54
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:16:9-54
 	android:icon
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:18:9-43
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:14:9-43
 	android:allowBackup
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:15:9-35
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:11:9-35
 	android:theme
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:22:9-43
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:18:9-43
 	android:dataExtractionRules
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:16:9-65
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:12:9-65
 activity#br.edu.fatecgru.glice.activity.AdminListActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:23:9-25:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:19:9-21:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:25:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:21:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:24:13-55
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:20:13-55
 activity#br.edu.fatecgru.glice.activity.ReceitasFavoritasActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:26:9-28:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:22:9-24:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:28:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:24:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:27:13-63
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:23:13-63
 activity#br.edu.fatecgru.glice.activity.EditarPerfilActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:29:9-31:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:25:9-27:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:31:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:27:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:30:13-58
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:26:13-58
 activity#br.edu.fatecgru.glice.activity.PerfilUsuario
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:32:9-34:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:28:9-30:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:34:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:30:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:33:13-51
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:29:13-51
 activity#br.edu.fatecgru.glice.activity.UploadReceitaActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:35:9-37:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:31:9-33:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:37:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:33:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:36:13-59
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:32:13-59
 activity#br.edu.fatecgru.glice.activity.CadastrarLoginActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:38:9-40:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:34:9-36:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:40:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:36:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:39:13-60
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:35:13-60
 activity#br.edu.fatecgru.glice.activity.ReceitasActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:41:9-43:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:37:9-39:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:43:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:39:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:42:13-54
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:38:13-54
 activity#br.edu.fatecgru.glice.activity.LoginActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:44:9-60
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:40:9-41:40
+	android:exported
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:41:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:44:19-57
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:40:19-57
 activity#br.edu.fatecgru.glice.activity.TutorialActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:45:9-47:40
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:42:9-44:40
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:47:13-37
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:44:13-37
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:46:13-54
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:43:13-54
 activity#br.edu.fatecgru.glice.activity.MainActivity
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:48:9-56:20
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:45:9-53:20
 	android:exported
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:50:13-36
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:47:13-36
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:49:13-50
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:46:13-50
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:51:13-55:29
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:48:13-52:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:52:17-69
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:49:17-69
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:52:25-66
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:49:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:54:17-77
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:51:17-77
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:54:27-74
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:51:27-74
 meta-data#preloaded_fonts
-ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:58:9-60:57
+ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:55:9-57:57
 	android:resource
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:60:13-54
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:57:13-54
 	android:name
-		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:59:13-43
+		ADDED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml:56:13-43
 uses-sdk
 INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Andrea\StudioProjects\Glice\app\src\main\AndroidManifest.xml

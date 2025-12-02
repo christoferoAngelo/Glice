@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +89,13 @@ public class ReceitaDAO {
                 ? FieldValue.arrayUnion(receitaId)
                 : FieldValue.arrayRemove(receitaId);
 
+        // Cria um mapa para representar a atualização
+        // O FieldValue.arrayUnion/arrayRemove só pode ser aplicado a campos do tipo Array (List<String>)
+        Map<String, Object> updateData = new java.util.HashMap<>();
+        updateData.put("favoritos", updateOperation);
+
         db.collection("usuarios").document(userId)
-                .update("favoritos", updateOperation)
+                .set(updateData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     Log.d("ReceitaDAO", "Favorito atualizado para o usuário: " + userId + " | Receita: " + receitaId);
                     callback.onSuccess();
@@ -99,7 +105,6 @@ public class ReceitaDAO {
                     callback.onError("Falha ao salvar favorito: " + e.getMessage());
                 });
     }
-
     // 🔹 BUSCAR RECEITAS FAVORITAS
     public void getReceitasFavoritas(String userId, BuscarReceitasCallback callback) {
 

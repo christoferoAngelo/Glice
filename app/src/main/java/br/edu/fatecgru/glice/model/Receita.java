@@ -18,18 +18,15 @@ public class Receita implements Parcelable {
     public String foto_url;
     public String fonte;
     public String preparo;
-
-    // LINHA REMOVIDA: public String documentId;
-
-    // Lista detalhada para exibição (substitui 'ingredientes' String)
     public List<String> ingredientesDetalhe;
-
-    // Lista limpa de nomes de ingredientes para pesquisa
     public List<String> nomesIngredientes;
     private boolean isFavorita = false;
-
-    @Exclude // O Firebase não deve tentar salvar este campo no banco
-    private String documentId; // <--- APENAS ESTA DECLARAÇÃO FOI MANTIDA
+    @Exclude
+    private String documentId;
+    public String resumo;
+    public String justificativaGlice;
+    public String substituicoes;
+    public String linkReceita;
 
     public int tempoPreparo;
 
@@ -39,7 +36,8 @@ public class Receita implements Parcelable {
 
     // Construtor completo para criação de novos objetos
     public Receita(String nome, int indiceGlicemico, String foto_url, String fonte, String preparo,
-                   int tempoPreparo, List<String> ingredientesDetalhe, List<String> nomesIngredientes) {
+                   int tempoPreparo, List<String> ingredientesDetalhe, List<String> nomesIngredientes,
+                   String resumo, String justificativaGlice, String substituicoes, String linkReceita) {
         this.nome = nome;
         this.indiceGlicemico = indiceGlicemico;
         this.foto_url = foto_url;
@@ -48,9 +46,12 @@ public class Receita implements Parcelable {
         this.tempoPreparo = tempoPreparo;
         this.ingredientesDetalhe = ingredientesDetalhe;
         this.nomesIngredientes = nomesIngredientes;
-    }
 
-    // EM Receita.java (Construtor protegido)
+        this.resumo = resumo;
+        this.justificativaGlice = justificativaGlice;
+        this.substituicoes = substituicoes;
+        this.linkReceita = linkReceita;
+    }
     protected Receita(Parcel in) {
         this.id = in.readLong();
         this.created_at = in.readString();
@@ -61,6 +62,10 @@ public class Receita implements Parcelable {
         this.preparo = in.readString();
         this.ingredientesDetalhe = in.createStringArrayList();
         this.nomesIngredientes = in.createStringArrayList();
+        this.resumo = in.readString();
+        this.justificativaGlice = in.readString();
+        this.substituicoes = in.readString();
+        this.linkReceita = in.readString();
 
         this.tempoPreparo = in.readInt();
         this.isFavorita = in.readByte() != 0;
@@ -91,6 +96,10 @@ public class Receita implements Parcelable {
         dest.writeString(this.preparo);
         dest.writeStringList(this.ingredientesDetalhe);
         dest.writeStringList(this.nomesIngredientes);
+        dest.writeString(this.resumo);
+        dest.writeString(this.justificativaGlice);
+        dest.writeString(this.substituicoes);
+        dest.writeString(this.linkReceita);
 
         dest.writeInt(this.tempoPreparo);
         dest.writeByte((byte) (this.isFavorita ? 1 : 0));
@@ -115,40 +124,48 @@ public class Receita implements Parcelable {
         map.put("tempoPreparo", tempoPreparo);
         map.put("ingredientesDetalhe", ingredientesDetalhe);
         map.put("nomesIngredientes", nomesIngredientes);
-
+        map.put("resumo", resumo);
+        map.put("justificativaGlice", justificativaGlice);
+        map.put("substituicoes", substituicoes);
+        map.put("linkReceita", linkReceita);
         return map;
     }
     public String getNome() {
         return nome;
     }
-
     public int getIndiceGlicemico() {
         return indiceGlicemico;
     }
-
     public String getFonte() {return fonte;}
-
     public String getUrlImagem() {
         return foto_url;
     }
-
     public String getPreparo() {
         return preparo;
     }
-
     public boolean isFavorita() {return isFavorita;}
-
     public void setFavorita(boolean favorita) {isFavorita = favorita;}
     public void setNome(String nome) {this.nome = nome;}
-
     public void setFotoUrl(String foto_url) {this.foto_url = foto_url;}
-
     public void setPreparo(String preparo) {this.preparo = preparo;}
-
     public void setIndice(int indice) {this.indiceGlicemico = indice;}
-
     public void setIngredientesDetalhe(List<String> ingredientesDetalhe) {this.ingredientesDetalhe = ingredientesDetalhe;}
+    public String getResumo() {return resumo;}
 
+    public void setResumo(String resumo) {this.resumo = resumo;}
+
+    public String getJustificativaGlice() {return justificativaGlice;}
+
+    public void setJustificativaGlice(String justificativaGlice) {this.justificativaGlice = justificativaGlice;}
+
+    public String getSubstituicoes() {return substituicoes;}
+
+    public void setSubstituicoes(String substituicoes) {this.substituicoes = substituicoes;}
+
+    public String getLinkReceita() {return linkReceita;}
+
+    public void setLinkReceita(String linkReceita) {this.linkReceita = linkReceita;}
+    public void setFonte(String fonte) {this.fonte = fonte;}
     public void setNomesIngredientes(List<String> nomesIngredientes) {this.nomesIngredientes = nomesIngredientes;}
     public String getDocumentId() {return documentId;}
     public int getTempoPreparo() {return tempoPreparo;}

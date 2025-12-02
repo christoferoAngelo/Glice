@@ -22,9 +22,9 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     private List<Receita> receitaList;
     private Context context;
     private OnReceitaClickListener clickListener;
-    private OnReceitaFavoriteListener favoriteListener; // NOVO: Listener para o clique no favorito
+    private OnReceitaFavoriteListener favoriteListener;
 
-    // CONSTRUTOR ATUALIZADO para 4 argumentos
+    // CONSTRUTOR
     public ReceitaAdapter(Context context, List<Receita> receitaList,
                           OnReceitaClickListener listener,
                           OnReceitaFavoriteListener favoriteListener) {
@@ -46,24 +46,35 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     public void onBindViewHolder(@NonNull ReceitaViewHolder holder, int position) {
         Receita r = receitaList.get(position);
 
-        // CORREÇÃO 1: Usando getters corretos e consistentes
+        // 1. Título
         holder.txtNome.setText(r.getNome());
-        holder.txtIndice.setText("Índice: " + r.getIndiceGlicemico()); // CORRIGIDO: usa getIndiceGlicemico()
+
+        // int indiceGlicemico = r.getIndiceGlicemico(); // Opcional: mantém o valor numérico para lógica futura
+        String indiceString = String.valueOf(r.getIndiceGlicemico());
+
+        // Como 'indiceGlicemico' é um 'int', ele nunca é null. Usamos diretamente 'indiceString'.
+        holder.txtIndice.setText("Índice Glicê: " + indiceString);
+
+
+        // 2. Fonte
         holder.txtFonte.setText("Fonte: " + r.getFonte());
 
-        // CORREÇÃO 2: Usando o getter correto para URL da imagem
+
+        // 3. Imagem
         String imageUrl = r.getUrlImagem();
 
-        // Se tiver imagem, usa Glide
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(context)
                     .load(imageUrl)
+                    .placeholder(R.drawable.baseline_image_24)
+                    .error(R.drawable.baseline_broken_image_24)
                     .into(holder.img);
         } else {
-            holder.img.setImageResource(R.drawable.ic_launcher_background); // alterar  ícone padrão
+            // Ícone padrão se não houver URL
+            holder.img.setImageResource(R.drawable.baseline_image_24);
         }
 
-        // NOVO: Lógica visual do ícone de favorito
+        // 4. Favoritos
         if (r.isFavorita()) {
             holder.imgFavoriteList.setImageResource(R.drawable.baseline_favorite_24); // Coração Cheio
         } else {
@@ -71,15 +82,14 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
         }
 
 
-        // NOVO: Configura o clique no ícone de favorito
+        // 5. Configura o clique no ícone de favorito
         holder.imgFavoriteList.setOnClickListener(v -> {
             if (favoriteListener != null) {
-                // Passa a receita e a posição para a Activity
                 favoriteListener.onReceitaFavoriteClick(r, position);
             }
         });
 
-        // Clique no item (área não-favorito) para abrir detalhes
+        // 6. CLIQUE NO ITEM COMPLETO para abrir detalhes
         holder.itemView.setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onReceitaClick(r);
@@ -95,7 +105,7 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
     public static class ReceitaViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
-        ImageView imgFavoriteList; // NOVO: Ícone de Favorito
+        ImageView imgFavoriteList;
         TextView txtNome, txtIndice, txtFonte;
 
         public ReceitaViewHolder(@NonNull View itemView) {
@@ -103,19 +113,18 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
 
             img = itemView.findViewById(R.id.imageView);
             txtNome = itemView.findViewById(R.id.txtNomeReceita);
-            txtIndice = itemView.findViewById(R.id.txtIndiceGlice);
+            txtIndice = itemView.findViewById(R.id.txtIndiceGlice); // Mapeamento do Índice Glicêmico
             txtFonte = itemView.findViewById(R.id.txtFonte);
 
-            // NOVO: Encontrar a view do ícone de favorito (ID do XML item_receita)
             imgFavoriteList = itemView.findViewById(R.id.imgFavoriteList);
         }
     }
 
+    // Interfaces de Clique e Favoritos (Sem Alterações)
     public interface OnReceitaClickListener {
         void onReceitaClick(Receita receita);
     }
 
-    // NOVA INTERFACE: Para tratar o clique no botão de Favorito
     public interface OnReceitaFavoriteListener {
         void onReceitaFavoriteClick(Receita receita, int position);
     }

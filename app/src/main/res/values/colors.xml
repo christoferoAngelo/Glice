@@ -8,6 +8,10 @@
     <color name="rosa4">#880D1E</color>
     <color name="preto">#141313</color>
 
+    <color name="cinza_claro">#E0E0E0</color>
 
+    <color name="cinza_escuro_texto">#555555</color>
+
+    <color name="azul_link">#007AFF</color>
 
 </resources>

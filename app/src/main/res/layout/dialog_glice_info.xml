@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="10dp"
+    android:background="@color/branco">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/ysabeau_bold"
+            android:text="CLASSIFICAÇÃO GLICÊ"
+            android:textColor="@color/rosa4"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/txtIndiceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Índice Glice: Glicê 2"
+            android:textColor="@color/rosa3"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ysabeau_bold"
+            android:text="JUSTIFICATIVA:"
+            android:textColor="@color/rosa4"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtJustificativaInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="10dp"
+            android:text="Detalhe da classificação com as palavras-chave em negrito."
+            android:textColor="@color/preto"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ysabeau_bold"
+            android:text="SUGESTÕES DE SUBSTITUIÇÃO:"
+            android:textColor="@color/rosa4"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtSubstituicoesInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="10dp"
+            android:text="Sugestões de troca de ingredientes."
+            android:textColor="@color/preto"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ysabeau_bold"
+            android:text="O QUE É O ÍNDICE GLICÊ?"
+            android:textColor="@color/rosa4"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtOQueEGlice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Uma breve explicação sobre a classificação (1, 2 ou 3)."
+            android:textColor="@color/preto"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnFecharInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:text="FECHAR"
+            android:backgroundTint="@color/rosa4"
+            android:textColor="@color/branco" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

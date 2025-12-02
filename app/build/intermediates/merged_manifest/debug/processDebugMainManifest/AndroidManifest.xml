@@ -9,10 +9,6 @@
         android:targetSdkVersion="36" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -61,7 +57,9 @@
         <activity
             android:name="br.edu.fatecgru.glice.activity.ReceitasActivity"
             android:exported="false" />
-        <activity android:name="br.edu.fatecgru.glice.activity.LoginActivity" />
+        <activity
+            android:name="br.edu.fatecgru.glice.activity.LoginActivity"
+            android:exported="false" />
         <activity
             android:name="br.edu.fatecgru.glice.activity.TutorialActivity"
             android:exported="false" />

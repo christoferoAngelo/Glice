@@ -2,7 +2,6 @@ package br.edu.fatecgru.glice.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import br.edu.fatecgru.glice.MainActivity;
 import br.edu.fatecgru.glice.R;
+import br.edu.fatecgru.glice.activity.ReceitasActivity;
+import br.edu.fatecgru.glice.activity.PerfilUsuario;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,32 +44,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 1. Inicialização do Firebase
+        // Inicialização do Firebase
         auth = FirebaseAuth.getInstance();
 
-        // 2. Configuração do Google Sign-In
+        // Configuração do Google Sign-In
         configurarGoogleSignIn();
 
-        // 3. Registro do Launcher (para receber o resultado do login do Google)
+        // Registro do Launcher (para receber o resultado do login do Google)
         registrarSignInLauncher();
 
-        // 4. Inicialização dos Componentes (IDs CORRIGIDOS)
-        // Os IDs foram corrigidos para: edtLoginEmail, edtLoginSenha, e btnLogin
-        edtEmail = findViewById(R.id.edtLoginEmail); // CORRIGIDO (Era edtEmailText)
-        edtSenha = findViewById(R.id.edtLoginSenha); // CORRIGIDO (Era edtSenhaText)
-        btnLogin = findViewById(R.id.btnLogin);      // CORRIGIDO (Era btnCadastrar)
+        // Inicialização dos Componentes (IDs CORRIGIDOS)
+        edtEmail = findViewById(R.id.edtLoginEmail);
+        edtSenha = findViewById(R.id.edtLoginSenha);
+        btnLogin = findViewById(R.id.btnLogin);
 
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
         txtCadastrar = findViewById(R.id.txvCadastrar);
 
-        // 5. Estado Inicial do Botão
-        // O botão AGORA não será nulo, pois o ID foi corrigido.
+        // Estado Inicial do Botão
         btnLogin.setEnabled(false);
 
-        // 6. Lógica de Habilitação do Botão (Text Watcher)
+        // Lógica de Habilitação do Botão (Text Watcher)
         addTextWatchers();
 
-        // 7. Configuração dos Listeners (Cliques)
+        // Configuração dos Listeners (Cliques)
 
         // Clicar em LOGIN (Email/Senha)
         btnLogin.setOnClickListener(v -> fazerLogin());
@@ -83,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 8. Checagem de Sessão Existente
+        //Checagem de Sessão Existente
         checarSessaoExistente();
     }
     // =========================================================================
@@ -122,8 +120,10 @@ public class LoginActivity extends AppCompatActivity {
     // Inicia o fluxo de login do Google
     // =========================================================================
     private void signInGoogle() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        signInLauncher.launch(signInIntent);
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            signInLauncher.launch(signInIntent);
+        });
     }
 
     // =========================================================================
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sucesso na autenticação Firebase
                         Toast.makeText(this, "Login com Google realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, ReceitasActivity.class));
                         finish();
                     } else {
                         // Falha na autenticação Firebase
@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, ReceitasActivity.class));
                         finish();
                     } else {
                         Toast.makeText(this, "Email ou senha inválidos!", Toast.LENGTH_SHORT).show();
@@ -187,7 +187,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void addTextWatchers() {
-        // ... (Lógica do TextWatcher mantida)
         android.text.TextWatcher watcher = new android.text.TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -206,8 +205,7 @@ public class LoginActivity extends AppCompatActivity {
     private void checarSessaoExistente() {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
-            // Usando MainActivity por enquanto, como no seu método fazerLogin().
-            // Se PerfilUsuario for o local correto, use-o.
+            // Mantendo a navegação para PerfilUsuario, como no seu código original
             Intent it = new Intent(this, PerfilUsuario.class);
             it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(it);

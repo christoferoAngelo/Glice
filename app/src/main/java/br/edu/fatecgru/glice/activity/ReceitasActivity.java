@@ -1,9 +1,12 @@
 package br.edu.fatecgru.glice.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +48,7 @@ public class ReceitasActivity extends AppCompatActivity
 
     private ImageView imgPerfil;
 
+    // Views do Detalhe
     private CardView cardDetalheReceita;
     private ImageView imgDetalheReceita;
     private TextView txtNomeDetalhe;
@@ -51,12 +56,18 @@ public class ReceitasActivity extends AppCompatActivity
     private TextView txtFonteDetalhe;
     private TextView txtIngredientes, txtPreparo;
 
+    private TextView txtResumoDetalhe;
+    private TextView txtTempoDetalhe;
+    private TextView txtJustificativaDetalhe;
+    private TextView txtSubstituicoesDetalhe;
+    private TextView txtLinkDetalhe;
 
     private FirebaseAuth auth;
-    private String currentUserId; // Armazenará o UID do usuário (será null se deslogado)
+    private String currentUserId;
 
     private ImageButton btnFecharDetalhe;
     private ImageButton btnFavoriteDetalhe;
+    private ImageButton btnInfoGlice;
 
     private static Cloudinary cloudinary;
 
@@ -68,18 +79,33 @@ public class ReceitasActivity extends AppCompatActivity
         // Inicialização do Firebase Auth
         auth = FirebaseAuth.getInstance();
 
-        // Busca de Views
+        // --- Busca de Views da TELA PRINCIPAL ---
         imgPerfil = findViewById(R.id.imgPerfil);
+        searchPesquisa = findViewById(R.id.searchPesquisa);
+        recycler = findViewById(R.id.recyclerReceitas);
+
+        // --- Busca de Views do DETALHE ---
         cardDetalheReceita = findViewById(R.id.cardDetalheReceita);
         imgDetalheReceita = findViewById(R.id.imgDetalheReceita);
-        searchPesquisa = findViewById(R.id.searchPesquisa);
         txtNomeDetalhe = findViewById(R.id.txtNomeDetalhe);
         txtIndiceDetalhe = findViewById(R.id.txtIndiceDetalhe);
         txtFonteDetalhe = findViewById(R.id.txtFonteDetalhe);
         txtIngredientes = findViewById(R.id.txtIngredientes);
         txtPreparo = findViewById(R.id.txtPreparo);
-        // Garanta que o ID R.id.btnFavoriteDetalhe existe no seu XML de detalhe!
         btnFavoriteDetalhe = findViewById(R.id.btnFavoriteDetalhe);
+        btnFecharDetalhe = findViewById(R.id.btnFecharDetalhe);
+
+        // --- Busca de Views de INTERAÇÃO (Botão de Info) ---
+        btnInfoGlice = findViewById(R.id.btnInfoGlice);
+
+        // --- Inicializa as variáveis de Dados da Receita (ELIMINEI O findViewById para os itens removidos do XML) ---
+        // Estas variáveis agora apenas guardam o dado da Receita no método exibirDetalheReceita
+        txtResumoDetalhe = new TextView(this); // Inicialização dummy (se necessário, senão o null check basta)
+        txtTempoDetalhe = new TextView(this);
+        txtJustificativaDetalhe = new TextView(this);
+        txtSubstituicoesDetalhe = new TextView(this);
+        txtLinkDetalhe = new TextView(this);
+
 
         // Configuração do Cloudinary
         Map config = new HashMap();
@@ -87,33 +113,34 @@ public class ReceitasActivity extends AppCompatActivity
         config.put("secure", true);
         MediaManager.init(this, config);
 
-        // Configuração do RecyclerView
-        recycler = findViewById(R.id.recyclerReceitas);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
-        // Instanciação do Adapter com os quatro argumentos
-        adapter = new ReceitaAdapter(this, lista, this, this);
-        recycler.setAdapter(adapter);
+        // --- Configuração do RecyclerView ---
+        if (recycler != null) {
+            recycler.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new ReceitaAdapter(this, lista, this, this);
+            recycler.setAdapter(adapter);
+        } else {
+            Toast.makeText(this, "Erro: RecyclerView não encontrado no layout.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         receitaDao = new ReceitaDAO();
 
-        // A chamada carregarReceitas() foi movida para o onResume()
-
-        imgPerfil.setOnClickListener(v-> {
-            Intent it = new Intent(this, LoginActivity.class);
-            startActivity(it);
-        });
+        // Configura o clique no ícone de perfil para ir para o Login
+        if (imgPerfil != null) {
+            imgPerfil.setOnClickListener(v-> {
+                Intent it = new Intent(this, LoginActivity.class);
+                startActivity(it);
+            });
+        }
 
         configurarPesquisa();
     }
-
-    // --- Lógica de Sincronização e Favoritos ---
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // 1. ATUALIZA o UID do usuário logado (será null se não estiver logado)
+        // 1. ATUALIZA o UID do usuário logado
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             currentUserId = user.getUid();
@@ -121,28 +148,8 @@ public class ReceitasActivity extends AppCompatActivity
             currentUserId = null;
         }
 
-        // 2. CHAMA a lógica de carregamento.
-        // Isso garante que a lista de favoritos será atualizada se o usuário acabou de logar
-        // ou deslogar.
+        // 2. Carrega as receitas e verifica se precisa abrir um detalhe via Intent
         carregarReceitas(() -> verificarIntentDeAbrirReceita());
-    }
-
-    // MÉTODO ATUALIZADO para receber o ID do usuário
-    private void carregarReceitas() {
-        // O ReceitaDAO agora precisa do ID do usuário para verificar os favoritos.
-        receitaDao.getReceitas(currentUserId, new ReceitaDAO.BuscarReceitasCallback() {
-            @Override
-            public void onSuccess(List<Receita> receitas) {
-                lista.clear();
-                lista.addAll(receitas);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(String msg) {
-                Toast.makeText(ReceitasActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void carregarReceitas(Runnable callback) {
@@ -151,7 +158,9 @@ public class ReceitasActivity extends AppCompatActivity
             public void onSuccess(List<Receita> receitas) {
                 lista.clear();
                 lista.addAll(receitas);
-                adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
 
                 if (callback != null) callback.run();
             }
@@ -176,41 +185,34 @@ public class ReceitasActivity extends AppCompatActivity
         // 🚨 PASSO 1: VERIFICAÇÃO DE LOGIN
         if (currentUserId == null || currentUserId.isEmpty()) {
             Toast.makeText(this, "Faça login para favoritar receitas!", Toast.LENGTH_LONG).show();
-
-            // Redireciona para a tela de Login
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-
-            return; // Sai do método
+            return;
         }
 
         // PASSO 2: Atualização Visual Imediata
         receita.setFavorita(!receita.isFavorita());
-        adapter.notifyItemChanged(position); // Atualiza o ícone na lista
+        adapter.notifyItemChanged(position);
 
         // PASSO 3: Persistência no Firebase
         if (receita.getDocumentId() != null) {
             receitaDao.atualizarFavorito(
                     currentUserId,
                     receita.getDocumentId(),
-                    receita.isFavorita(), // Se está favoritado (true), o DAO adiciona
+                    receita.isFavorita(),
                     new ReceitaDAO.UpdateFavoriteCallback() {
                         @Override
-                        public void onSuccess() {
-                            // Não precisa de Toast aqui, pois já foi dado um feedback rápido
-                        }
+                        public void onSuccess() {}
 
                         @Override
                         public void onError(String msg) {
-                            // Se o banco falhar, REVERTE o estado visual para o usuário não ser enganado.
+                            // Reverte o estado visual em caso de falha
                             receita.setFavorita(!receita.isFavorita());
                             adapter.notifyItemChanged(position);
                             Toast.makeText(ReceitasActivity.this, "Erro ao salvar favorito: " + msg, Toast.LENGTH_LONG).show();
                         }
                     }
             );
-
-            // Feedback imediato
             Toast.makeText(this, receita.getNome() + (receita.isFavorita() ? " favoritada!" : " desfavoritada!"), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Erro: Receita sem ID de documento.", Toast.LENGTH_SHORT).show();
@@ -219,56 +221,77 @@ public class ReceitasActivity extends AppCompatActivity
 
     // Método para popular e mostrar o CardView de Detalhes
     private void exibirDetalheReceita(Receita receita) {
-        // Popule os dados
+
+        // --- PREENCHIMENTO DOS CAMPOS DE TEXTO ---
         txtNomeDetalhe.setText(receita.getNome());
-        txtIndiceDetalhe.setText("Índice Glicêmico: " + receita.getIndiceGlicemico());
+
+        // Armazena os dados da receita (Mesmo que não estejam no layout principal)
+        txtResumoDetalhe.setText(receita.getResumo());
+        txtTempoDetalhe.setText(receita.getTempoPreparo() + " minutos");
+        txtJustificativaDetalhe.setText(receita.getJustificativaGlice());
+        txtSubstituicoesDetalhe.setText(receita.getSubstituicoes());
+
+        txtPreparo.setText(receita.getPreparo());
         txtFonteDetalhe.setText("Fonte: " + receita.getFonte());
+
+        // --- PREENCHIMENTO DO LINK ---
+        String link = receita.getLinkReceita();
+        if (link != null && !link.isEmpty()) {
+            txtLinkDetalhe.setText(link);
+            txtLinkDetalhe.setVisibility(View.VISIBLE);
+        } else {
+            txtLinkDetalhe.setVisibility(View.GONE);
+        }
+
+        // --- PREENCHIMENTO DA LISTA DE INGREDIENTES ---
         List<String> ingredientesList = receita.getIngredientesDetalhe();
-        if (ingredientesList != null) {
-            // Usa String.join("\n", lista) para colocar cada item da lista em uma nova linha.
-            txtIngredientes.setText(String.join("\n", ingredientesList));
+        if (ingredientesList != null && !ingredientesList.isEmpty()) {
+            String ingredientesFormatados = formatarListaComBullet(ingredientesList);
+            txtIngredientes.setText(ingredientesFormatados);
         } else {
             txtIngredientes.setText("Ingredientes não disponíveis.");
         }
-        txtPreparo.setText(receita.getPreparo());
 
+        // --- PREENCHIMENTO DO ÍNDICE GLICÊMICO E COR ---
+        int indice = receita.getIndiceGlicemico();
+        String textoIndice = "Glicê " + indice;
+        txtIndiceDetalhe.setText(textoIndice);
+
+        int cor = R.color.preto;
+        if (indice == 1) {
+            cor = R.color.rosa4;
+        } else if (indice == 2) {
+            cor = R.color.rosa2;
+        } else if (indice == 3) {
+            cor = R.color.rosa3;
+        }
+        txtIndiceDetalhe.setTextColor(ContextCompat.getColor(this, cor));
+
+
+        // --- CARREGAMENTO DA IMAGEM ---
         Glide.with(this)
                 .load(receita.getUrlImagem())
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgDetalheReceita);
 
-        // Configurar o estado inicial do ícone de favorito no detalhe
+        // --- LÓGICA DO BOTÃO FAVORITO NO DETALHE ---
         atualizarIconeFavoritoDetalhe(receita);
 
-        // Lógica de clique do botão de favorito na tela de Detalhes
         btnFavoriteDetalhe.setOnClickListener(v -> {
-
-            // Reutiliza a mesma lógica de persistência e verificação de login do clique na lista
-            // Note que o onReceitaFavoriteClick exige a posição do item na lista,
-            // mas aqui precisamos apenas da receita. Vamos chamar a lógica de persistência
-            // diretamente para simplificar.
-
-            // 🚨 VERIFICAÇÃO DE LOGIN
             if (currentUserId == null || currentUserId.isEmpty()) {
                 Toast.makeText(this, "Faça login para favoritar receitas!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this, LoginActivity.class));
                 return;
             }
 
-            // 1. Inverte o estado de favorito
             receita.setFavorita(!receita.isFavorita());
-
-            // 2. Atualiza o ícone de favorito do detalhe
             atualizarIconeFavoritoDetalhe(receita);
 
-            // 3. Persistência e atualização da lista
-            int index = lista.indexOf(receita); // Encontra a posição do item na lista
+            int index = lista.indexOf(receita);
             if(index != -1) {
-                // Notifica a lista para atualizar o coração na tela principal
                 adapter.notifyItemChanged(index);
             }
 
-            // Lógica de Persistência (duplicada do onReceitaFavoriteClick para simplificar)
             if (receita.getDocumentId() != null) {
                 receitaDao.atualizarFavorito(
                         currentUserId,
@@ -279,10 +302,9 @@ public class ReceitasActivity extends AppCompatActivity
                             public void onSuccess() {}
                             @Override
                             public void onError(String msg) {
-                                // Reverter o estado visual
                                 receita.setFavorita(!receita.isFavorita());
                                 if(index != -1) adapter.notifyItemChanged(index);
-                                atualizarIconeFavoritoDetalhe(receita); // Reverte no detalhe também
+                                atualizarIconeFavoritoDetalhe(receita);
                                 Toast.makeText(ReceitasActivity.this, "Erro ao salvar favorito: " + msg, Toast.LENGTH_LONG).show();
                             }
                         }
@@ -292,18 +314,32 @@ public class ReceitasActivity extends AppCompatActivity
             Toast.makeText(this, receita.getNome() + (receita.isFavorita() ? " favoritada!" : " desfavoritada!"), Toast.LENGTH_SHORT).show();
         });
 
+        // Configuração do clique para abrir o Pop-up de informações
+        if (btnInfoGlice != null) {
+            btnInfoGlice.setOnClickListener(v -> {
+                exibirInfoGlice(receita);
+            });
+        }
+
 
         // Muda a visibilidade para VISIBLE
         cardDetalheReceita.setVisibility(View.VISIBLE);
     }
 
-    // Método auxiliar para atualizar o ícone no Detalhe
+    // Método auxiliar para formatar a lista com bullets
+    private String formatarListaComBullet(List<String> lista) {
+        StringBuilder sb = new StringBuilder();
+        for (String item : lista) {
+            sb.append("• ").append(item).append("\n");
+        }
+        return sb.toString().trim();
+    }
+
+
     private void atualizarIconeFavoritoDetalhe(Receita receita) {
         if (receita.isFavorita()) {
-            // Garanta que você tem R.drawable.baseline_favorite_24 (coração cheio)
             btnFavoriteDetalhe.setImageResource(R.drawable.baseline_favorite_24);
         } else {
-            // Garanta que você tem R.drawable.baseline_favorite_border_24 (coração vazio)
             btnFavoriteDetalhe.setImageResource(R.drawable.baseline_favorite_border_24);
         }
     }
@@ -312,7 +348,6 @@ public class ReceitasActivity extends AppCompatActivity
         String id = getIntent().getStringExtra("abrir_receita_id");
         if (id == null) return;
 
-        // evitar reabrir ao voltar
         getIntent().removeExtra("abrir_receita_id");
 
         for (Receita r : lista) {
@@ -323,12 +358,14 @@ public class ReceitasActivity extends AppCompatActivity
         }
     }
 
-    // Método para fechar o CardView de Detalhes
     public void fecharDetalhe(View view) {
         cardDetalheReceita.setVisibility(View.GONE);
     }
 
     private void configurarPesquisa() {
+        // Verifica se o searchPesquisa foi encontrado para evitar NullPointerException
+        if (searchPesquisa == null) return;
+
         searchPesquisa.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -346,9 +383,10 @@ public class ReceitasActivity extends AppCompatActivity
     }
 
     private void filtrarReceitas(String texto) {
+        // Verifica se o adapter foi inicializado
+        if (adapter == null) return;
 
         if (texto == null || texto.trim().isEmpty()) {
-            // Se o texto estiver vazio, restaura a lista completa
             adapter.atualizarLista(lista);
             return;
         }
@@ -366,4 +404,69 @@ public class ReceitasActivity extends AppCompatActivity
         adapter.atualizarLista(listaFiltrada);
     }
 
+    // ************************************************************
+    // MÉTODOS PARA O POP-UP DE INFORMAÇÕES GLICÊ
+    // ************************************************************
+
+    // Método auxiliar para formatar a string de justificativa com negrito
+    private CharSequence formatarComNegrito(String texto) {
+        // Substitui **palavra** por <b>palavra</b> para que o Html.fromHtml renderize em negrito.
+        String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>");
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(htmlText);
+        }
+    }
+
+
+    // Método para exibir o pop-up com Justificativa, Substituições e Explicação do IG
+    private void exibirInfoGlice(Receita receita) {
+        // 1. Inflar o layout do diálogo (R.layout.dialog_glice_info deve existir)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_glice_info, null);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        // 2. Encontrar as views do diálogo
+        TextView txtIndiceInfo = dialogView.findViewById(R.id.txtIndiceInfo);
+        TextView txtJustificativaInfo = dialogView.findViewById(R.id.txtJustificativaInfo);
+        TextView txtSubstituicoesInfo = dialogView.findViewById(R.id.txtSubstituicoesInfo);
+        TextView txtOQueEGlice = dialogView.findViewById(R.id.txtOQueEGlice);
+        Button btnFecharInfo = dialogView.findViewById(R.id.btnFecharInfo);
+
+        // 3. Preencher os dados
+        int indice = receita.getIndiceGlicemico();
+        String textoIndice = "Índice Glicê: Glicê " + indice;
+        txtIndiceInfo.setText(textoIndice);
+
+        // Ajusta a cor do índice no pop-up
+        int cor = R.color.preto;
+        if (indice == 1) {
+            cor = R.color.rosa4;
+        } else if (indice == 2) {
+            cor = R.color.rosa2;
+        } else if (indice == 3) {
+            cor = R.color.rosa3;
+        }
+        txtIndiceInfo.setTextColor(ContextCompat.getColor(this, cor));
+
+
+        // Usa a função para aplicar negrito (dados são obtidos diretamente do objeto 'receita')
+        txtJustificativaInfo.setText(formatarComNegrito(receita.getJustificativaGlice()));
+        txtSubstituicoesInfo.setText(formatarComNegrito(receita.getSubstituicoes()));
+
+        // Explicação padrão do Índice Glicê (pode ser movida para strings.xml se preferir)
+        String explicacao = "O Índice Glice do GLICE classifica o impacto potencial da receita na glicemia: " +
+                "Glice 1 (Baixo), Glice 2 (Moderado) e Glice 3 (Alto). " +
+                "O objetivo é auxiliar na escolha de refeições mais estáveis.";
+        txtOQueEGlice.setText(explicacao);
+
+        // 4. Configurar o botão de fechar
+        btnFecharInfo.setOnClickListener(v -> dialog.dismiss());
+
+        // 5. Exibir o diálogo
+        dialog.show();
+    }
 }
