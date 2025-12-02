@@ -73,9 +73,9 @@
         android:textColor="@color/preto"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/btnEditarPerfilIcone"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardFotoPerfil"
-        app:layout_constraintHorizontal_chainStyle="packed"
         tools:text="Nome do Usuário Aqui" />
 
     <!-- Botão de Edição do Perfil -->

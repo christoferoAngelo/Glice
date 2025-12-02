@@ -23,6 +23,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import br.edu.fatecgru.glice.R;
 import br.edu.fatecgru.glice.adapter.PerfilPageAdapter;
 
+import android.net.Uri; // Para a URI da imagem
+import android.content.SharedPreferences; // Para persistência local
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 /**
  * Activity que representa a tela de Perfil do usuário.
  * Contém informações do usuário no topo e usa TabLayout/ViewPager2 para navegar
@@ -43,6 +48,12 @@ public class PerfilUsuario extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String userId;
 
+    //foto de perfil
+    private SharedPreferences sharedPreferences;
+    private ActivityResultLauncher<String> mGetContent;
+    private static final String PREFS_NAME = "PerfilPrefs";
+    private static final String KEY_PROFILE_PIC_URI = "profilePicUri";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +73,9 @@ public class PerfilUsuario extends AppCompatActivity {
         }
 
         userId = currentUser.getUid();
+
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        configurarSelecaoFotoLauncher();
 
         // --- Inicializa Elementos de Perfil e Firebase ---
         txtNomeUsuario = findViewById(R.id.txtNomeUsuario);
@@ -103,17 +117,42 @@ public class PerfilUsuario extends AppCompatActivity {
     /**
      * Carrega Nome (Firestore) e Foto/Email (Auth).
      */
+    /**
+     * Carrega Nome (Firestore) e Foto/Email (Local/Auth).
+     */
     private void carregarInformacoesUsuario() {
-        // Carrega foto do Firebase Auth (se existir)
-        if (currentUser.getPhotoUrl() != null) {
+        // --- NOVO: Tenta carregar a foto de perfil local ---
+        String localUriString = sharedPreferences.getString(KEY_PROFILE_PIC_URI, null);
+        Uri imageUri = null;
+
+        if (localUriString != null) {
+            imageUri = Uri.parse(localUriString);
+        }
+
+        if (imageUri != null) {
+            // Se houver URI local, carrega ela
+            Glide.with(this)
+                    .load(imageUri)
+                    .placeholder(R.drawable.ic_default_profile)
+                    .error(R.drawable.ic_default_profile)
+                    .into(imgFotoPerfil);
+        }
+        // --- FIM NOVO ---
+
+        // Carrega foto do Firebase Auth (SÓ SE NÃO HOUVER FOTO LOCAL)
+        else if (currentUser.getPhotoUrl() != null) {
             Glide.with(this)
                     .load(currentUser.getPhotoUrl())
-                    .placeholder(R.drawable.ic_default_profile) // Use o recurso de ícone padrão
-                    .error(R.drawable.ic_default_profile) // Use o recurso de ícone padrão
+                    .placeholder(R.drawable.ic_default_profile)
+                    .error(R.drawable.ic_default_profile)
                     .into(imgFotoPerfil);
+        } else {
+            // Caso não tenha foto nenhuma, carrega o placeholder
+            imgFotoPerfil.setImageResource(R.drawable.ic_default_profile);
         }
 
         // Carrega o nome do Firestore
+        // ... (Restante do código para carregar o nome)
         DocumentReference userRef = db.collection("usuarios").document(userId);
         userRef.addSnapshotListener((documentSnapshot, error) -> {
             if (error != null || documentSnapshot == null || !documentSnapshot.exists()) {
@@ -131,10 +170,7 @@ public class PerfilUsuario extends AppCompatActivity {
 
     // Métodos onClick do layout
 
-    public void selecionarFotoPerfil(View view) {
-        // Lógica para selecionar foto
-        Toast.makeText(this, "Funcionalidade de upload de foto pendente.", Toast.LENGTH_SHORT).show();
-    }
+
 
     public void abrirTelaEdicao(View view) {
         // Lógica para abrir tela de edição (como na sua versão antiga)
@@ -149,5 +185,44 @@ public class PerfilUsuario extends AppCompatActivity {
             // Garante que o nome é atualizado após a edição
             carregarInformacoesUsuario();
         }
+    }
+
+    /**
+     * Configura o ActivityResultLauncher para selecionar a foto da galeria.
+     */
+    private void configurarSelecaoFotoLauncher() {
+        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                // 1. Persistir a URI localmente
+                persistirUriLocal(uri);
+
+                // 2. Exibir a imagem
+                Glide.with(this)
+                        .load(uri)
+                        .placeholder(R.drawable.ic_default_profile)
+                        .error(R.drawable.ic_default_profile)
+                        .into(imgFotoPerfil);
+
+                Toast.makeText(this, "Foto de perfil atualizada!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Persiste a URI da imagem selecionada no SharedPreferences.
+     */
+    private void persistirUriLocal(Uri uri) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_PROFILE_PIC_URI, uri.toString());
+        // Permite que o aplicativo tenha acesso persistente à URI (importante para URIs de conteúdo)
+        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        editor.apply();
+    }
+
+
+    public void selecionarFotoPerfil(View view) {
+        // Lógica para abrir o seletor de imagens
+        mGetContent.launch("image/*");
+        // Não é mais necessário o Toast: Toast.makeText(this, "Funcionalidade de upload de foto pendente.", Toast.LENGTH_SHORT).show();
     }
 }
