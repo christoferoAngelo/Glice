@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_disclaimer_dialog"
+    android:padding="24dp">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Termos de Uso"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <!-- Texto do disclaimer -->
+    <TextView
+        android:id="@+id/txtMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="As classificações Glicê e as informações nutricionais contidas neste aplicativo
+são geradas por Inteligência Artificial com base em regras predefinidas e
+não substituem o aconselhamento de um médico, endocrinologista ou
+nutricionista. Sempre consulte um profissional de saúde antes de fazer
+alterações significativas em sua dieta."
+        android:textColor="#4A4A4A"
+        android:textSize="14sp"
+        android:lineSpacingExtra="4dp"/>
+
+    <!-- Botão ACEITAR -->
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F49CBB"
+        android:text="Concordo"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+
+    <!-- Botão Fechar -->
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#000000"
+        android:text="Cancelar"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
