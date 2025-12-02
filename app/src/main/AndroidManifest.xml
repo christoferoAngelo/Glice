@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glice">
         <activity
+            android:name=".activity.AdicionarReceitaLocalActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetalheReceitaActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    tools:context=".fragment.ReceitasFavoritasFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewLivroReceitas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_receita_favorita" />
+
+    <TextView
+        android:id="@+id/txtListaVazia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="Você ainda não favoritou nenhuma receita!"
+        android:textColor="@color/cinza_escuro_texto"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDetalheReceita"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageButton
+                        android:id="@+id/btnFecharDetalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Fechar"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel"
+                        android:tint="@color/cinza_escuro_texto"
+                        android:padding="4dp" /> <TextView
+                    android:id="@+id/txtNomeDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/btnFecharDetalhe"
+                    android:layout_alignParentStart="true"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="8dp"
+                    tools:text="Nome da Receita"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imgDetalheReceita"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="8dp"
+                    tools:src="@drawable/recipes" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <ImageButton
+                        android:id="@+id/btnInfoGlice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Informações sobre Índice Glicêmico"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:id="@+id/txtIndiceDetalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/btnInfoGlice"
+                        android:layout_marginStart="4dp"
+                        android:textSize="16sp"
+                        tools:text="Índice Glicêmico: Baixo" />
+
+                    <ImageButton
+                        android:id="@+id/btnFavoriteDetalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Favoritar/Desfavoritar"
+                        android:src="@drawable/baseline_favorite_24"
+                        android:padding="4dp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtFonteDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    tools:text="Fonte: Livro de Culinária Saudável" />
+
+                <TextView
+                    android:id="@+id/txtResumoDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:text="Resumo:" />
+
+                <TextView
+                    android:id="@+id/txtTempoDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:text="Tempo:" />
+
+                <TextView
+                    android:id="@+id/txtIngredientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:text="Ingredientes:" />
+
+                <TextView
+                    android:id="@+id/txtPreparo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:text="Preparo:" />
+
+                <TextView
+                    android:id="@+id/txtLinkDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:autoLink="web"
+                    android:textStyle="bold"
+                    android:text="Link:" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
