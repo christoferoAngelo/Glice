@@ -511,9 +511,9 @@ public class ReceitasActivity extends AppCompatActivity
 
     // Método auxiliar para formatar a string de justificativa com negrito
     private CharSequence formatarComNegrito(String texto) {
-        // Substitui **palavra** por <b>palavra</b> para que o Html.fromHtml renderize em negrito.
-        String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>");
-
+        // Substitui **palavra** por <b>palavra</b> e \n por <br/>
+        String htmlText = texto.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
+                .replaceAll("\n", "<br/>");
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY);
         } else {
@@ -557,12 +557,12 @@ public class ReceitasActivity extends AppCompatActivity
         txtJustificativaInfo.setText(formatarComNegrito(receita.getJustificativaGlice()));
         txtSubstituicoesInfo.setText(formatarComNegrito(receita.getSubstituicoes()));
 
-        // Explicação padrão do Índice Glicê (pode ser movida para strings.xml se preferir)
-        String explicacao = "O Índice Glice do GLICE classifica o impacto potencial da receita na glicemia: " +
-                "Glice 1 (Baixo), Glice 2 (Moderado) e Glice 3 (Alto). " +
-                "O objetivo é auxiliar na escolha de refeições mais estáveis.";
-        txtOQueEGlice.setText(explicacao);
-
+        // Explicação padrão do Índice Glicê
+        String explicacao = "O **Índice Glice** do GLICE classifica o impacto potencial da receita na glicemia:\n\n" +
+                "• **Glice 1 (Baixo):** Receitas sem adição de açúcar, frequentemente usando adoçantes dietéticos e ingredientes de baixo carboidrato. Ideal para controle estrito.\n" +
+                "• **Glice 2 (Moderado):** Contém carboidratos complexos ou açúcares naturais de frutas/vegetais. Impacto controlado, adequado com moderação.\n" +
+                "• **Glice 3 (Alto):** Contém açúcar adicionado (mel, açúcar refinado, leite condensado) ou alto teor de farinhas brancas. Deve ser consumido com cautela.";
+        txtOQueEGlice.setText(formatarComNegrito(explicacao));
         // 4. Configurar o botão de fechar
         btnFecharInfo.setOnClickListener(v -> dialog.dismiss());
 
