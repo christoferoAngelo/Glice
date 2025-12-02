@@ -2,4 +2,11 @@
 <resources>
     <string name="app_name">Glice</string>
     <string name="imagem_da_receita">Imagem da receita sendo exibida</string>
+    <array name="indices_glice">
+        <item>0 (Todos)</item>
+        <item>1 (Baixo)</item>
+        <item>2 (Médio)</item>
+        <item>3 (Alto)</item>
+    </array>
+
 </resources>
