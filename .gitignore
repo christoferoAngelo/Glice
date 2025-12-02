@@ -1,0 +1,55 @@
+# === Android Studio / IntelliJ ===
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Never ignore gradle wrapper jar
+# (it is needed to build the project in any machine)
+!gradle-wrapper.jar
+
+# === Local configuration ===
+local.properties
+
+# === Gradle ===
+.gradle/
+build/
+out/
+
+# === Android generated files ===
+/captures/
+/outputs/
+
+# === Logs ===
+*.log
+
+# === Temporary files ===
+*.tmp
+*.temp
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Keystore (EVITE commitar chaves privadas) ===
+*.keystore
+*.jks
+
+# === Kotlin ===
+*.kotlin_module
+
+# === Jetpack Compose ===
+*.cache/
+
+# === NDK ===
+obj/
+
+# === VSCode (se usar) ===
+.vscode/
+
+# === Firebase / Google Services ===
+/google-services.json
+/google-services.plist
+
+# === App-specific ===
+/app/build/
