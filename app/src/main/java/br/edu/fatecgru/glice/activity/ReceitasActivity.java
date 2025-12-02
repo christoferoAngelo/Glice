@@ -136,11 +136,19 @@ public class ReceitasActivity extends AppCompatActivity
 
         receitaDao = new ReceitaDAO();
 
-        // Configura o clique no ícone de perfil para ir para o Login
+        // Configura o clique no ícone de perfil para ir para o Perfil (se logado) ou Login (se deslogado)
         if (imgPerfil != null) {
             imgPerfil.setOnClickListener(v-> {
-                Intent it = new Intent(this, LoginActivity.class);
-                startActivity(it);
+                // Verifica se o usuário está logado (usando o auth inicializado no onCreate)
+                if (auth.getCurrentUser() != null) {
+                    // Se logado, vai para PerfilUsuario
+                    Intent it = new Intent(this, PerfilUsuario.class);
+                    startActivity(it);
+                } else {
+                    // Se não logado, vai para LoginActivity
+                    Intent it = new Intent(this, LoginActivity.class);
+                    startActivity(it);
+                }
             });
         }
 
