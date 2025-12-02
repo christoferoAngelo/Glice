@@ -95,7 +95,7 @@
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imgFiltro"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:onClick="abrirFiltro"

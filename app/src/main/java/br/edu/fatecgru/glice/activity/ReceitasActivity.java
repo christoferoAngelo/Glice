@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.edu.fatecgru.glice.R;
+import br.edu.fatecgru.glice.adapter.IngredienteAdapter;
 import br.edu.fatecgru.glice.adapter.ReceitaAdapter;
 import br.edu.fatecgru.glice.dao.ReceitaDAO;
 import br.edu.fatecgru.glice.model.Receita;
@@ -47,6 +50,7 @@ public class ReceitasActivity extends AppCompatActivity
     private ReceitaDAO receitaDao;
 
     private ImageView imgPerfil;
+    private ImageView imgFiltro;
 
     // Views do Detalhe
     private CardView cardDetalheReceita;
@@ -83,6 +87,12 @@ public class ReceitasActivity extends AppCompatActivity
         imgPerfil = findViewById(R.id.imgPerfil);
         searchPesquisa = findViewById(R.id.searchPesquisa);
         recycler = findViewById(R.id.recyclerReceitas);
+        imgFiltro = findViewById(R.id.imgFiltro);
+
+        if (imgFiltro != null) {
+            imgFiltro.setOnClickListener(v -> abrirFiltro());
+        }
+
 
         // --- Busca de Views do DETALHE ---
         cardDetalheReceita = findViewById(R.id.cardDetalheReceita);
@@ -403,6 +413,86 @@ public class ReceitasActivity extends AppCompatActivity
 
         adapter.atualizarLista(listaFiltrada);
     }
+
+    private void abrirFiltro() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_filtro_receitas, null);
+        builder.setView(view);
+
+        AlertDialog dialog = builder.create();
+
+        // Views do popup
+        Spinner spnIndice = view.findViewById(R.id.spnIndice);
+        EditText edtIngrediente = view.findViewById(R.id.edtIngrediente);
+        Button btnAddIngrediente = view.findViewById(R.id.btnAddIngrediente);
+        RecyclerView recyclerIngredientes = view.findViewById(R.id.recyclerIngredientes);
+        Button btnAplicarFiltro = view.findViewById(R.id.btnAplicarFiltro);
+        Button btnCancelarFiltro = view.findViewById(R.id.btnCancelarFiltro);
+
+        // Lista
+        List<String> ingredientesFiltro = new ArrayList<>();
+
+        // Adapter correto para RecyclerView
+        IngredienteAdapter ingredientesAdapter = new IngredienteAdapter(ingredientesFiltro);
+
+        recyclerIngredientes.setLayoutManager(new LinearLayoutManager(this));
+        recyclerIngredientes.setAdapter(ingredientesAdapter);
+
+        // Botão de adicionar ingrediente
+        btnAddIngrediente.setOnClickListener(v -> {
+            String ing = edtIngrediente.getText().toString().trim();
+
+            if (!ing.isEmpty()) {
+                ingredientesFiltro.add(ing);
+                ingredientesAdapter.notifyDataSetChanged();
+                edtIngrediente.setText("");
+            }
+        });
+
+        btnAplicarFiltro.setOnClickListener(v -> {
+            int indiceSelecionado = spnIndice.getSelectedItemPosition();
+            aplicarFiltro(indiceSelecionado, ingredientesFiltro);
+            dialog.dismiss();
+        });
+
+        btnCancelarFiltro.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+
+    private void aplicarFiltro(int indice, List<String> ingredientesFiltro) {
+
+        List<Receita> filtradas = new ArrayList<>();
+
+        for (Receita r : lista) {
+
+            boolean atendeIndice = (indice == 0) || r.getIndiceGlicemico() == indice;
+
+            boolean atendeIngredientes = true;
+
+            if (!ingredientesFiltro.isEmpty()) {
+                for (String ing : ingredientesFiltro) {
+                    boolean contem = r.getIngredientesDetalhe().stream()
+                            .anyMatch(item -> item.toLowerCase().contains(ing.toLowerCase()));
+
+                    if (!contem) {
+                        atendeIngredientes = false;
+                        break;
+                    }
+                }
+            }
+
+            if (atendeIndice && atendeIngredientes) {
+                filtradas.add(r);
+            }
+        }
+
+        adapter.atualizarLista(filtradas);
+    }
+
+
 
     // ************************************************************
     // MÉTODOS PARA O POP-UP DE INFORMAÇÕES GLICÊ
