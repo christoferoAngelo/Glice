@@ -1,6 +1,9 @@
 package br.edu.fatecgru.glice.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +30,7 @@ public class TutorialActivity extends AppCompatActivity {
     private WelcomeAdapter adapter;
     private List<Carrossel_Item> lista = new ArrayList<>();
     private Button btnPular, btnContinuar;
+    int ultimoSlide = lista.size()-1; //Guardar tamanho para descobrir em qual slide o user tá
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,25 +93,26 @@ public class TutorialActivity extends AppCompatActivity {
         });
 
     }
-      // TERMOS E CONDIÇÕES - MODEO PADRÃO
+
     private void mostrarDisclaimer() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Termos de Uso");
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_dialog_disclaimer);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
 
-        builder.setMessage("As classificações Glicê e as informações nutricionais contidas neste aplicativo " +
-                "são geradas por Inteligência Artificial com base em regras predefinidas e não substituem o " +
-                "aconselhamento de um médico, endocrinologista ou nutricionista. Sempre consulte um profissional " +
-                "de saúde antes de fazer alterações significativas em sua dieta.");
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+        Button btnCancelar = dialog.findViewById(R.id.btnCancelar);
 
-        builder.setPositiveButton("Concordo", (dialog, which) -> {
+        btnOk.setOnClickListener(v -> {
             Intent intent = new Intent(TutorialActivity.this, ReceitasActivity.class);
             startActivity(intent);
+            dialog.dismiss();
             finish();
         });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        btnCancelar.setOnClickListener(v -> dialog.dismiss());
 
-        builder.create().show();
+        dialog.show();
     }
 
 }
