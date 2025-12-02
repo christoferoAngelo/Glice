@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -51,13 +52,11 @@ public class TutorialActivity extends AppCompatActivity {
         lista.add(new Carrossel_Item(
                 "Bem-vindo ao Glicê",
                 "O seu companheiro fitness para receitas saudáveis e nutritivas. Alcance seus objetivos com alimentação balanceada!",
-                R.drawable.welcome
+                R.drawable.gate
         ));
 
-        lista.add(new Carrossel_Item("Controle Glicêmico", "Glicê 1: Sem açúcar; baixo impacto glicêmico. " +
-                "Glicê 2: Contém apenas açúcares naturais (frutas) ou carboidratos complexos." +
-                "Glicê 3:Contém qualquer açúcar adicionado ou carboidratos simples (mel, açúcar,farinha branca); impacto glicêmico:  ", R.drawable.welcome));
-       lista.add(new Carrossel_Item("Receitas Saudáveis", "Descubra receitas", R.drawable.welcome));
+        lista.add(new Carrossel_Item("Controle Glicêmico", "Receitas classificadas com índice glicêmico 1, 2 ou 3, para você comer com segurança.", R.drawable.vegetables));
+       lista.add(new Carrossel_Item("Receitas Saudáveis", "Publique e descubra receitas criativas com ingredientes que você já tem na geladeira!", R.drawable.recipes));
 
         // Adapter
         adapter = new WelcomeAdapter(lista);
@@ -71,11 +70,16 @@ public class TutorialActivity extends AppCompatActivity {
 
         btnContinuar.setOnClickListener(v -> {
             int next = ((LinearLayoutManager) recyclerCarrossel.getLayoutManager()).findFirstVisibleItemPosition() + 1;
+
             if (next < lista.size()) {
                 recyclerCarrossel.smoothScrollToPosition(next);
-            } else {
+            }
+                else if(next==lista.size()){
+                    mostrarDisclaimer();
+            }
+            else {
                 finish();
-            }//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah
+            }
         });
 
         btnPular.setOnClickListener(v -> {
@@ -85,4 +89,25 @@ public class TutorialActivity extends AppCompatActivity {
         });
 
     }
+      // TERMOS E CONDIÇÕES - MODEO PADRÃO
+    private void mostrarDisclaimer() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Termos de Uso");
+
+        builder.setMessage("As classificações Glicê e as informações nutricionais contidas neste aplicativo " +
+                "são geradas por Inteligência Artificial com base em regras predefinidas e não substituem o " +
+                "aconselhamento de um médico, endocrinologista ou nutricionista. Sempre consulte um profissional " +
+                "de saúde antes de fazer alterações significativas em sua dieta.");
+
+        builder.setPositiveButton("Concordo", (dialog, which) -> {
+            Intent intent = new Intent(TutorialActivity.this, ReceitasActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        builder.create().show();
+    }
+
 }
