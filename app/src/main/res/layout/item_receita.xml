@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
+        <!-- 1. CardView para a Imagem (Thumbnail) -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardImage"
             android:layout_width="80dp"
@@ -30,15 +31,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
+            <!-- ID: imgReceitaThumbnail (Usado no ReceitaAdapter) -->
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgReceitaThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/imagem_da_receita"
                 tools:srcCompat="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
 
+        <!-- 2. Layout de Conteúdo (Nome, IG, Fonte) -->
         <LinearLayout
             android:id="@+id/layout_content"
             android:layout_width="0dp"
@@ -51,6 +55,7 @@
             app:layout_constraintEnd_toStartOf="@id/imgFavoriteList"
             app:layout_constraintBottom_toBottomOf="parent">
 
+            <!-- ID: txtNomeReceita (Resolvendo o erro atual) -->
             <TextView
                 android:id="@+id/txtNomeReceita"
                 android:layout_width="match_parent"
@@ -62,6 +67,7 @@
                 android:ellipsize="end"
                 tools:text="Receita de Bolo de Cenoura com Nome Bem Longo" />
 
+            <!-- ID: txtIndiceGlice -->
             <TextView
                 android:id="@+id/txtIndiceGlice"
                 android:layout_width="match_parent"
@@ -72,6 +78,7 @@
                 android:layout_marginTop="2dp"
                 tools:text="IG: Baixo (35)" />
 
+            <!-- ID: txtFonte -->
             <TextView
                 android:id="@+id/txtFonte"
                 android:layout_width="match_parent"
@@ -82,6 +89,8 @@
                 tools:text="Fonte: Culinária Saudável" />
         </LinearLayout>
 
+        <!-- 3. Botão de Favoritar -->
+        <!-- ID: imgFavoriteList -->
         <ImageView
             android:id="@+id/imgFavoriteList"
             android:layout_width="32dp"
@@ -91,6 +100,7 @@
             android:focusable="true"
             app:srcCompat="@drawable/baseline_favorite_border_24"
             app:tint="@color/rosa4"
+            android:contentDescription="Adicionar ou remover dos favoritos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

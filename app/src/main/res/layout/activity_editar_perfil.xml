@@ -1,30 +1,107 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:padding="24dp"
+    tools:context=".activity.EditarPerfilActivity">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edtNome"
-        android:hint="Nome"
+    <!-- Título da Tela -->
+    <TextView
+        android:id="@+id/txtTituloEdicao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Editar Dados de Acesso"
+        android:textColor="@color/rosa4"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Subtítulo / Email Atual (Visualização Apenas) -->
+    <TextView
+        android:id="@+id/txtEmailAtual"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/cinza_escuro_texto"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTituloEdicao"
+        tools:text="Email: nome.usuario@exemplo.com" />
+
+    <!-- Campo Nome -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutNome"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_marginTop="300dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:boxStrokeColor="@color/rosa3"
+        app:hintTextColor="@color/rosa3"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailAtual">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edtEmail"
-        android:hint="Email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome de Usuário"
+            android:inputType="textPersonName"
+            android:textColor="@color/preto" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Senha (opcional, para reautenticação ou alteração) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutSenha"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:boxStrokeColor="@color/rosa3"
+        app:hintTextColor="@color/rosa3"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutNome">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nova Senha (deixe vazio para não alterar)"
+            android:inputType="textPassword"
+            android:textColor="@color/preto" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botão Salvar -->
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@color/rosa2"
-        android:text="Salvar mudanças" />
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/rosa3"
+        android:text="SALVAR MUDANÇAS"
+        android:textColor="@color/branco"
+        android:textStyle="bold"
+        android:paddingVertical="12dp"
+        android:onClick="salvarAlteracoes"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutSenha" />
 
-</LinearLayout>
+    <!-- Botão de Deslogar (Sair da Conta) -->
+    <Button
+        android:id="@+id/btnSair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/rosa4"
+        android:text="SAIR DA CONTA"
+        android:textColor="@color/branco"
+        android:textStyle="bold"
+        android:paddingVertical="12dp"
+        android:onClick="deslogarUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

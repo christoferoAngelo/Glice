@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Cor quando a aba está selecionada (focada/ativa) -->
+    <item android:color="@color/rosa4" android:state_selected="true" />
+    <!-- Cor padrão quando a aba não está selecionada -->
+    <item android:color="@color/cinza_escuro_texto" />
+</selector>

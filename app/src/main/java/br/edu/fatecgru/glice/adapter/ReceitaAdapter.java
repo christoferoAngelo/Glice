@@ -111,7 +111,8 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ReceitaV
         public ReceitaViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img = itemView.findViewById(R.id.imageView);
+            // CORREÇÃO: Alterado R.id.imageView para R.id.imgReceitaThumbnail para padronizar com o Canvas
+            img = itemView.findViewById(R.id.imgReceitaThumbnail);
             txtNome = itemView.findViewById(R.id.txtNomeReceita);
             txtIndice = itemView.findViewById(R.id.txtIndiceGlice); // Mapeamento do Índice Glicêmico
             txtFonte = itemView.findViewById(R.id.txtFonte);

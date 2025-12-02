@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glice">
         <activity
+            android:name=".DetalheReceitaActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AdminListActivity"
             android:exported="false" />
         <activity
@@ -37,7 +40,8 @@
         <activity
             android:name=".activity.ReceitasActivity"
             android:exported="false" />
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".activity.TutorialActivity"

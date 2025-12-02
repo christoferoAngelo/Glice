@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-46:/values-mr/values-mr.xml",
+            "outputFile": "br.edu.fatecgru.glice.app-mergeDebugResources-49:/values-mr/values-mr.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Andrea\\.gradle\\caches\\8.13\\transforms\\52a801a4759cdfc1daf319546a309032\\transformed\\play-services-base-18.0.1\\res\\values-mr\\values.xml",

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Glice</string>
+    <string name="imagem_da_receita">Imagem da receita sendo exibida</string>
 </resources>

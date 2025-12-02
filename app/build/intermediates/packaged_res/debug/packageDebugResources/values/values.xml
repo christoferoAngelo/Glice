@@ -42,6 +42,7 @@
     <string name="google_app_id" translatable="false">1:107850080862:android:0d1ae0efed81686636cacf</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCUMnkhHnyAkdztH4WQyezlWbijnsKJbsU</string>
     <string name="google_storage_bucket" translatable="false">glice-98ca7.firebasestorage.app</string>
+    <string name="imagem_da_receita">Imagem da receita sendo exibida</string>
     <string name="project_id" translatable="false">glice-98ca7</string>
     <style name="Base.Theme.Glice" parent="Theme.Material3.DayNight.NoActionBar">
         

@@ -3,53 +3,44 @@ package br.edu.fatecgru.glice.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import br.edu.fatecgru.glice.R;
+import br.edu.fatecgru.glice.adapter.PerfilPageAdapter;
 
+/**
+ * Activity que representa a tela de Perfil do usuário.
+ * Contém informações do usuário no topo e usa TabLayout/ViewPager2 para navegar
+ * entre as seções Livro de Receitas (local) e Receitas Favoritas (FireStore).
+ */
 public class PerfilUsuario extends AppCompatActivity {
 
-    private ImageView imgProfile;
-    private TextView txtUserName, txtUserEmail;
-    private Button btnEditarInfo, btnVerFavoritos, btnLogout;
-    private EditText edtIngrediente;
-    private Button btnAdicionarIngrediente;
-    private ListView listIngredientes;
-    private ScrollView scrollMain;
+    private TextView txtNomeUsuario;
+    private ImageView imgFotoPerfil;
+    private ImageButton btnEditarPerfilIcone;
 
-    private FirebaseFirestore db;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+
+    // Campos do Firebase
     private FirebaseAuth auth;
-
-    private ArrayAdapter<String> adapterIngredientes;
-    private ArrayList<String> listaIngredientes = new ArrayList<>();
-
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
     private String userId;
 
     @Override
@@ -58,140 +49,105 @@ public class PerfilUsuario extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_perfil_usuario);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scrollMain), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        // Firebase
-        db = FirebaseFirestore.getInstance();
+        // --- Configuração do Firebase ---
         auth = FirebaseAuth.getInstance();
-        userId = auth.getCurrentUser().getUid();
+        db = FirebaseFirestore.getInstance();
+        currentUser = auth.getCurrentUser();
 
-        // Views
-        imgProfile = findViewById(R.id.imgProfile);
-        txtUserName = findViewById(R.id.txtUserName);
-        txtUserEmail = findViewById(R.id.txtUserEmail);
-        btnEditarInfo = findViewById(R.id.btnEditarInfo);
-        btnVerFavoritos = findViewById(R.id.btnVerFavoritos);
-        edtIngrediente = findViewById(R.id.edtIngrediente);
-        btnAdicionarIngrediente = findViewById(R.id.btnAdicionarIngrediente);
-        listIngredientes = findViewById(R.id.listIngredientes);
-        btnLogout = findViewById(R.id.btnLogout);
-
-        // Adapter ListView
-        adapterIngredientes = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaIngredientes);
-        listIngredientes.setAdapter(adapterIngredientes);
-
-        // Carregar dados do usuário
-        carregarInformacoesUsuario();
-
-        // Botão para adicionar ingrediente
-        btnAdicionarIngrediente.setOnClickListener(v -> adicionarIngrediente());
-
-        // EventListener realtime da geladeira
-        observarMudancasGeladeira();
-
-        btnEditarInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(PerfilUsuario.this, EditarPerfilActivity.class);
-            startActivity(intent);
-        });
-
-        btnVerFavoritos.setOnClickListener(v -> {
-            Intent intent = new Intent(PerfilUsuario.this, ReceitasFavoritasActivity.class);
-            startActivity(intent);
-        });
-
-        btnLogout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut(); // Desloga o usuário
-
-            Intent i = new Intent(PerfilUsuario.this, LoginActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-        });
-
-    }
-
-    // 🔥 Carregar dados do usuário
-    private void carregarInformacoesUsuario() {
-        db.collection("usuarios")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(document -> {
-                    if (document.exists()) {
-                        txtUserName.setText(document.getString("nome"));
-                        txtUserEmail.setText(document.getString("email"));
-
-                        // Carregar ingredientes se existir campo "geladeira"
-                        List<String> lista = (List<String>) document.get("geladeira");
-                        if (lista != null) {
-                            listaIngredientes.clear();
-                            listaIngredientes.addAll(lista);
-                            adapterIngredientes.notifyDataSetChanged();
-                        }
-                    }
-                });
-    }
-
-    // 🔥 Adicionar item da geladeira no Firestore
-    private void adicionarIngrediente() {
-        String ingrediente = edtIngrediente.getText().toString().trim();
-
-        if (ingrediente.isEmpty()) {
-            Toast.makeText(this, "Digite um ingrediente!", Toast.LENGTH_SHORT).show();
+        if (currentUser == null) {
+            // Se o usuário não estiver logado, redireciona para a tela de Login
+            startActivity(new Intent(PerfilUsuario.this, LoginActivity.class));
+            finish();
             return;
         }
 
-        listaIngredientes.add(ingrediente);
-        adapterIngredientes.notifyDataSetChanged();
-        edtIngrediente.setText("");
+        userId = currentUser.getUid();
 
-        // Salvar no Firestore
-        db.collection("usuarios")
-                .document(userId)
-                .update("geladeira", listaIngredientes)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(this, "Ingrediente adicionado!", Toast.LENGTH_SHORT).show());
+        // --- Inicializa Elementos de Perfil e Firebase ---
+        txtNomeUsuario = findViewById(R.id.txtNomeUsuario);
+        imgFotoPerfil = findViewById(R.id.imgFotoPerfil);
+        btnEditarPerfilIcone = findViewById(R.id.btnEditarPerfilIcone);
+
+        // Adiciona Listeners para os botões do Perfil
+        btnEditarPerfilIcone.setOnClickListener(this::abrirTelaEdicao);
+        // O método selecionarFotoPerfil já está definido como onClick no XML
+        // imgFotoPerfil.setOnClickListener(this::selecionarFotoPerfil); // Pode ser removido se já estiver no XML
+
+        carregarInformacoesUsuario();
+
+        // --- Configuração das Abas Deslizantes (ViewPager2 e TabLayout) ---
+        tabLayout = findViewById(R.id.tabLayoutPerfil);
+        viewPager = findViewById(R.id.viewPagerPerfil);
+
+        // 1. Configura o adapter do ViewPager2
+        PerfilPageAdapter adapter = new PerfilPageAdapter(this);
+        viewPager.setAdapter(adapter);
+
+        // 2. Liga o TabLayout com o ViewPager2, definindo os títulos e ícones das abas
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Meu Livro");
+                    // Adiciona o Ícone para "Meu Livro de Receitas"
+                    tab.setIcon(R.drawable.sharp_book_24);
+                    break;
+                case 1:
+                    tab.setText("Favoritos");
+                    // Adiciona o Ícone para "Receitas Favoritas"
+                    tab.setIcon(R.drawable.baseline_favorite_24);
+                    break;
+            }
+        }).attach();
+    }
+
+    /**
+     * Carrega Nome (Firestore) e Foto/Email (Auth).
+     */
+    private void carregarInformacoesUsuario() {
+        // Carrega foto do Firebase Auth (se existir)
+        if (currentUser.getPhotoUrl() != null) {
+            Glide.with(this)
+                    .load(currentUser.getPhotoUrl())
+                    .placeholder(R.drawable.ic_default_profile) // Use o recurso de ícone padrão
+                    .error(R.drawable.ic_default_profile) // Use o recurso de ícone padrão
+                    .into(imgFotoPerfil);
+        }
+
+        // Carrega o nome do Firestore
+        DocumentReference userRef = db.collection("usuarios").document(userId);
+        userRef.addSnapshotListener((documentSnapshot, error) -> {
+            if (error != null || documentSnapshot == null || !documentSnapshot.exists()) {
+                // Se houver erro ou não existir, usa o nome do Auth
+                txtNomeUsuario.setText(currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Usuário GLICE");
+                return;
+            }
+
+            String nome = documentSnapshot.getString("nome");
+            if (nome != null && !nome.isEmpty()) {
+                txtNomeUsuario.setText(nome);
+            }
+        });
+    }
+
+    // Métodos onClick do layout
+
+    public void selecionarFotoPerfil(View view) {
+        // Lógica para selecionar foto
+        Toast.makeText(this, "Funcionalidade de upload de foto pendente.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void abrirTelaEdicao(View view) {
+        // Lógica para abrir tela de edição (como na sua versão antiga)
+        Intent intent = new Intent(PerfilUsuario.this, EditarPerfilActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        carregarDadosUsuario(); // Atualiza sempre que volta pra tela
-    }
-
-    // 🔥 Atualiza automaticamente quando mudar no Firestore
-    private void observarMudancasGeladeira() {
-        db.collection("usuarios")
-                .document(userId)
-                .addSnapshotListener((snapshot, error) -> {
-                    if (error != null || snapshot == null || !snapshot.exists()) return;
-
-                    List<String> lista = (List<String>) snapshot.get("geladeira");
-                    if (lista != null) {
-                        listaIngredientes.clear();
-                        listaIngredientes.addAll(lista);
-                        adapterIngredientes.notifyDataSetChanged();
-                    }
-                });
-    }
-
-    private void carregarDadosUsuario() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        FirebaseFirestore.getInstance()
-                .collection("usuarios")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists()) {
-                        txtUserName.setText(doc.getString("nome"));
-                        txtUserEmail.setText(doc.getString("email"));
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erro ao carregar dados", Toast.LENGTH_SHORT).show();
-                });
+        if (currentUser != null) {
+            // Garante que o nome é atualizado após a edição
+            carregarInformacoesUsuario();
+        }
     }
 }
