@@ -1,158 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UploadReceitaActivity">
+    android:background="@color/branco"
+    tools:context=".activity.UploadReceitaActivity"
+    android:fitsSystemWindows="true"
+    android:paddingTop="?attr/actionBarSize">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/textView_titulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nova Receita"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Foto da Receita"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
-
-        <ImageView
-            android:id="@+id/imageView_fotoReceita"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#E0E0E0"
-            android:clickable="true"
-            android:contentDescription="Clique para selecionar a foto da receita"
-            android:focusable="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Nome da receita"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_nomeReceita"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nome da Receita"
-                android:inputType="textCapWords" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingredientes"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
+    <!-- SCROLL PRINCIPAL -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/containerBottomButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/container_ingredientes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_adicionarIngrediente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adicionar Ingrediente"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_gravity="end"/>
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="3dp"
-            android:text="Modo de preparo"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_modoPreparo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:hint="Modo de Preparo (Passos)"
-                android:inputType="textMultiLine"
-                android:minLines="6" />
-
+            <!-- TÍTULO -->
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textView_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="3dp"
-                android:layout_weight="1"
-                android:text="Tempo de preparo"
+                android:text="Nova Receita"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/rosa4"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+            <!-- FOTO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Foto da Receita"
+                android:textColor="@color/rosa3"
                 android:textSize="18sp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_tempoPreparo"
+            <!-- CONTAINER RESPONSIVO P/ IMAGEM -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tempo de Preparo (minutos)"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/imageView_fotoReceita"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/azul"
+                    android:contentDescription="Foto da Receita"
+                    android:scaleType="centerCrop"
+                    android:clickable="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="16:9" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- NOME -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome da receita"
+                android:textColor="@color/rosa3"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/rosa2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_nomeReceita"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome da Receita"
+                    android:textColor="@color/preto" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- INGREDIENTES -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredientes"
+                android:textColor="@color/rosa3"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/container_ingredientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/button_adicionarIngrediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adicionar Ingrediente"
+                android:textColor="@color/rosa4"
+                android:backgroundTint="@color/rosa1"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="end" />
+
+            <!-- MODO DE PREPARO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modo de preparo"
+                android:textColor="@color/rosa3"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/rosa2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_modoPreparo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="5"
+                    android:hint="Modo de Preparo (Passos)"
+                    android:textColor="@color/preto" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TEMPO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tempo de preparo"
+                android:textColor="@color/rosa3"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/rosa2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_tempoPreparo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tempo (minutos)"
+                    android:inputType="number"
+                    android:textColor="@color/preto" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
-        <Button
-            android:id="@+id/button_uploadReceita"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Publicar Receita" />
+    <!-- BOTÕES FLUTUANTES -->
+    <LinearLayout
+        android:id="@+id/containerBottomButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center"
+        android:background="@color/branco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="24dp"
+        android:fitsSystemWindows="true">
 
         <Button
             android:id="@+id/btnCancelar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:textColor="@color/branco"
             android:backgroundTint="@color/rosa4"
-            android:text="Cancelar" />
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/button_uploadReceita"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Publicar Receita"
+            android:textColor="@color/branco"
+            android:backgroundTint="@color/rosa3"
+            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
