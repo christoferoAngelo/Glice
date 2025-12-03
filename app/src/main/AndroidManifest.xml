@@ -18,9 +18,10 @@
         android:theme="@style/Theme.Glice">
         <activity
             android:name=".activity.AdicionarReceitaLocalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".DetalheReceitaActivity"
+            android:name=".activity.DetalheReceitaActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AdminListActivity"

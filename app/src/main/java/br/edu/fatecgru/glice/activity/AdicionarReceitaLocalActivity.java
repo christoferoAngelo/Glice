@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,9 +61,22 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
         editLink = findViewById(R.id.editLink);
         btnSalvar = findViewById(R.id.btnSalvar);
         imagePreview = findViewById(R.id.imagePreview);
+        ScrollView scrollView = findViewById(R.id.scrollView);
 
         viewModel = new ViewModelProvider(this).get(ReceitaLocalViewModel.class);
 
+        // Listener para detectar quando o teclado aparece/desaparece
+        ViewTreeObserver.OnGlobalLayoutListener layoutListener = () -> {
+            int heightDiff = scrollView.getRootView().getHeight() - scrollView.getHeight();
+            if (heightDiff > 300) {  // Teclado provavelmente apareceu (ajuste o threshold se necessário)
+                // Rola para o campo focado, se houver um
+                View focusedView = getCurrentFocus();
+                if (focusedView != null && (focusedView == editIngredientes || focusedView == editPreparo || focusedView == editAnotacoes)) {
+                    scrollView.post(() -> scrollView.smoothScrollTo(0, focusedView.getTop() - heightDiff / 2));  // Ajusta baseado na altura do teclado
+                }
+            }
+        };
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
         configurarSelecaoImagemLauncher();
 
         imagePreview.setOnClickListener(this::selecionarImagemReceita);
@@ -77,6 +92,24 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(android.text.Editable s) { }
         });
+
+        View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
+            if (hasFocus) {
+                // Rola suavemente para o topo do campo focado, com offset extra
+                scrollView.post(() -> scrollView.smoothScrollTo(0, v.getTop() - 200));  // Subtrai 200 pixels (ajuste conforme necessário)
+            }
+        };
+
+        // Aplica o listener aos campos multilinha (onde o problema é mais comum)
+        editIngredientes.setOnFocusChangeListener(focusChangeListener);
+        editPreparo.setOnFocusChangeListener(focusChangeListener);
+        editAnotacoes.setOnFocusChangeListener(focusChangeListener);
+
+        // Opcional: Aplica também aos outros campos, se quiser consistência
+        editTitulo.setOnFocusChangeListener(focusChangeListener);
+        editFonte.setOnFocusChangeListener(focusChangeListener);
+        editLink.setOnFocusChangeListener(focusChangeListener);
+
 
         // Verifica edição
         Intent intent = getIntent();

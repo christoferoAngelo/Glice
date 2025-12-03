@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/ysabeau_bold"
         android:gravity="center"
@@ -52,16 +52,18 @@
     <!-- Ícone de Edição da Foto -->
     <ImageView
         android:id="@+id/imgEditarFoto"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:background="@drawable/circle_background"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardFotoPerfil"
-        app:layout_constraintBottom_toBottomOf="@+id/cardFotoPerfil"
-        app:srcCompat="@drawable/outline_person_edit_24"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="6dp"
+        android:contentDescription="Editar Foto"
+        android:elevation="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/bg_circle_rosa"
+        android:src="@drawable/outline_add_a_photo_24"
         app:tint="@color/branco"
-        android:elevation="7dp"
-        android:contentDescription="Editar Foto" />
+        app:layout_constraintEnd_toEndOf="@+id/cardFotoPerfil"
+        app:layout_constraintBottom_toBottomOf="@+id/cardFotoPerfil" />
 
     <!-- Nome do Usuário -->
     <TextView

@@ -6,28 +6,23 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.List;
 
 import br.edu.fatecgru.glice.R;
 import br.edu.fatecgru.glice.model.ReceitaPessoal;
-import br.edu.fatecgru.glice.viewmodel.ReceitaLocalViewModel;
 
-/**
- * Adapter para exibir a lista de Receitas Locais no RecyclerView.
- */
 public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapter.ReceitaViewHolder> {
 
     private List<ReceitaPessoal> receitas;
     private OnItemClickListener listener;
 
-    // Interface para manipular cliques (para abrir detalhes ou excluir)
     public interface OnItemClickListener {
         void onItemClick(ReceitaPessoal receita);
         void onDeleteClick(ReceitaPessoal receita);
@@ -41,7 +36,6 @@ public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapte
         this.receitas = receitas;
     }
 
-    // Usado pelo ViewModel para atualizar a lista reativamente
     public void setReceitas(List<ReceitaPessoal> novasReceitas) {
         this.receitas = novasReceitas;
         notifyDataSetChanged();
@@ -57,23 +51,27 @@ public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ReceitaViewHolder holder, int position) {
-        ReceitaPessoal currentReceita = receitas.get(position);
+        ReceitaPessoal receita = receitas.get(position);
 
-        holder.txtTituloReceita.setText(currentReceita.getTitulo());
+        // Nome/Título
+        holder.txtTituloReceita.setText(receita.getTitulo());
 
-        // Exibe um resumo do conteúdo
-        String resumo = (currentReceita.getIngredientes() != null ? currentReceita.getIngredientes() + "\n" : "") + currentReceita.getPreparo();
-        holder.txtDescricaoReceita.setText(resumo.length() > 80 ? resumo.substring(0, 80) + "..." : resumo);
+        // Fonte ou "Sem fonte"
+        holder.txtFonteReceita.setText(
+                (receita.getFonte() == null || receita.getFonte().isEmpty()) ?
+                        "Fonte: Sem fonte" : "Fonte: " + receita.getFonte()
+        );
 
-        // Carrega a imagem se o URL estiver disponível
-        if (currentReceita.getImageUrl() != null && !currentReceita.getImageUrl().isEmpty()) {
+        // Imagem
+        if (receita.getImageUrl() != null && !receita.getImageUrl().isEmpty()) {
+            File arquivo = new File(receita.getImageUrl());
             Glide.with(holder.itemView.getContext())
-                    .load(currentReceita.getImageUrl())
-                    .placeholder(R.drawable.ic_default_recipe) // Placeholder (assumindo que você tem um ícone padrão)
+                    .load(arquivo.exists() ? arquivo : R.drawable.ic_default_recipe)
+                    .placeholder(R.drawable.ic_default_recipe)
                     .error(R.drawable.ic_default_recipe)
                     .into(holder.imgReceitaThumbnail);
         } else {
-            holder.imgReceitaThumbnail.setImageResource(R.drawable.ic_default_recipe); // Ícone padrão
+            holder.imgReceitaThumbnail.setImageResource(R.drawable.ic_default_recipe);
         }
     }
 
@@ -82,21 +80,19 @@ public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapte
         return receitas.size();
     }
 
-    // ViewHolder interno
     class ReceitaViewHolder extends RecyclerView.ViewHolder {
         final ImageView imgReceitaThumbnail;
         final TextView txtTituloReceita;
-        final TextView txtDescricaoReceita;
+        final TextView txtFonteReceita;
         final ImageButton btnExcluir;
 
         public ReceitaViewHolder(@NonNull View itemView) {
             super(itemView);
             imgReceitaThumbnail = itemView.findViewById(R.id.imgReceitaThumbnail);
             txtTituloReceita = itemView.findViewById(R.id.txtTituloReceita);
-            txtDescricaoReceita = itemView.findViewById(R.id.txtDescricaoReceita);
+            txtFonteReceita = itemView.findViewById(R.id.txtFonteReceita);
             btnExcluir = itemView.findViewById(R.id.btnExcluir);
 
-            // Listener de clique no item completo
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (listener != null && position != RecyclerView.NO_POSITION) {
@@ -104,7 +100,6 @@ public class ReceitaLocalAdapter extends RecyclerView.Adapter<ReceitaLocalAdapte
                 }
             });
 
-            // Listener de clique no botão de excluir
             btnExcluir.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (listener != null && position != RecyclerView.NO_POSITION) {
