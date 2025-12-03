@@ -21,7 +21,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".DetalheReceitaActivity"
+            android:name=".activity.DetalheReceitaActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AdminListActivity"

@@ -1,179 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/branco">
+    android:background="@color/branco"
+    android:fillViewport="true"
+    android:id="@+id/scrollView"
+    android:padding="24dp"
+    android:paddingBottom="200dp"
+    android:scrollbars="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
+        <!-- Título grande acima da imagem -->
+        <TextView
+            android:id="@+id/tvNomeReceita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="24dp">
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/ysabeau_bold"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:text="Nome da Receita"
+            android:textColor="@color/rosa4"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-            <!-- Título grande acima da imagem -->
-            <TextView
-                android:id="@+id/tvNomeReceita"
+        <!-- Foto da Receita -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeColor="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/imagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Clique para selecionar a foto da receita"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/outline_menu_book_2_24" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Campos de texto -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutTitulo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Título da Receita"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/round_title_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/ysabeau_bold"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp"
-                android:text="Nome da Receita"
-                android:textColor="@color/rosa4"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:inputType="textCapWords"
+                android:imeOptions="actionNext"/>  <!-- Navegação para o próximo campo -->
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Foto da Receita -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@android:color/transparent">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Ingredientes (um por linha)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/outline_kitchen_24">
 
-                <ImageView
-                    android:id="@+id/imagePreview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Clique para selecionar a foto da receita"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/outline_menu_book_2_24" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Título da receita (campo editável) -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutTitulo"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editIngredientes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Título da Receita"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-                app:startIconDrawable="@drawable/round_title_24">
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="3"
+                android:gravity="top"
+                android:scrollHorizontally="false"
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTitulo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Modo de Preparo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/outline_menu_book_2_24">
 
-            <!-- Ingredientes -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editPreparo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Ingredientes (um por linha)"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-             app:startIconDrawable="@drawable/outline_kitchen_24">
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="5"
+                android:gravity="top"
+                android:scrollHorizontally="false"
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editIngredientes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:minLines="3"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Anotações (opcional)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/outline_book_24">
 
-            <!-- Preparo -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editAnotacoes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Modo de Preparo"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-                app:startIconDrawable="@drawable/outline_menu_book_2_24">
+                android:inputType="textMultiLine|textCapSentences"
+                android:gravity="top"
+                android:scrollHorizontally="false"
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editPreparo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:minLines="5"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Fonte (opcional)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/outline_feature_search_24">
 
-            <!-- Anotações -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFonte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Anotações (opcional)"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-                app:startIconDrawable="@drawable/outline_book_24">
+                android:imeOptions="actionNext"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editAnotacoes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Link (opcional)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rosa4"
+            app:hintTextColor="@color/rosa4"
+            app:startIconDrawable="@drawable/outline_add_link_24">
 
-            <!-- Fonte -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Fonte (opcional)"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-                app:startIconDrawable="@drawable/outline_feature_search_24">
+                android:inputType="textUri"
+                android:imeOptions="actionDone"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editFonte"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        <!-- Botão Salvar -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:elevation="6dp"
+            android:text="Salvar Receita"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/rosa3"
+            app:cornerRadius="12dp"/>
 
-            <!-- Link -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Link (opcional)"
-                app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4"
-                app:startIconDrawable="@drawable/outline_add_link_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editLink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textUri"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Botão Salvar -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSalvar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="24dp"
-                android:elevation="6dp"
-                android:text="Salvar Receita"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/rosa3"
-                app:cornerRadius="12dp"/>
-        </LinearLayout>
-
-    </FrameLayout>
+    </LinearLayout>
 </ScrollView>
+   
