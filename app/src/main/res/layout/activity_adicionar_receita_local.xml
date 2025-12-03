@@ -13,35 +13,59 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_marginTop="24dp">
 
-            <!-- Título da tela -->
+            <!-- Título grande acima da imagem -->
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvNomeReceita"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="24dp"
-                android:text="ADICIONAR RECEITA"
+                android:text="Nome da Receita"
                 android:textColor="@color/rosa4"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:fontFamily="@font/ysabeau_bold"
+                android:layout_marginBottom="16dp"/>
 
-            <!-- Título da receita -->
+            <!-- Foto da Receita -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:strokeColor="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/imagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Clique para selecionar a foto da receita"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/outline_menu_book_2_24" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Título da receita (campo editável) -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutTitulo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Título da Receita"
-                app:startIconDrawable="@drawable/round_title_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/round_title_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Ingredientes -->
@@ -51,16 +75,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Ingredientes (um por linha)"
-                app:startIconDrawable="@drawable/outline_kitchen_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/outline_kitchen_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editIngredientes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:minLines="3" />
+                    android:minLines="3"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Preparo -->
@@ -70,16 +94,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Modo de Preparo"
-                app:startIconDrawable="@drawable/outline_menu_book_2_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/outline_menu_book_2_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editPreparo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:minLines="5" />
+                    android:minLines="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Anotações -->
@@ -89,15 +113,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Anotações (opcional)"
-                app:startIconDrawable="@drawable/outline_book_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/outline_book_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editAnotacoes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Fonte -->
@@ -107,14 +131,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Fonte (opcional)"
-                app:startIconDrawable="@drawable/outline_feature_search_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/outline_feature_search_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editFonte"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Link -->
@@ -124,15 +148,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Link (opcional)"
-                app:startIconDrawable="@drawable/outline_add_link_24"
                 app:boxStrokeColor="@color/rosa4"
-                app:hintTextColor="@color/rosa4">
+                app:hintTextColor="@color/rosa4"
+                app:startIconDrawable="@drawable/outline_add_link_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botão Salvar -->
@@ -145,10 +169,8 @@
                 android:text="Salvar Receita"
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/rosa3"
-                app:cornerRadius="12dp" />
-
+                app:cornerRadius="12dp"/>
         </LinearLayout>
 
     </FrameLayout>
-
 </ScrollView>
