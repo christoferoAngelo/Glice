@@ -15,20 +15,27 @@
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="1dp">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="GLACÊ"
-            android:textSize="34sp" />
-
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="206dp"
-            android:layout_marginTop="24dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_width="500dp"
+            android:layout_height="247dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            tools:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-30dp"
+            android:elevation="3dp"
+            android:fontFamily="@font/ysabeau_bold"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="GLICÊ"
+            android:textColor="@color/rosa4"
+            android:textSize="48sp" />
 
     </LinearLayout>
 
