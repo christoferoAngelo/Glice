@@ -223,6 +223,5 @@ public class PerfilUsuario extends AppCompatActivity {
     public void selecionarFotoPerfil(View view) {
         // Lógica para abrir o seletor de imagens
         mGetContent.launch("image/*");
-        // Não é mais necessário o Toast: Toast.makeText(this, "Funcionalidade de upload de foto pendente.", Toast.LENGTH_SHORT).show();
     }
 }
