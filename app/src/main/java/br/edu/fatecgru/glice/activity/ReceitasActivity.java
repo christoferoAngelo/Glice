@@ -3,6 +3,7 @@ package br.edu.fatecgru.glice.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -79,6 +80,16 @@ public class ReceitasActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("glice_prefs", MODE_PRIVATE);
+        boolean tutorialVisto = prefs.getBoolean("tutorial_visto", false);
+
+        if (!tutorialVisto) {
+            startActivity(new Intent(this, TutorialActivity.class));
+            finish(); // impede que o usuário volte pra cá sem concluir
+            return;
+        }
+
         setContentView(R.layout.activity_receitas);
 
         // Inicialização do Firebase Auth

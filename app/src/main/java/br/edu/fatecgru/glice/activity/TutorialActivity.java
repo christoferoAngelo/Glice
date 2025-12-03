@@ -2,6 +2,7 @@ package br.edu.fatecgru.glice.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -87,6 +88,11 @@ public class TutorialActivity extends AppCompatActivity {
         });
 
         btnPular.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("glice_prefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("tutorial_visto", true);
+            editor.apply();
+
             Intent intent = new Intent(TutorialActivity.this, ReceitasActivity.class);
             startActivity(intent);
             finish(); // Fecha o tutorial para não voltar ao voltar do MainActivity
@@ -104,6 +110,11 @@ public class TutorialActivity extends AppCompatActivity {
         Button btnCancelar = dialog.findViewById(R.id.btnCancelar);
 
         btnOk.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("glice_prefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("tutorial_visto", true);
+            editor.apply();
+
             Intent intent = new Intent(TutorialActivity.this, ReceitasActivity.class);
             startActivity(intent);
             dialog.dismiss();

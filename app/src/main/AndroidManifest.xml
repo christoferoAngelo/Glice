@@ -41,7 +41,7 @@
             android:name=".activity.CadastrarLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ReceitasActivity"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
@@ -50,7 +50,7 @@
             android:name=".activity.TutorialActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.ReceitasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
