@@ -1,11 +1,15 @@
 package br.edu.fatecgru.glice.activity;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,6 +46,7 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
     private ImageView imagePreview;
     private ReceitaLocalViewModel viewModel;
     private ReceitaPessoal receitaParaEditar;
+    private Button btnCancelar;
 
     private Uri uriImagemSelecionada;
     private ActivityResultLauncher<String> mGetContent;
@@ -61,23 +66,15 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
         editLink = findViewById(R.id.editLink);
         btnSalvar = findViewById(R.id.btnSalvar);
         imagePreview = findViewById(R.id.imagePreview);
-        ScrollView scrollView = findViewById(R.id.scrollView);
+
+        btnCancelar = findViewById(R.id.btnCancelarEnvio);
 
         viewModel = new ViewModelProvider(this).get(ReceitaLocalViewModel.class);
 
-        // Listener para detectar quando o teclado aparece/desaparece
-        ViewTreeObserver.OnGlobalLayoutListener layoutListener = () -> {
-            int heightDiff = scrollView.getRootView().getHeight() - scrollView.getHeight();
-            if (heightDiff > 300) {  // Teclado provavelmente apareceu (ajuste o threshold se necessário)
-                // Rola para o campo focado, se houver um
-                View focusedView = getCurrentFocus();
-                if (focusedView != null && (focusedView == editIngredientes || focusedView == editPreparo || focusedView == editAnotacoes)) {
-                    scrollView.post(() -> scrollView.smoothScrollTo(0, focusedView.getTop() - heightDiff / 2));  // Ajusta baseado na altura do teclado
-                }
-            }
-        };
-        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
+
+
         configurarSelecaoImagemLauncher();
+
 
         imagePreview.setOnClickListener(this::selecionarImagemReceita);
 
@@ -93,22 +90,9 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
             public void afterTextChanged(android.text.Editable s) { }
         });
 
-        View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
-            if (hasFocus) {
-                // Rola suavemente para o topo do campo focado, com offset extra
-                scrollView.post(() -> scrollView.smoothScrollTo(0, v.getTop() - 200));  // Subtrai 200 pixels (ajuste conforme necessário)
-            }
-        };
 
-        // Aplica o listener aos campos multilinha (onde o problema é mais comum)
-        editIngredientes.setOnFocusChangeListener(focusChangeListener);
-        editPreparo.setOnFocusChangeListener(focusChangeListener);
-        editAnotacoes.setOnFocusChangeListener(focusChangeListener);
 
-        // Opcional: Aplica também aos outros campos, se quiser consistência
-        editTitulo.setOnFocusChangeListener(focusChangeListener);
-        editFonte.setOnFocusChangeListener(focusChangeListener);
-        editLink.setOnFocusChangeListener(focusChangeListener);
+
 
 
         // Verifica edição
@@ -125,6 +109,7 @@ public class AdicionarReceitaLocalActivity extends AppCompatActivity {
         }
 
         btnSalvar.setOnClickListener(v -> salvarReceita());
+        btnCancelar.setOnClickListener(v -> finish());
     }
 
     private void configurarSelecaoImagemLauncher() {

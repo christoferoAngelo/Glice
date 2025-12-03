@@ -19,7 +19,7 @@
         <activity
             android:name=".activity.AdicionarReceitaLocalActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.DetalheReceitaActivity"
             android:exported="false" />
