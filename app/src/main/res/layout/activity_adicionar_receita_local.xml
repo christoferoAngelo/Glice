@@ -33,7 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Título da Receita"
-                app:startIconDrawable="@drawable/round_title_24">
+                app:startIconDrawable="@drawable/round_title_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTitulo"
@@ -49,7 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Ingredientes (um por linha)"
-                app:startIconDrawable="@drawable/outline_kitchen_24">
+                app:startIconDrawable="@drawable/outline_kitchen_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editIngredientes"
@@ -66,7 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Modo de Preparo"
-                app:startIconDrawable="@drawable/outline_menu_book_2_24">
+                app:startIconDrawable="@drawable/outline_menu_book_2_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editPreparo"
@@ -83,7 +89,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Anotações (opcional)"
-                app:startIconDrawable="@drawable/outline_book_24">
+                app:startIconDrawable="@drawable/outline_book_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editAnotacoes"
@@ -99,7 +107,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Fonte (opcional)"
-                app:startIconDrawable="@drawable/outline_feature_search_24">
+                app:startIconDrawable="@drawable/outline_feature_search_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editFonte"
@@ -114,7 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Link (opcional)"
-                app:startIconDrawable="@drawable/outline_add_link_24">
+                app:startIconDrawable="@drawable/outline_add_link_24"
+                app:boxStrokeColor="@color/rosa4"
+                app:hintTextColor="@color/rosa4">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editLink"
