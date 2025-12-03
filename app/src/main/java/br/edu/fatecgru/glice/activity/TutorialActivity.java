@@ -60,8 +60,13 @@ public class TutorialActivity extends AppCompatActivity {
                 R.drawable.gate
         ));
 
-        lista.add(new Carrossel_Item("Controle Glicêmico", "Receitas classificadas com índice glicêmico 1, 2 ou 3, para você comer com segurança.", R.drawable.vegetables));
-       lista.add(new Carrossel_Item("Receitas Saudáveis", "Publique e descubra receitas criativas com ingredientes que você já tem na geladeira!", R.drawable.recipes));
+        lista.add(new Carrossel_Item("Controle Glicêmico", "Receitas classificadas com índice glicêmico 1, 2 ou 3, informado na própria receita. Saiba mais sobre os índices na próxima tela!", R.drawable.vegetables));
+        lista.add(new Carrossel_Item("Glicê 01", "Sem Açúcar adicionado, usa adoçantes próprios para diabetes, baixo impacto glicêmico.", R.drawable.fruit));
+        lista.add(new Carrossel_Item("Glicê 02", "Contém apenas açúcares naturais ou carboidratos complexos; baixo a moderado impacto.", R.drawable.rice));
+        lista.add(new Carrossel_Item("Glicê 03", "Contém qualquer açúcar adicionado ou carboidratos simples.", R.drawable.sugar));
+        lista.add(new Carrossel_Item("Queremos Ouvir Você!", "Caso alguma receita esteja classificada com um índice incorreto,você pode contestar.", R.drawable.mark));
+        lista.add(new Carrossel_Item("Seu Livro de Receitas", "Alimente o seu perfil com receitas criativas!", R.drawable.recipes));
+        lista.add(new Carrossel_Item("Publique Receitas", "Envie suas receitas para o e-mail glice.oficial@gmail.com, para serem verificadas e postadas!", R.drawable.email));
 
         // Adapter
         adapter = new WelcomeAdapter(lista);
@@ -88,14 +93,7 @@ public class TutorialActivity extends AppCompatActivity {
         });
 
         btnPular.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("glice_prefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("tutorial_visto", true);
-            editor.apply();
-
-            Intent intent = new Intent(TutorialActivity.this, ReceitasActivity.class);
-            startActivity(intent);
-            finish(); // Fecha o tutorial para não voltar ao voltar do MainActivity
+            mostrarDisclaimer();
         });
 
     }
