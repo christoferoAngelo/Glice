@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Quando o campo estiver focado -->
+    <item android:color="@color/rosa3" android:state_focused="true"/>
+    <!-- Estado normal -->
+    <item android:color="@color/rosa4"/>
+</selector>
+   
